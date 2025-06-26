@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b --noEmit false && vite build",
-    "build:prod": "vite build",
+    "build:prod": "vite build --emptyOutDir",
+    "vercel-build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
