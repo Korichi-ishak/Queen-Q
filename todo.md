@@ -100,57 +100,25 @@ flowchart TD
     E --> F[Thank‑you overlay]
 ```
 
-1 Repo / Environment
- Spin up Next.js 14 project with --typescript flag and Tailwind preset (npx create-next-app).
- Add GSAP v3 (npm i gsap) plus @gsap/shockingly if you prefer the helper utilities.
- Install @tailwindcss/typography and define custom color tokens (royal-purple, imperial-gold, rose-champagne) in tailwind.config.js.
-2 Sprite-sheet deck
- Export a 9×6 PNG spritesheet (1080 × 720 px per card @ 2× DPR).
- Create components/CardDeck.tsx that:
-Imports GSAP, creates gsap.timeline({ repeat: -1 }).
-Uses background-position tweens to cycle frames at 24 fps.
-Pauses on click/keydown("Space"), computes current frame, and emits deck:stop event with <CardName> payload.
-3 Hero section
- Full-viewport container with gradient bg-royal-purple/95.
- Glassmorphic card overlay (blur + 20 % opacity) housing:
-<CardImage> (the chosen archetype)
-Mailchimp embed form (double opt-in, hidden data-card field).
-4 Sections below the fold
- How It Works grid (step-1, step-2, step-3) with fade-in scroll triggers (GSAP ScrollTrigger or Framer Motion).
- Testimonials: autoplay carousel (keen-slider or Swiper), pauses on hover.
- FAQ accordion: semantic <details> tags enhanced with custom animations.
-5 Accessibility & performance
- Implement WCAG 2.2 AA focus indicators (outline-[3px_solid_theme(colors.imperial-gold)]) 
-w3.org
-w3.org
-.
- Add prefers-reduced-motion media query to disable looping animation for motion-sensitive users.
- Guard against CLS by pre-hydrating first card in <Image priority> 
-tailwindcss.com
-.
- Target ≥ 95 Lighthouse Performance; use Vercel’s built-in Speed Insights for regression checks
-landingpageflow.com
-.
-6 Analytics & rollout
- Wire Plausible (self-hosted) or GA4 with custom event card_pick.
- Deploy preview branch to Vercel; set production rewrite from /app to the build output.
-Implementation tips & vetted references
-GSAP sprite-sheet pattern – forum post shows step() tweening and pause logic 
-greensock.com
-greensock.com
-.
-Tailwind responsive rules (mobile-first breakpoints) keep CSS weight low 
-tailwindcss.com
-.
-Mailchimp form styling: use CSS hooks instead of inline styles for dark-mode friendliness
-mailchimp.com
-mailchimp.com
-.
-Conversion benchmarks: landing pages average ~6–7 % submissions; micro-interaction lead magnets often exceed 10 % 
-unbounce.com
-unbounce.com
-.
-Scarcity counters reliably lift urgency (17 brand examples) 
-cxl.com
-blog.hubspot.com
-.
+🚀 Sprint 0 – Démarrage du développement
+Créer src/components/CardDeck.tsx
+Importer GSAP v3 (import { gsap } from 'gsap').
+Charger la spritesheet temporaire src/assets/sprites/54-cards.png.
+Construire un gsap.timeline({ repeat: -1, ease: 'none' }) avec une animation de type steps(54) pour faire défiler les 54 cartes.
+Sur click ou keydown("Space"), tl.pause(), calculer currentFrame, puis émettre card:drawn via un onCardDraw(cardName) prop.
+Ajouter l’attribut aria-live="polite" pour annoncer la carte tirée.
+Coder src/components/SignupForm.tsx
+Intégrer l’embed Mailchimp (audience Queen de Q), enlever les styles inline et remplacer par des classes Tailwind.
+Ajouter un champ caché data-card qui reçoit la valeur de onCardDraw.
+Afficher un toast/overlay “Invitation envoyée ! 📧” après succès.
+Assembler la Hero section dans src/layout/Hero.tsx
+Fond bg-royalPurple, texte or (text-imperialGold).
+Contient <CardDeck onCardDraw={setDrawnCard} /> et <SignupForm drawnCard={drawnCard} />.
+Bouton overlay « Deal me a card ↗ » (ou cacher le bouton et déclencher au click sur le deck, à ton choix).
+Push & preview
+Commit : feat: hero section with animated card deck and mailchimp signup.
+Déployer un preview Vercel (vercel --prod facultatif pour l’instant).
+Ensuite
+Intégrer Framer Motion pour la section “How It Works”.
+Mettre en place le carrousel de témoignages (keen-slider).
+Ajouter la FAQ accordéon (<details> + Tailwind).

@@ -1,11 +1,14 @@
 import React from 'react';
 import { Hero } from './layout/Hero';
+import { SmoothScroll } from './components/SmoothScroll';
 
 function App() {
   return (
-    <div className="min-h-screen">
-      <Hero />
-    </div>
+    <SmoothScroll>
+      <div className="min-h-screen">
+        <Hero />
+      </div>
+    </SmoothScroll>
   );
 }
 

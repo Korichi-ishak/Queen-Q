@@ -1,1 +1,8 @@
- 
+# Placeholder for 54-cards.png spritesheet
+# 
+# Format requis:
+# - 9×6 grid (9 cartes par ligne, 6 lignes)
+# - Chaque carte: 60×80px
+# - Taille totale: 540×480px
+# - Format PNG
+# - Nommer le fichier: 54-cards.png 
