@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import confetti from 'canvas-confetti';
+import { useLanguage } from '../i18n/LanguageContext';
 
 interface SuccessOverlayProps {
   isVisible: boolean;
@@ -10,6 +11,7 @@ interface SuccessOverlayProps {
 export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({ isVisible, onClose, cardName }) => {
   const confettiRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const { t } = useLanguage();
 
   // Handle Escape key press
   useEffect(() => {
@@ -75,6 +77,9 @@ export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({ isVisible, onClo
 
   if (!isVisible) return null;
 
+  // Format the message with the card name
+  const formattedMessage = t.successOverlay.message.replace('{cardName}', cardName);
+
   return (
     <div 
       className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center"
@@ -116,19 +121,18 @@ export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({ isVisible, onClo
             id="success-title"
             className="text-2xl sm:text-3xl font-playfair font-bold text-imperial-gold mb-4"
           >
-            Welcome to the Realm!
+            {t.successOverlay.title}
           </h2>
           
           <p className="text-rose-champagne/90 mb-6">
-            Your royal archetype <span className="text-imperial-gold font-medium">{cardName}</span> awaits. 
-            We'll notify you when your royal journey begins.
+            {formattedMessage}
           </p>
           
           <button
             onClick={onClose}
             className="px-6 py-3 bg-imperial-gold hover:bg-imperial-gold/90 text-royal-purple font-playfair font-bold rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-royal-purple"
           >
-            Return to Kingdom
+            {t.successOverlay.returnButton}
           </button>
         </div>
       </div>

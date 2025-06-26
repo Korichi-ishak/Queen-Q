@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animations de transition de langue */
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
+
 /* Custom 3D deck animations */
 .deck-container.is-single {
   transform: scale(1.1) rotateY(0deg) !important;
@@ -151,6 +167,47 @@ html {
   animation: pulse-slow 6s ease-in-out infinite;
 }
 
+/* Animation pour les particules dorées */
+@keyframes sparkle-float {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  50% { transform: translateY(-15px) scale(1); opacity: 1; }
+  100% { transform: translateY(-30px) scale(0.2); opacity: 0; }
+}
+
+.sparkle {
+  animation: sparkle-float 1.2s ease-out forwards;
+}
+
+/* Animation pour le reflet spéculaire */
+@keyframes specular-shine {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+.specular-effect {
+  animation: specular-shine 1s ease-in-out;
+}
+
+/* Styles pour l'effet masonry */
+.masonry-grid {
+  display: grid;
+  grid-template-rows: masonry;
+  align-items: start;
+}
+
+/* Effet de révélation en cascade */
+.card-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.card-item.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -174,6 +231,22 @@ html {
   /* Disable particle animations */
   canvas#particles {
     display: none !important;
+  }
+  
+  /* Disable sparkle animations */
+  .sparkle {
+    display: none !important;
+  }
+  
+  /* Disable specular effect */
+  .specular-effect {
+    display: none !important;
+  }
+  
+  /* Disable card reveal animations */
+  .card-item {
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
@@ -266,4 +339,14 @@ button:focus-visible {
 /* Perspective pour les conteneurs de cartes */
 .card-container {
   perspective: 1000px;
+}
+
+/* Effet de glow doré pour les cartes */
+.gold-glow {
+  box-shadow: 0 0 15px 2px rgba(214, 174, 96, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.gold-glow:hover {
+  box-shadow: 0 0 25px 5px rgba(214, 174, 96, 0.5);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 
 interface Deck3DProps {
@@ -25,10 +25,18 @@ function frameToArchetype(progress: number): string {
   return ARCHETYPES[frameIndex % ARCHETYPES.length];
 }
 
+// Interface pour Plausible
+interface PlausibleWindow extends Window {
+  plausible?: (eventName: string, options?: { props?: Record<string, string | number> }) => void;
+}
+
 // Helper function for Plausible analytics
-const trackEvent = (eventName: string, props?: Record<string, any>) => {
-  if (typeof window !== 'undefined' && (window as any).plausible) {
-    (window as any).plausible(eventName, { props });
+const trackEvent = (eventName: string, props?: Record<string, string | number>) => {
+  if (typeof window !== 'undefined') {
+    const plausibleWindow = window as PlausibleWindow;
+    if (plausibleWindow.plausible) {
+      plausibleWindow.plausible(eventName, { props });
+    }
   }
 };
 
@@ -77,9 +85,8 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  const dealCard = () => {
+  const dealCard = useCallback(() => {
     if (isDealing) return;
-    
     setIsDealing(true);
     
     // Pause rotation
@@ -118,7 +125,7 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
           setTimeout(() => document.body.removeChild(announcement), 1000);
         }
       });
-  };
+  }, [isDealing, onCardDraw]);
 
   return (
     <div
