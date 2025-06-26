@@ -1,9 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
-import { Flip } from 'gsap/Flip';
-
-// Register GSAP plugins
-gsap.registerPlugin(Flip);
 
 interface Deck3DProps {
   onCardDraw: (cardName: string) => void;
@@ -35,9 +31,12 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
   const [isDealing, setIsDealing] = useState(false);
 
   useEffect(() => {
-    if (!deckRef.current) return;
+    // Check for reduced motion preference
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    if (!deckRef.current || prefersReducedMotion) return;
 
-    // Create 3D rotation timeline as specified
+    // Create 3D rotation timeline
     const tl = gsap.timeline({ repeat: -1, ease: 'none' });
     
     tl.to(deckRef.current, { 
@@ -59,34 +58,65 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
     };
   }, []);
 
-  const deal = () => {
-    if (!deckRef.current || !timelineRef.current || isDealing) return;
+  // Handle Space key globally
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        dealCard();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const dealCard = () => {
+    if (isDealing) return;
     
     setIsDealing(true);
     
-    const tl = timelineRef.current;
-    tl.pause();
+    // Pause rotation
+    if (timelineRef.current) {
+      timelineRef.current.pause();
+    }
     
-    const state = Flip.getState(deckRef.current);
-    deckRef.current.classList.add('is-single');
+    // Get current card based on rotation progress
+    const progress = timelineRef.current?.progress() || Math.random();
+    const selectedCard = frameToArchetype(progress);
     
-    Flip.from(state, { 
-      duration: 0.6, 
-      ease: 'expo.out',
-      onComplete: () => {
-        const selectedCard = frameToArchetype(tl.progress());
-        onCardDraw(selectedCard);
-        setIsDealing(false);
-      }
-    });
+    // Scale animation
+    gsap.timeline()
+      .to(deckRef.current, { 
+        scale: 1.1, 
+        duration: 0.3, 
+        ease: 'power2.out' 
+      })
+      .to(deckRef.current, { 
+        scale: 1, 
+        duration: 0.4, 
+        ease: 'power2.inOut',
+        onComplete: () => {
+          onCardDraw(selectedCard);
+          setIsDealing(false);
+          
+          // Announce for screen readers
+          const announcement = document.createElement('div');
+          announcement.setAttribute('aria-live', 'polite');
+          announcement.className = 'sr-only';
+          announcement.textContent = `Card drawn: ${selectedCard}`;
+          document.body.appendChild(announcement);
+          setTimeout(() => document.body.removeChild(announcement), 1000);
+        }
+      });
   };
 
   return (
     <div
       ref={deckRef}
-      onClick={deal}
-      className={`relative z-30 w-80 h-[28rem] lg:w-[24rem] lg:h-[34rem] min-w-[20rem] cursor-pointer deck-container ${className}`}
+      onClick={dealCard}
+      className={`relative z-20 w-56 h-80 md:w-72 md:h-96 cursor-pointer deck-container ${className}`}
       aria-label="Deck de cartes – cliquez pour tirer"
+      aria-describedby="cardHint"
       tabIndex={0}
       role="button"
     >
@@ -94,7 +124,7 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
       {[...Array(5)].map((_, i) => (
         <div
           key={i}
-          className="absolute inset-0 rounded-lg border-2 border-imperial-gold/30 bg-gradient-to-br from-royal-purple via-royal-purple/90 to-royal-purple/80 shadow-2xl backdrop-blur-sm"
+          className="absolute inset-0 rounded-lg border-2 border-imperial-gold/30 bg-gradient-to-br from-royal-purple via-royal-purple/90 to-royal-purple/80 shadow-2xl"
           style={{
             transform: `translateZ(${i * 2}px) rotateX(${i * 1}deg)`,
             zIndex: 5 - i,
@@ -115,6 +145,9 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
           </div>
         </div>
       ))}
+      
+      {/* Screen reader hint */}
+      <p id="cardHint" className="sr-only">Press Space or click to draw a card</p>
     </div>
   );
 }; 
