@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { Deck3D } from '../components/Deck3D';
 import { SignupForm } from '../components/SignupForm';
@@ -16,6 +16,19 @@ export const Hero: React.FC = () => {
   const handleCloseForm = () => {
     setShowSignupForm(false);
   };
+
+  // Add keyboard listener for space key
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === 'Space' && !showSignupForm) {
+        event.preventDefault();
+        handleCardDraw("The Mysterious");
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showSignupForm]);
 
   // Typography animation variants
   const container: Variants = { 
@@ -42,9 +55,9 @@ export const Hero: React.FC = () => {
 
   return (
     <>
-      <section className="grid lg:grid-cols-[60%_40%] min-h-screen">
+      <section className="min-h-screen lg:grid lg:grid-cols-[60%_40%]">
         {/* Left Cell - Content */}
-        <div className="relative z-20 bg-gradient-to-br from-royal-purple via-royal-purple/95 to-royal-purple/90 flex items-center justify-center p-4 sm:p-8 lg:p-16 min-h-screen lg:min-h-auto">
+        <div className="relative z-20 bg-gradient-to-br from-royal-purple via-royal-purple/95 to-royal-purple/90 flex items-center justify-center p-4 sm:p-8 lg:p-16 min-h-screen">
           <div className="max-w-2xl w-full mx-auto">
             
             {/* Animated Typography */}
@@ -111,7 +124,7 @@ export const Hero: React.FC = () => {
             >
               <button
                 onClick={() => handleCardDraw("The Mysterious")}
-                className="button-ripple px-8 py-4 bg-imperial-gold hover:bg-imperial-gold/90 text-royal-purple font-playfair font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-imperial-gold/30 focus-visible:ring-2 ring-imperial-gold ring-offset-2 ring-offset-royal-purple relative overflow-hidden"
+                className="button px-8 py-4 bg-imperial-gold hover:bg-imperial-gold/90 text-royal-purple font-playfair font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-imperial-gold/30 focus-visible:ring-2 ring-imperial-gold ring-offset-2 ring-offset-royal-purple"
               >
                 <span className="relative z-10">Deal me a card ↗</span>
               </button>
@@ -135,28 +148,28 @@ export const Hero: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Cell - Visual Layers */}
-        <div className="hidden lg:block relative overflow-hidden">
-          {/* Layer 1: Radial Gradient */}
+        {/* RIGHT Cell - Final Stage */}
+        <div className="hidden lg:block relative overflow-hidden flex items-center justify-center">
+          {/* Velvet + halo gradient */}
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(214,174,96,0.25)_0%,rgba(16,12,23,0.95)_70%)]"></div>
+          
+          {/* Subtle parallax layer */}
           <div 
-            className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,_rgba(214,174,96,0.25),transparent_70%)]" 
-            data-speed="0.3"
+            data-speed="0.5"
+            className="absolute inset-0 bg-gradient-to-br from-royal-purple/20 to-black/90"
           ></div>
           
-          {/* Layer 2: Canvas Particles */}
-          <ParticleCanvas />
+          {/* Canvas Particles */}
+          <ParticleCanvas className="mix-blend-screen" />
           
-          {/* Layer 3: 3D Deck */}
-          <div className="absolute inset-0 flex items-center justify-center z-20">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, rotateY: -90 }}
-              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-              transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="w-48 h-72 md:w-56 md:h-84"
-            >
-              <Deck3D onCardDraw={handleCardDraw} />
-            </motion.div>
-          </div>
+          {/* 3D Deck */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotateY: -90 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Deck3D onCardDraw={handleCardDraw} />
+          </motion.div>
         </div>
       </section>
 

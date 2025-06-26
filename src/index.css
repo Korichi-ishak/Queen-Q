@@ -68,6 +68,26 @@ html {
 }
 
 /* CTA Micro-interaction - Ripple Effect */
+.button {
+  position: relative;
+  overflow: hidden;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform: scale(0);
+  background: rgba(214, 174, 96, 0.35);
+  transition: transform 0.4s;
+  pointer-events: none;
+}
+
+.button:hover::after {
+  transform: scale(1.2);
+}
+
 .button-ripple {
   position: relative;
   overflow: hidden;
@@ -111,6 +131,11 @@ html {
   }
 }
 
+/* Custom height utilities */
+.h-84 {
+  height: 21rem; /* 336px */
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -125,6 +150,11 @@ html {
   .deck-container {
     animation: none !important;
     transform: none !important;
+  }
+  
+  /* Disable particle animations */
+  canvas#particles {
+    display: none !important;
   }
 }
 
