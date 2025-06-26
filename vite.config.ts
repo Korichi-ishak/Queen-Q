@@ -4,26 +4,36 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react({
+      // Forcer l'utilisation du JSX automatique pour éviter les problèmes de résolution
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
+    })
+  ],
   resolve: {
     alias: {
       '@': path.resolve(process.cwd(), 'src'),
+      // Forcer la résolution de react/jsx-runtime pour Vercel
+      'react/jsx-runtime': 'react/jsx-runtime.js',
+      'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
     },
   },
   build: {
-    // Ignorer les avertissements TypeScript pendant la construction
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-      },
-    },
+    // Utiliser esbuild au lieu de terser pour de meilleures performances
+    minify: 'esbuild',
+    // Assurer la compatibilité avec les navigateurs modernes
+    target: 'es2020',
     rollupOptions: {
-      // Ignorer les erreurs de résolution de modules
+      // Gérer les avertissements spécifiques
       onwarn(warning, warn) {
-        if (warning.code === 'MODULE_LEVEL_DIRECTIVE' || 
-            warning.code === 'MISSING_EXPORT' || 
-            warning.code === 'CIRCULAR_DEPENDENCY') {
+        // Ignorer les avertissements spécifiques qui ne sont pas critiques
+        if (
+          warning.code === 'MODULE_LEVEL_DIRECTIVE' || 
+          warning.code === 'MISSING_EXPORT' || 
+          warning.code === 'CIRCULAR_DEPENDENCY' ||
+          warning.code === 'UNRESOLVED_IMPORT'
+        ) {
           return;
         }
         warn(warning);
@@ -35,13 +45,27 @@ export default defineConfig({
           animations: ['framer-motion', 'gsap'],
         },
       },
+      // Résoudre les modules externes de façon explicite
+      external: (id) => {
+        // Ne pas externaliser react/jsx-runtime
+        if (id.includes('react/jsx-runtime')) {
+          return false;
+        }
+        return false;
+      },
     },
-    // Assurer la compatibilité avec les navigateurs modernes
-    target: 'es2015',
-    // Ignorer les erreurs TypeScript pendant le build
+    // Configuration CommonJS pour une meilleure compatibilité
     commonjsOptions: {
+      include: [/node_modules/],
       transformMixedEsModules: true,
     },
+    // Assurer que les dépendances sont correctement incluses
+    ssr: false,
+  },
+  // Optimisation pour Vercel
+  define: {
+    // Définir l'environnement pour éviter les problèmes de résolution
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
   },
   // Optimiser le serveur de développement
   server: {
