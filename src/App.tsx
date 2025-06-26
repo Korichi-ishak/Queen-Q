@@ -5,9 +5,7 @@ import { SmoothScroll } from './components/SmoothScroll';
 function App() {
   return (
     <SmoothScroll>
-      <div className="min-h-screen">
-        <Hero />
-      </div>
+      <Hero />
     </SmoothScroll>
   );
 }

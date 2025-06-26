@@ -55,7 +55,7 @@ export const Hero: React.FC = () => {
 
   return (
     <>
-      <section className="min-h-screen lg:grid lg:grid-cols-[60%_40%]">
+      <section id="hero" className="relative grid lg:grid-cols-[60%_40%] w-screen min-h-screen overflow-hidden">
         {/* Left Cell - Content */}
         <div className="relative z-20 bg-gradient-to-br from-royal-purple via-royal-purple/95 to-royal-purple/90 flex items-center justify-center p-4 sm:p-8 lg:p-16 min-h-screen">
           <div className="max-w-2xl w-full mx-auto">
@@ -150,23 +150,24 @@ export const Hero: React.FC = () => {
 
         {/* RIGHT Cell - Final Stage */}
         <div className="hidden lg:block relative overflow-hidden flex items-center justify-center">
-          {/* Velvet + halo gradient */}
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(214,174,96,0.25)_0%,rgba(16,12,23,0.95)_70%)]"></div>
+          {/* Velvet motif pleine largeur */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2d133e] via-[#130926] to-black/95"></div>
           
-          {/* Subtle parallax layer */}
-          <div 
-            data-speed="0.5"
-            className="absolute inset-0 bg-gradient-to-br from-royal-purple/20 to-black/90"
-          ></div>
+          {/* Halo diffus */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(239,203,183,0.18)_0%,transparent_70%)]"></div>
+          
+          {/* Halo principal (pulsation) */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,174,96,0.28)_0%,transparent_70%)] animate-pulse-slow"></div>
           
           {/* Canvas Particles */}
-          <ParticleCanvas className="mix-blend-screen" />
+          <ParticleCanvas className="z-20 mix-blend-screen" />
           
           {/* 3D Deck */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, rotateY: -90 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="relative z-30"
           >
             <Deck3D onCardDraw={handleCardDraw} />
           </motion.div>

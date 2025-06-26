@@ -136,6 +136,16 @@ html {
   height: 21rem; /* 336px */
 }
 
+/* Pulse slow animation for halos */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.35; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -150,6 +160,10 @@ html {
   .deck-container {
     animation: none !important;
     transform: none !important;
+  }
+  
+  .animate-pulse-slow {
+    animation: none !important;
   }
   
   /* Disable particle animations */
@@ -184,10 +198,10 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background: #130926;
+  overflow-x: hidden;
 }
 
 h1 {

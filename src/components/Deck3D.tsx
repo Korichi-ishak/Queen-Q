@@ -85,7 +85,7 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
     <div
       ref={deckRef}
       onClick={deal}
-      className={`relative z-20 w-56 h-80 md:w-64 md:h-96 cursor-pointer deck-container ${className}`}
+      className={`relative z-30 w-80 h-[28rem] lg:w-[24rem] lg:h-[34rem] min-w-[20rem] cursor-pointer deck-container ${className}`}
       aria-label="Deck de cartes – cliquez pour tirer"
       tabIndex={0}
       role="button"

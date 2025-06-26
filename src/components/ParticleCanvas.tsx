@@ -41,11 +41,11 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ className = '' }
     let w = canvas.width;
     let h = canvas.height;
 
-    // Create 40 particles as specified
-    const dots: Particle[] = Array.from({ length: 40 }, () => ({
+    // Create 80 particles as specified
+    const dots: Particle[] = Array.from({ length: 80 }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: 1 + Math.random() * 2,
+      r: 1 + Math.random() * 2.5,
       s: 0.2 + Math.random() * 0.4,
     }));
 
@@ -55,14 +55,15 @@ export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ className = '' }
       
       ctx.clearRect(0, 0, w, h);
       
-      dots.forEach(p => {
+      dots.forEach((p, i) => {
         p.y += p.s;
         if (p.y > h) {
           p.y = -10;
           p.x = Math.random() * w; // Randomize x when resetting
         }
         
-        ctx.fillStyle = 'rgba(214,174,96,0.6)';
+        // Varier la couleur - champagne une fois sur quatre
+        ctx.fillStyle = i % 4 === 0 ? 'rgba(239,203,183,0.5)' : 'rgba(214,174,96,0.6)';
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fill();
