@@ -122,3 +122,159 @@ Ensuite
 Intégrer Framer Motion pour la section “How It Works”.
 Mettre en place le carrousel de témoignages (keen-slider).
 Ajouter la FAQ accordéon (<details> + Tailwind).
+
+## 🚀 Sprint 2 – Corps de page
+
+> Objectif : finaliser la structure principale après le Hero  
+>            (How It Works → Social proof → FAQ + toast de succès)
+
+---
+
+### 1 · Section “How It Works” (3 étapes)
+
+| Étape | Icone/illustration | Texte court (45 caractères max)          |
+|-------|--------------------|-------------------------------------------|
+| 1     | 🃏 Carte qui tourne | Stop the deck                             |
+| 2     | 🔍 Loupe            | Reveal your archetype                    |
+| 3     | 👑 Couronne         | Claim royal perks – join the list        |
+
+* **Layout** : flex `flex-col md:flex-row gap-10 items-start md:items-center`
+* **Animation** : Framer Motion `whileInView` fade-up + stagger 0.15 s
+* **Icones** : `lucide-react` (ou emojis SVG) teintées `text-imperialGold`
+* **Background** : `bg-royalPurple/5 backdrop-blur-sm rounded-3xl p-8`
+
+---
+
+### 2 · Testimonials Carousel
+
+* Wrapper : `max-w-3xl mx-auto`
+* Slider lib : **Keen-slider** (`npm i keen-slider`)  
+  `slidesPerView: 1.1`, `spacing: 24`, `loop: true`
+* Card : glassmorphism (`bg-white/5 backdrop-blur-md rounded-2xl p-6`)
+* Fields : avatar 48 px, name, 2 lignes de quote max
+* Auto-scroll : 6 s, pause on hover, swipe mobile.
+
+---
+
+### 3 · FAQ Accordion
+
+* Semantic HTML :  
+  ```html
+  <details class="group border-b border-white/10 py-4">
+    <summary class="flex justify-between cursor-pointer marker:hidden">
+      <span class="text-lg">Is it really free?</span>
+      <span class="transition-transform group-open:rotate-180">⌄</span>
+    </summary>
+    <p class="mt-3 text-sm text-roseChampagne/90">
+      Yes. Joining the wait-list costs nothing …
+    </p>
+  </details>
+Tailwind animation : transition-[max-height] duration-300 ease-in-out
+4–6 questions max, ordre : prix, nombre de cartes, date de sortie, RGPD.
+4 · Mailchimp Success Toast / Overlay
+Dans SignupForm.tsx : après status === "success"
+Afficher overlay pleine viewport bg-black/70 backdrop-blur-sm.
+Carte confetti (import confetti from 'canvas-confetti'; confetti({...})).
+Titre : “👑 Welcome to the Realm!” + bouton “Retour”.
+Overlay dismissable par Esc ou clic sur X.
+A11y : role="alertdialog" + focus-trap sur bouton “Retour”.
+5 · Accessibilité & perf
+Color-contrast check WCAG AA (Tailwind text-roseChampagne sur bg-royalPurple OK).
+prefers-reduced-motion: désactiver slider auto & Framer animations.
+Lazy-load Keen-slider (dynamic import) hors FCP.
+
+## 🚦 Sprint 3 – QA, Optimise & Launch
+
+### 1 · Lighthouse & Axe-core audit
+- Run `npm run build && npx serve dist` then:
+  - **Lighthouse** target ≥ 95 Performance / 100 A11y / 100 Best-Practices / 100 SEO
+  - **axe-core** (`npx axe http://localhost:5000`) → zero violations
+- Fix any flagged colour-contrast or heading-order issues.
+
+### 2 · Analytics & Events
+- Add **Plausible** (or GA4) via `<script defer data-domain="queendeq.com"...>`.
+- Fire custom event `card_pick` in `dealCard()` with `plausible('card_pick', {card})`.
+
+### 3 · “Spots left” live counter (optional urgency)
+- Create `/api/spots` JSON in `/public` (e.g. `{ "left": 492 }`).
+- Fetch on hero mount; display in badge.  
+  > Later you can wire this to Firestore for real-time updates.
+
+### 4 · SEO & Social
+- `<Head>`:
+  ```html
+  <title>Queen de Q – Claim Your Throne Early</title>
+  <meta name="description" content="Draw your archetype, join the royal wait-list and unlock perks when Queen de Q launches." />
+  <meta property="og:image" content="/og-image.png" />
+  <link rel="canonical" href="https://queendeq.com/app" />
+Generate a 1200 × 630 px og-image.png (purple gradient + golden crown).
+5 · Cross-browser & device tests
+Chrome, Firefox, Safari (desktop); iOS Safari; Android Chrome.
+Viewports: 375 px, 768 px, 1440 px, 1920 px.
+Check prefers-reduced-motion: animations pause, page still usable.
+6 · Performance tweaks
+Dynamic-import Keen-slider (const KeenSlider = (await import('keen-slider')).default).
+Add loading="lazy" to testimonial avatars.
+Minify Lottie JSON (svg-minify or lottiefiles optimisation).
+7 · Environment & deploy
+.env.local → VITE_MAILCHIMP_URL, PLAUSIBLE_DOMAIN.
+vercel pull && vercel env pull .env.local.
+vercel --prod (maps to https://queendeq-landing.vercel.app).
+Add production domain alias queendeq.com in Vercel dashboard.
+8 · README update
+Brief setup + build instructions.
+“Known issues / todo” section (e.g. swap placeholder spritesheet with final art).
+
+
+-----
+1. Jeu de 54 cartes (écran clé)
+À faire
+Extraire les faces et dos du PDF → spritesheet ou dossier /assets/cards/*.png.
+Page /cards :
+grille statique (6 × 9) ;
+clic ⇒ GSAP Flip qui agrandit la carte + panneau latéral “Archetype, punchline, question miroir”.
+Bouton “Tirer 1 carte” qui joue l’anim de la pile et ouvre directement la fiche.
+Un prototype interactif, même sans persistance, suffit à tester l’UX ; c’est le livrable de référence pour un projet web front-end 
+ux.stackexchange.com
+userinterviews.com
+.
+2. Mini-quiz “Quelle Queen es-tu ?”
+À faire
+8 questions sous forme de boutons-icônes (radio).
+Barre de progression animée (motion.div width).
+Écran résultat : portrait SVG de la Queen + description (texte du CdC).
+Les prototypes de quiz augmentent la compréhension produit et l’engagement dès la phase maquette
+tilda.education
+linkedin.com
+.
+3. Écrans placeholder à faible effort
+Écran	Contenu statique suffisant pour la démo
+Chat “Afternoon Tea”	Fenêtre chat, avatar grand-mère, message “Coming soon…”.
+Boutique	Grid 3 cartes + 2 T-shirts mock ; boutons “Ajouter” désactivés.
+Journal d’âme	Canvas + 3 stickers drag-and-drop stockés en localStorage.
+Ces écrans rassurent le client sur la faisabilité, même sans logique 
+elementor.com
+reddit.com
+.
+4. Bandeau “Live Tea Time”
+Sticky bottom : “☕ Live Tea Time – 13 juillet, 19 h GMT+1” + ✖ fermer.
+Transition translateY en GSAP lors de l’apparition.
+Les bannières live sont un livrable courant dans les projets de landing pages 
+stoutewebsolutions.com
+shanedoyle.io
+.
+5. PWA & pages légales
+manifest.webmanifest + favicon 512 px pour test “Ajouter à l’écran d’accueil”.
+Pages Privacy & Terms (Markdown → vite-plugin-md).
+Ces livrables complètent la liste réglementaire minimale d’un site vitrine 
+reddit.com
+elementor.com
+.
+6. Accessibilité & performance express
+Vérifier contraste (WCAG AA) et focus rings.
+Lazy-load sprite des cartes et le quiz (import dynamique).
+Lighthouse ≥ 90, axe-core sans erreurs.
+Des prototypes haute-fidélité mais légers démontrent la valeur UX sans code serveur 
+justinmind.com
+uxdesigninstitute.com
+.----------

@@ -1,35 +1,82 @@
-# Vite + React + TypeScript + TailwindCSS v3 Template
+# Queen de Q - Landing Page
 
-This is a ready-to-clone template for starting new projects instantly. It includes:
-- Vite + React + TypeScript
-- TailwindCSS v3 (with config file)
-- Framer Motion
-- React Navigation
-- Pre-configured folder structure for components, layouts, UI, theme, hooks, lib, types, constants, data, styles, and assets
-- `.gitkeep` files in empty folders to ensure they are tracked by git
-- `config` for centralizing colors, assets, themes, and fonts setup
+Une landing page luxueuse pour Queen de Q, avec un système de deck de cartes interactif et une expérience utilisateur immersive.
 
-## Folder Structure
+## 🚀 Technologies
 
-- `src/components` – Reusable UI components
-- `src/layout` – Layout components (wrappers, page layouts)
-- `src/ui` – UI primitives or atomic components
-- `src/theme` – Theme-related utilities (can be used for Tailwind or styled-components)
-- `src/hooks` – Custom React hooks
-- `src/lib` – Utility functions and libraries
-- `src/types` – TypeScript type definitions
-- `src/constants` – App-wide constants
-- `src/data` – Static data or mock data
-- `src/styles` – Global or shared styles
-- `src/assets` – Static assets (images, SVGs, etc.)
-- `src/config` – Centralized configuration for colors, fonts, themes, and assets
+- React 19 avec TypeScript
+- Tailwind CSS pour le styling
+- GSAP pour les animations avancées
+- Framer Motion pour les animations d'interface
+- Keen-slider pour le carrousel de témoignages
+- Canvas-confetti pour les effets de célébration
 
-## Best Practices
+## 📋 Fonctionnalités
 
-- **Always use config files**: Import colors, fonts, themes, and asset paths from the files in `src/config` instead of hardcoding values. This keeps your design system consistent and easy to update.
-- **Always create components**: Build your UI by creating reusable components in `src/components` or `src/ui`. Avoid writing raw JSX or logic directly in pages or the root `App.tsx`—this makes your codebase scalable and maintainable.
+- Deck de cartes interactif avec 54 archétypes
+- Formulaire d'inscription à la liste d'attente "Royal Launch"
+- Section "Comment ça marche" avec animation par étapes
+- Témoignages en carrousel
+- FAQ accordéon
+- Overlay de succès avec effets de confettis
+- Support complet pour l'accessibilité (WCAG 2.2 AA)
+- Optimisations pour les moteurs de recherche
 
-## Usage
-1. Clone this repo
-2. Run `npm install`
-3. Start building your app!
+## 🛠️ Installation
+
+```bash
+# Cloner le dépôt
+git clone https://github.com/votre-utilisateur/queen-q.git
+cd queen-q
+
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
+npm run dev
+```
+
+## 🏗️ Build
+
+```bash
+# Créer une build de production
+npm run build
+
+# Prévisualiser la build localement
+npm run preview
+```
+
+## 🧪 Tests et qualité
+
+```bash
+# Lancer les tests d'accessibilité
+npm run build && npx serve dist
+npx axe http://localhost:5000
+```
+
+## 📊 Analytics
+
+Le site utilise Plausible Analytics pour le suivi des visiteurs. Les événements suivants sont tracés :
+- `card_pick` : Lorsqu'un utilisateur tire une carte (avec la propriété `card` contenant le nom de l'archétype)
+
+## 🔄 API Statique
+
+Le compteur de places restantes est géré via un fichier JSON statique :
+- `/api/spots.json` : Contient le nombre de places restantes pour le Royal Launch
+
+## 📝 Notes de développement
+
+### Optimisations futures
+
+- Intégration avec Firestore pour un compteur de places restantes en temps réel
+- Optimisation des images et assets pour améliorer les performances
+- Tests cross-browser supplémentaires
+
+### Problèmes connus
+
+- Le SVG de l'image og-image.svg doit être converti en PNG pour une meilleure compatibilité
+- Les animations peuvent être saccadées sur des appareils de faible puissance
+
+## 📄 Licence
+
+Tous droits réservés © Queen de Q

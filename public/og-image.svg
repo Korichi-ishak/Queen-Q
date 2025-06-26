@@ -1,0 +1,35 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <rect width="1200" height="630" fill="url(#bg-gradient)"/>
+  
+  <!-- Crown icon -->
+  <path d="M600 180C588.954 180 580 188.954 580 200C580 211.046 588.954 220 600 220C611.046 220 620 211.046 620 200C620 188.954 611.046 180 600 180ZM600 240C577.909 240 560 222.091 560 200C560 177.909 577.909 160 600 160C622.091 160 640 177.909 640 200C640 222.091 622.091 240 600 240Z" fill="#D6AE60"/>
+  <path d="M600 160L560 120H640L600 160Z" fill="#D6AE60"/>
+  <path d="M560 120L520 140H640L680 140L560 120Z" fill="#D6AE60"/>
+  <path d="M520 140V180L560 160V120L520 140Z" fill="#D6AE60"/>
+  <path d="M680 140V180L640 160V120L680 140Z" fill="#D6AE60"/>
+  <path d="M520 180L560 220V160L520 180Z" fill="#D6AE60"/>
+  <path d="M680 180L640 220V160L680 180Z" fill="#D6AE60"/>
+  
+  <!-- Title -->
+  <text x="600" y="340" font-family="'Playfair Display', serif" font-size="72" font-weight="700" fill="#D6AE60" text-anchor="middle">Queen de Q</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="420" font-family="'Inter', sans-serif" font-size="36" fill="#D4B5A5" text-anchor="middle">Claim Your Throne Early</text>
+  
+  <!-- Card deck illustration -->
+  <g transform="translate(540, 480)">
+    <rect x="0" y="0" width="120" height="180" rx="8" fill="#3B1E50" stroke="#D6AE60" stroke-width="2"/>
+    <rect x="10" y="10" width="100" height="160" rx="4" fill="#3B1E50" stroke="#D6AE60" stroke-opacity="0.3" stroke-width="1"/>
+    <text x="60" y="90" font-family="'Inter', sans-serif" font-size="14" fill="#D6AE60" text-anchor="middle">Draw Your</text>
+    <text x="60" y="110" font-family="'Inter', sans-serif" font-size="14" fill="#D6AE60" text-anchor="middle">Archetype</text>
+  </g>
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3B1E50"/>
+      <stop offset="1" stop-color="#1A0C25"/>
+    </linearGradient>
+  </defs>
+</svg> 

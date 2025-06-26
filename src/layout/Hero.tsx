@@ -3,10 +3,12 @@ import { motion, type Variants } from 'framer-motion';
 import { Deck3D } from '../components/Deck3D';
 import { ParticleCanvas } from '../components/ParticleCanvas';
 import { SignupForm } from '../components/SignupForm';
+import { useSpotsLeft } from '../hooks/useSpotsLeft';
 
 export const Hero: React.FC = () => {
   const [drawnCard, setDrawnCard] = useState<string | null>(null);
   const [showSignupForm, setShowSignupForm] = useState(false);
+  const { spotsLeft, isLoading } = useSpotsLeft();
 
   const handleCardDraw = (cardName: string) => {
     setDrawnCard(cardName);
@@ -98,7 +100,13 @@ export const Hero: React.FC = () => {
             >
               <div className="w-2 h-2 bg-imperial-gold rounded-full animate-pulse"></div>
               <span className="font-inter font-medium text-sm sm:text-base">
-                Seulement 1,000 places disponibles
+                {isLoading ? (
+                  "Chargement des places disponibles..."
+                ) : (
+                  <>
+                    Seulement <span className="text-imperial-gold font-bold">{spotsLeft}</span> places disponibles
+                  </>
+                )}
               </span>
             </motion.div>
 
@@ -112,6 +120,8 @@ export const Hero: React.FC = () => {
               <button
                 onClick={() => handleCardDraw("The Mysterious")}
                 className="button relative overflow-hidden px-8 py-4 bg-imperial-gold hover:bg-imperial-gold/90 text-royal-purple font-playfair font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:shadow-imperial-gold/30 focus-visible:ring-2 ring-imperial-gold ring-offset-2 ring-offset-royal-purple"
+                data-plausible-event="card_pick"
+                data-plausible-props='{"card": "The Mysterious"}'
               >
                 <span className="relative z-10">Deal me a card ↗</span>
               </button>
@@ -153,7 +163,10 @@ export const Hero: React.FC = () => {
             transition={{ delay: 1.8, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative z-20"
           >
-            <Deck3D onCardDraw={handleCardDraw} className="w-56 h-80 md:w-72 md:h-96" />
+            <Deck3D 
+              onCardDraw={handleCardDraw} 
+              className="w-56 h-80 md:w-72 md:h-96" 
+            />
             
             {/* Scroll cue */}
             <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20">

@@ -25,6 +25,13 @@ function frameToArchetype(progress: number): string {
   return ARCHETYPES[frameIndex % ARCHETYPES.length];
 }
 
+// Helper function for Plausible analytics
+const trackEvent = (eventName: string, props?: Record<string, any>) => {
+  if (typeof window !== 'undefined' && (window as any).plausible) {
+    (window as any).plausible(eventName, { props });
+  }
+};
+
 export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) => {
   const deckRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
@@ -83,6 +90,9 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
     // Get current card based on rotation progress
     const progress = timelineRef.current?.progress() || Math.random();
     const selectedCard = frameToArchetype(progress);
+    
+    // Track card pick event
+    trackEvent('card_pick', { card: selectedCard });
     
     // Scale animation
     gsap.timeline()
