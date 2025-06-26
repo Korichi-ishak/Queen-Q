@@ -154,6 +154,19 @@ export const Hero: React.FC = () => {
             className="relative z-20"
           >
             <Deck3D onCardDraw={handleCardDraw} className="w-56 h-80 md:w-72 md:h-96" />
+            
+            {/* Lottie scroll cue */}
+            <div className="absolute bottom-8 md:bottom-12 left-1/2 transform -translate-x-1/2 z-20">
+              <lottie-player
+                src="/assets/lottie/scroll-down.json"
+                background="transparent"
+                speed="1"
+                loop
+                autoplay
+                style={{ width: '48px', height: '48px' }}
+                className="opacity-60 hover:opacity-100 transition-opacity"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
