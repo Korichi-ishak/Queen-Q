@@ -60,6 +60,74 @@ html {
   outline-offset: 2px;
 }
 
+/* Responsive viewport height adjustments */
+@media (max-height: 600px) {
+  .min-h-screen {
+    min-height: 100vh;
+  }
+}
+
+/* CTA Micro-interaction - Ripple Effect */
+.button-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-ripple::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform: scale(0);
+  background: rgba(214, 174, 96, 0.35);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.button-ripple:hover::after {
+  transform: scale(1.2);
+}
+
+.button-ripple:active::after {
+  transform: scale(1.4);
+  transition-duration: 0.1s;
+}
+
+/* Focus styles for accessibility */
+.focus-visible\:ring-2:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--tw-ring-offset-color, #3B1E50), 0 0 0 calc(2px + var(--tw-ring-offset-width, 0px)) var(--tw-ring-color, #D6AE60);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .deck-container {
+    transform-style: preserve-3d !important;
+  }
+  
+  /* Ensure proper text scaling on small screens */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .deck-container {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
