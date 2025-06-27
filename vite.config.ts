@@ -6,7 +6,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [
     react({
-      // Configuration JSX pour éviter les problèmes de résolution
+      // Configuration JSX simple et fonctionnelle
       jsxRuntime: 'automatic',
     })
   ],
@@ -48,9 +48,8 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },
-  // Optimisation pour Vercel
+  // Optimisation pour le déploiement
   define: {
-    // Définir l'environnement pour éviter les problèmes de résolution
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
   },
   // Configuration pour éviter les problèmes de dépendances

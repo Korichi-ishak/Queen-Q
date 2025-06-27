@@ -1,25 +1,40 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { archetypes } from '../data/archetypes';
 import { Link } from 'react-router-dom';
 import Tilt from 'react-parallax-tilt';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useLanguage } from '../i18n/LanguageContext';
+import { useTranslation } from '../hooks/useTranslation';
 
-// Enregistrer le plugin ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+// Import des images Ace
+import AceOfSpades from '../assets/Ace of Spades.jpeg';
+import AceOfDiamonds from '../assets/Ace of Diamonds.jpeg';
 
-// Générer les chemins d'accès pour les 54 cartes
+// Générateur simple des cartes
 const generateCardPaths = () => {
   const cards = [];
+  
   for (let i = 1; i <= 54; i++) {
-    // Utiliser une hauteur fixe pour éviter le positionnement aléatoire
+    let cardPath = `/assets/cards/placeholder.svg`;
+    let cardName = archetypes[i - 1] || `Archétype n° ${i}`;
+    let isSpecial = false;
+
+    // Utiliser les images Ace pour les cartes 1 et 2
+    if (i === 1) {
+      cardPath = AceOfSpades;
+      cardName = "Ace of Spades";
+      isSpecial = true;
+    } else if (i === 2) {
+      cardPath = AceOfDiamonds;
+      cardName = "Ace of Diamonds";
+      isSpecial = true;
+    }
+
     cards.push({
       id: i,
-      // Utiliser l'image placeholder en attendant les vraies images
-      path: `/assets/cards/placeholder.svg`,
-      name: archetypes[i - 1] || `Carte n° ${i}`,
-      number: i
+      path: cardPath,
+      name: cardName,
+      number: i,
+      isSpecial
     });
   }
   return cards;
@@ -33,6 +48,7 @@ interface CardProps {
     path: string;
     name: string;
     number: number;
+    isSpecial?: boolean;
   };
   index: number;
 }
@@ -40,7 +56,6 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ card, index }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-  const [showSparkles, setShowSparkles] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   // Vérifier la préférence de réduction de mouvement
@@ -54,120 +69,94 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Animation d'entrée avec GSAP
+  // Animation d'entrée simple
   useEffect(() => {
-    if (cardRef.current) {
-      gsap.fromTo(
-        cardRef.current,
+    if (cardRef.current && !prefersReducedMotion) {
+      gsap.fromTo(cardRef.current, 
         { 
           opacity: 0, 
-          y: 30 
+          y: 20 
         },
         { 
           opacity: 1, 
-          y: 0, 
-          duration: 0.5,
-          delay: index * 0.05, // Stagger de 50ms par carte
-          ease: "power3.out"
+          y: 0,
+          duration: 0.4,
+          delay: index * 0.02, // Stagger léger
+          ease: "power2.out"
         }
       );
     }
-  }, [index]);
+  }, [index, prefersReducedMotion]);
 
-  const handleFlip = () => {
-    if (!prefersReducedMotion) {
-      setIsFlipped(true);
-      
-      // Déclencher des particules au premier flip
-      if (!showSparkles) {
-        setShowSparkles(true);
-        
-        // Créer des particules dorées
-        if (cardRef.current) {
-          const card = cardRef.current;
-          
-          // Créer 3-4 particules
-          for (let i = 0; i < 3 + Math.floor(Math.random()); i++) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'absolute w-1 h-1 rounded-full bg-imperial-gold sparkle';
-            sparkle.style.top = `${Math.random() * 40}%`;
-            sparkle.style.left = `${Math.random() * 80 + 10}%`;
-            card.appendChild(sparkle);
-            
-            // Supprimer après animation
-            setTimeout(() => sparkle.remove(), 1200);
-          }
-        }
-      }
-      
-      // Augmenter le temps d'affichage à 1.5 secondes (1500ms)
-      setTimeout(() => setIsFlipped(false), 1500);
-    }
-  };
+  // Flip simple de la carte
+  const handleFlip = useCallback(() => {
+    setIsFlipped(true);
+    
+    // Retour automatique après 10 secondes
+    setTimeout(() => setIsFlipped(false), 10000);
+  }, []);
 
   return (
     <div 
       ref={cardRef}
       className="relative card-item"
     >
-      {/* Effet de surbrillance dorée */}
-      <div 
-        className={`absolute inset-0 rounded-lg bg-imperial-gold/30 blur-md z-0 transition-all duration-300 ${isFlipped ? 'opacity-60 scale-110' : 'opacity-0 scale-80'}`}
-      />
-      
       <Tilt
-        tiltMaxAngleX={prefersReducedMotion ? 0 : 6}
-        tiltMaxAngleY={prefersReducedMotion ? 0 : 6}
+        tiltMaxAngleX={prefersReducedMotion ? 0 : 8}
+        tiltMaxAngleY={prefersReducedMotion ? 0 : 8}
         perspective={1000}
-        transitionSpeed={400}
-        scale={1.05}
-        gyroscope={true}
+        transitionSpeed={300}
+        scale={1.02}
         glareEnable={true}
-        glareMaxOpacity={0.15}
+        glareMaxOpacity={0.1}
         glareColor="#D6AE60"
-        glarePosition="all"
-        glareBorderRadius="8px"
         className="h-full"
       >
         <button
-          className="card-container aspect-[2/3] relative w-full h-full rounded-lg overflow-hidden shadow-md focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-royal-purple z-10 gold-glow"
+          className="card-container aspect-[7/12] relative w-full h-full rounded-lg overflow-hidden shadow-lg focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-royal-purple border border-imperial-gold/20 hover:border-imperial-gold/40 transition-all duration-300 hover:shadow-imperial-gold/20"
           onClick={handleFlip}
           onKeyDown={(e: React.KeyboardEvent) => e.key === 'Enter' && handleFlip()}
-          aria-label={`Carte n° ${card.number}, ${card.name}, survolez pour détails`}
+          aria-label={`Carte ${card.name}, numéro ${card.number}. Cliquez pour révéler.`}
         >
           <div
-            className={`card-inner w-full h-full relative ${isFlipped ? 'rotate-x-180' : ''}`}
-            style={{
-              transform: isFlipped ? 'rotateX(180deg)' : 'rotateX(0deg)'
-            }}
+            className={`card-inner w-full h-full relative transition-transform duration-500 transform-style-preserve-3d ${
+              isFlipped ? 'rotate-y-180' : ''
+            }`}
           >
-            <div 
-              className="card-face absolute inset-0 rounded-lg bg-gradient-to-br from-royal-purple/80 to-royal-purple/60 border border-imperial-gold/30 backface-hidden"
-            >
-              <img 
-                src={card.path} 
-                alt={card.name} 
-                className="w-full h-full object-contain rounded-lg"
-                loading="lazy"
-                width="300"
-                height="450"
-              />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                <div className="text-imperial-gold font-playfair font-bold text-sm sm:text-base text-center">
+            {/* Face cachée : Dos de carte simple */}
+            <div className="card-face absolute inset-0 rounded-lg bg-gradient-to-br from-royal-purple/90 to-royal-purple/70 backface-hidden">
+              <div className="flex flex-col items-center justify-center h-full p-4">
+                <div className="text-imperial-gold font-playfair font-bold text-lg text-center mb-2">
+                  Queen de Q
+                </div>
+                <div className="text-rose-champagne/70 text-sm text-center">
+                  Archétype
+                </div>
+              </div>
+              
+              {/* Numéro de carte */}
+              <div className="absolute bottom-2 left-2 right-2 text-center">
+                <div className="text-imperial-gold font-playfair font-bold text-sm">
                   {card.number}
                 </div>
               </div>
             </div>
-            <div 
-              className="card-back absolute inset-0 rounded-lg bg-gradient-to-br from-imperial-gold/20 to-royal-purple/80 border border-imperial-gold/50 backface-hidden shadow-[inset_0_0_0.8rem_#D6AE60]"
-              style={{ transform: 'rotateX(180deg)' }}
-            >
-              <div className="flex flex-col items-center justify-center h-full p-4">
-                <div className="text-imperial-gold font-playfair font-bold text-lg sm:text-xl text-center mb-2">
+            
+            {/* Face révélée : Image */}
+            <div className="card-back absolute inset-0 rounded-lg backface-hidden overflow-hidden rotate-y-180">
+              <img 
+                src={card.path} 
+                alt={card.name} 
+                className="w-full h-full object-cover"
+                loading="lazy"
+                width="1152"
+                height="768"
+              />
+              
+              {/* Overlay simple */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                <div className="text-imperial-gold font-playfair font-bold text-sm text-center">
                   {card.name}
-                </div>
-                <div className="text-rose-champagne/80 text-sm text-center">
-                  Carte n° {card.number}
                 </div>
               </div>
             </div>
@@ -180,55 +169,46 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
 
 export const CardGrid: React.FC = () => {
   const gridRef = useRef<HTMLDivElement>(null);
-  const { t } = useLanguage();
-  
-  useEffect(() => {
-    // Animation de révélation en cascade diagonale
-    if (gridRef.current) {
-      const cards = gridRef.current.querySelectorAll('.card-item');
-      
-      ScrollTrigger.batch(cards, {
-        onEnter: (elements) => {
-          gsap.to(elements, {
-            opacity: 1,
-            y: 0,
-            stagger: {
-              each: 0.05,
-              grid: [6, 9], // approximation de la grille
-              from: "start"
-            }
-          });
-        },
-        once: false
-      });
-    }
-    
-    return () => {
-      // Nettoyer les instances ScrollTrigger
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
+  const { t } = useTranslation();
 
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-royal-purple to-black min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold text-imperial-gold mb-8 text-center">
-          {t.cards.title}
-        </h1>
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-royal-purple via-black to-royal-purple min-h-screen relative overflow-hidden">
+      {/* Arrière-plan subtil avec étoiles flottantes */}
+      <div className="absolute inset-0 opacity-30">
+        {/* Étoiles statiques */}
+        <div className="absolute top-20 left-10 w-1 h-1 bg-imperial-gold rounded-full animate-pulse" />
+        <div className="absolute top-40 right-20 w-1.5 h-1.5 bg-imperial-gold rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-32 left-1/4 w-1 h-1 bg-imperial-gold rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-60 right-1/3 w-1 h-1 bg-imperial-gold rounded-full animate-pulse" style={{ animationDelay: '0.5s' }} />
+        <div className="absolute bottom-20 right-10 w-1.5 h-1.5 bg-imperial-gold rounded-full animate-pulse" style={{ animationDelay: '1.5s' }} />
         
-        <p className="text-rose-champagne/80 max-w-3xl mx-auto text-center mb-12">
-          {t.cards.description}
-        </p>
+        {/* Voiles mystiques */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-transparent via-imperial-gold/5 to-transparent animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-bl from-transparent via-imperial-gold/3 to-transparent animate-pulse" style={{ animationDuration: '6s', animationDelay: '2s' }} />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* En-tête simple */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-bold text-imperial-gold mb-4">
+            {t('cards.title')}
+          </h1>
+          <p className="text-rose-champagne/80 max-w-3xl mx-auto text-lg">
+            {t('cards.description')}
+          </p>
+        </div>
         
+        {/* Grille de cartes simple */}
         <div 
           ref={gridRef}
-          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4 md:gap-5 lg:gap-6"
+          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 sm:gap-5 md:gap-6"
         >
           {cards.map((card, index) => (
             <Card key={card.id} card={card} index={index} />
           ))}
         </div>
         
+        {/* Bouton de retour simple */}
         <div className="mt-16 text-center">
           <Link 
             to="/"
@@ -237,7 +217,7 @@ export const CardGrid: React.FC = () => {
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
               <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
             </svg>
-            {t.cards.returnHome}
+            {t('cards.returnHome')}
           </Link>
         </div>
       </div>

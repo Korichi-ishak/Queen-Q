@@ -18,18 +18,18 @@
   transition: opacity 300ms ease-out;
 }
 
-/* Custom 3D deck animations */
+/* Custom 3D deck animations (simplifiées) */
 .deck-container.is-single {
-  transform: scale(1.1) rotateY(0deg) !important;
+  transform: scale(1.05);
 }
 
 .deck-container.is-single .absolute {
-  transform: translateZ(0px) rotateX(0deg) !important;
-  background: linear-gradient(135deg, #D6AE60, #D4B5A5) !important;
-  border-color: #D6AE60 !important;
+  transform: translateZ(0px);
+  background: linear-gradient(135deg, #D6AE60, #D4B5A5);
+  border-color: #D6AE60;
 }
 
-/* Custom animations */
+/* Animations essentielles */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -45,6 +45,11 @@
   animation: fade-in 0.6s ease-out forwards;
 }
 
+@keyframes gentle-pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
 /* Glassmorphism utility */
 .glass {
   background: rgba(255, 255, 255, 0.1);
@@ -53,15 +58,12 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Velvet texture overlay */
+/* Velvet texture overlay (simplifiée) */
 .velvet-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(214, 174, 96, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(212, 181, 165, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(214, 174, 96, 0.05) 0%, transparent 50%);
+  background: radial-gradient(circle at 50% 50%, rgba(214, 174, 96, 0.05) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -76,34 +78,7 @@ html {
   outline-offset: 2px;
 }
 
-/* Responsive viewport height adjustments */
-@media (max-height: 600px) {
-  .min-h-screen {
-    min-height: 100vh;
-  }
-}
-
-/* CTA Micro-interaction - Ripple Effect */
-.button {
-  position: relative;
-  overflow: hidden;
-}
-
-.button::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  transform: scale(0);
-  background: rgba(214, 174, 96, 0.35);
-  transition: transform 0.4s;
-  pointer-events: none;
-}
-
-.button:hover::after {
-  transform: scale(1.2);
-}
-
+/* Simple button ripple effect */
 .button-ripple {
   position: relative;
   overflow: hidden;
@@ -115,100 +90,89 @@ html {
   inset: 0;
   border-radius: inherit;
   transform: scale(0);
-  background: rgba(214, 174, 96, 0.35);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(214, 174, 96, 0.2);
+  transition: transform 0.3s ease;
   pointer-events: none;
 }
 
 .button-ripple:hover::after {
-  transform: scale(1.2);
-}
-
-.button-ripple:active::after {
-  transform: scale(1.4);
-  transition-duration: 0.1s;
-}
-
-/* Focus styles for accessibility */
-.focus-visible\:ring-2:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--tw-ring-offset-color, #3B1E50), 0 0 0 calc(2px + var(--tw-ring-offset-width, 0px)) var(--tw-ring-color, #D6AE60);
+  transform: scale(1.1);
 }
 
 /* Mobile optimizations */
 @media (max-width: 640px) {
   .deck-container {
-    transform-style: preserve-3d !important;
+    transform-style: preserve-3d;
   }
   
-  /* Ensure proper text scaling on small screens */
   html {
     -webkit-text-size-adjust: 100%;
   }
 }
 
-/* Custom height utilities */
-.h-84 {
-  height: 21rem; /* 336px */
+/* Flip animation for cards */
+@keyframes rotate-y-180 {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(180deg); }
 }
 
-/* Custom z-index utilities */
-.z-25 {
-  z-index: 25;
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
 }
 
-/* Pulse slow animation for halos */
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.35; }
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }
 
-.animate-pulse-slow {
-  animation: pulse-slow 6s ease-in-out infinite;
+.backface-hidden {
+  backface-visibility: hidden;
 }
 
-/* Animation pour les particules dorées */
-@keyframes sparkle-float {
-  0% { transform: translateY(0) scale(0.5); opacity: 0; }
-  50% { transform: translateY(-15px) scale(1); opacity: 1; }
-  100% { transform: translateY(-30px) scale(0.2); opacity: 0; }
+/* Styles pour les cartes */
+.card-container {
+  transition: all 0.3s ease;
+  min-height: 120px;
 }
 
-.sparkle {
-  animation: sparkle-float 1.2s ease-out forwards;
+.card-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(214, 174, 96, 0.15);
 }
 
-/* Animation pour le reflet spéculaire */
-@keyframes specular-shine {
-  0% { opacity: 0; }
-  50% { opacity: 0.5; }
-  100% { opacity: 0; }
+.card-container img {
+  transition: transform 0.3s ease;
 }
 
-.specular-effect {
-  animation: specular-shine 1s ease-in-out;
+.card-inner {
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
 }
 
-/* Styles pour l'effet masonry */
-.masonry-grid {
-  display: grid;
-  grid-template-rows: masonry;
-  align-items: start;
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .card-container {
+    min-height: 140px;
+  }
 }
 
-/* Effet de révélation en cascade */
-.card-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+@media (min-width: 1024px) {
+  .card-container {
+    min-height: 160px;
+  }
 }
 
-.card-item.revealed {
-  opacity: 1;
-  transform: translateY(0);
+/* Exit button styles (simplifiés) */
+.exit-button {
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* Reduce motion for accessibility */
+.exit-button:hover {
+  transform: rotate(90deg) scale(1.1);
+  color: #ef4444;
+}
+
+/* Styles d'accessibilité */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -216,137 +180,157 @@ html {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
   
-  .deck-container {
-    animation: none !important;
-    transform: none !important;
-  }
-  
-  .animate-pulse-slow {
-    animation: none !important;
-  }
-  
-  /* Disable particle animations */
-  canvas#particles {
-    display: none !important;
-  }
-  
-  /* Disable sparkle animations */
-  .sparkle {
-    display: none !important;
-  }
-  
-  /* Disable specular effect */
-  .specular-effect {
-    display: none !important;
-  }
-  
-  /* Disable card reveal animations */
-  .card-item {
-    opacity: 1 !important;
-    transform: none !important;
+  .card-container:hover {
+    transform: none;
   }
 }
 
+/* Variables CSS */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
   --royal-purple: #3B1E50;
   --imperial-gold: #D6AE60;
   --rose-champagne: #D4B5A5;
+  --deep-purple: #1a0b2e;
+  --soft-gold: #e6c570;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+/* Styles de base */
 body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background: color-mix(in srgb, #3B1E50 calc(var(--bg-shift, 0) * 100%), #000000);
-  overflow-x: hidden;
-  transition: background-color 0.1s ease;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(135deg, var(--royal-purple), var(--deep-purple));
+  color: var(--rose-champagne);
+  line-height: 1.6;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
+/* Focus accessibility */
 button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+a:focus {
+  outline: 2px solid var(--imperial-gold);
+  outline-offset: 2px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+/* Shimmer effect for inputs */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer-effect {
+  animation: shimmer 2s infinite;
+}
+
+/* Animations pour les particules flottantes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.7;
   }
-  a:hover {
-    color: #747bff;
+  25% {
+    transform: translateY(-10px) scale(1.1);
+    opacity: 1;
   }
-  button {
-    background-color: #f9f9f9;
+  50% {
+    transform: translateY(-20px) scale(0.9);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-15px) scale(1.05);
+    opacity: 0.9;
   }
 }
 
-/* Styles pour l'effet de flip des cartes */
-.backface-hidden {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  transform-style: preserve-3d;
+.floating-particle {
+  animation: float 6s ease-in-out infinite;
 }
 
-.card-inner {
-  transform-style: preserve-3d;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+.floating-particle:nth-child(2) {
+  animation-delay: 1s;
 }
 
-/* Perspective pour les conteneurs de cartes */
-.card-container {
+.floating-particle:nth-child(3) {
+  animation-delay: 2s;
+}
+
+.floating-particle:nth-child(4) {
+  animation-delay: 3s;
+}
+
+.floating-particle:nth-child(5) {
+  animation-delay: 4s;
+}
+
+.floating-particle:nth-child(6) {
+  animation-delay: 5s;
+}
+
+/* Animations mystiques pour les sections créatives */
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  50% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: -100;
+  }
+}
+
+/* Animation pour les particules des sections */
+@keyframes mystical-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateY(-15px) translateX(8px) rotate(2deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-8px) translateX(-8px) rotate(-2deg);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-20px) translateX(5px) rotate(1deg);
+    opacity: 0.9;
+  }
+}
+
+.animate-float {
+  animation: mystical-float 5s ease-in-out infinite;
+}
+
+/* Classes utilitaires pour les effets 3D des cartes flip */
+.perspective-1000 {
   perspective: 1000px;
 }
 
-/* Effet de glow doré pour les cartes */
-.gold-glow {
-  box-shadow: 0 0 15px 2px rgba(214, 174, 96, 0.3);
-  transition: box-shadow 0.3s ease;
+.preserve-3d {
+  transform-style: preserve-3d;
 }
 
-.gold-glow:hover {
-  box-shadow: 0 0 25px 5px rgba(214, 174, 96, 0.5);
+.flip-card-front {
+  backface-visibility: hidden;
 }
+
+.flip-card-back {
+  backface-visibility: hidden;
+}
+
+/* Animation des confessions */
+@keyframes confession-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.confession-card {
+  animation: confession-reveal 0.8s ease-out forwards;
+} 

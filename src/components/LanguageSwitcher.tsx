@@ -1,31 +1,30 @@
 import React from 'react';
-import { useLanguage } from '../i18n/LanguageContext';
+import { useTranslation } from '../hooks/useTranslation';
+import type { Language } from '../hooks/useTranslation';
 
 export const LanguageSwitcher: React.FC = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, changeLanguage } = useTranslation();
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex bg-royal-purple/40 backdrop-blur-md rounded-full border border-imperial-gold/40 overflow-hidden shadow-lg">
       <button
-        onClick={() => setLanguage('fr')}
-        className={`px-2 py-1 rounded-md text-sm font-medium transition-colors ${
+        onClick={() => changeLanguage('fr')}
+        className={`px-3 py-1.5 text-sm font-bold font-playfair transition-all duration-500 ${
           language === 'fr'
-            ? 'bg-imperial-gold/20 text-imperial-gold'
-            : 'text-rose-champagne hover:text-imperial-gold'
+            ? 'bg-imperial-gold text-royal-purple shadow-md transform scale-105'
+            : 'text-imperial-gold hover:bg-imperial-gold/20 hover:scale-105'
         }`}
-        aria-label="Changer la langue en français"
       >
         FR
       </button>
-      <span className="text-rose-champagne/50">|</span>
+      <div className="w-px bg-imperial-gold/30"></div>
       <button
-        onClick={() => setLanguage('en')}
-        className={`px-2 py-1 rounded-md text-sm font-medium transition-colors ${
+        onClick={() => changeLanguage('en')}
+        className={`px-3 py-1.5 text-sm font-bold font-playfair transition-all duration-500 ${
           language === 'en'
-            ? 'bg-imperial-gold/20 text-imperial-gold'
-            : 'text-rose-champagne hover:text-imperial-gold'
+            ? 'bg-imperial-gold text-royal-purple shadow-md transform scale-105'
+            : 'text-imperial-gold hover:bg-imperial-gold/20 hover:scale-105'
         }`}
-        aria-label="Change language to English"
       >
         EN
       </button>

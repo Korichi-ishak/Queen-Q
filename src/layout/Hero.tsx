@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { motion, type Variants } from 'framer-motion';
+import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Deck3D } from '../components/Deck3D';
 import { ParticleCanvas } from '../components/ParticleCanvas';
 import { SignupForm } from '../components/SignupForm';
 import { useSpotsLeft } from '../hooks/useSpotsLeft';
 
 export const Hero: React.FC = () => {
-  const [drawnCard, setDrawnCard] = useState<string | null>(null);
+  const [drawnCard, setDrawnCard] = useState<string>('');
   const [showSignupForm, setShowSignupForm] = useState(false);
   const { spotsLeft, isLoading } = useSpotsLeft();
 
@@ -58,7 +59,7 @@ export const Hero: React.FC = () => {
             >
               {/* Main Title */}
               <div className="mb-6 sm:mb-8">
-                {titleWords.map((word, index) => (
+                {titleWords.map((word: string, index: number) => (
                   <motion.span
                     key={index}
                     variants={item}
@@ -76,7 +77,7 @@ export const Hero: React.FC = () => {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-playfair font-bold text-rose-champagne mb-6 sm:mb-8 leading-relaxed"
               >
-                Découvrez votre archétype royal
+                Révélez les mystères de votre chemin personnel
               </motion.h2>
 
               {/* Description */}
@@ -86,8 +87,7 @@ export const Hero: React.FC = () => {
                 transition={{ delay: 1, duration: 0.6 }}
                 className="text-base sm:text-lg lg:text-xl text-rose-champagne/80 font-inter max-w-xl leading-relaxed mb-8 sm:mb-12"
               >
-                Rejoignez le <span className="text-imperial-gold font-semibold">Royal Launch</span> exclusif. 
-                Une expérience unique dans le royaume des archétypes vous attend.
+                Découvrez votre archétype unique à travers nos cartes divinatoires personnalisées. Une expérience mystique pour mieux vous connaître.
               </motion.p>
             </motion.div>
 
@@ -101,11 +101,9 @@ export const Hero: React.FC = () => {
               <div className="w-2 h-2 bg-imperial-gold rounded-full animate-pulse"></div>
               <span className="font-inter font-medium text-sm sm:text-base">
                 {isLoading ? (
-                  "Chargement des places disponibles..."
+                  "Chargement..."
                 ) : (
-                  <>
-                    Seulement <span className="text-imperial-gold font-bold">{spotsLeft}</span> places disponibles
-                  </>
+                  `${spotsLeft || 0} places restantes`
                 )}
               </span>
             </motion.div>
@@ -123,7 +121,7 @@ export const Hero: React.FC = () => {
                 data-plausible-event="card_pick"
                 data-plausible-props='{"card": "The Mysterious"}'
               >
-                <span className="relative z-10">Deal me a card ↗</span>
+                <span className="relative z-10">Commencer ma Révélation</span>
               </button>
             </motion.div>
 
@@ -135,9 +133,9 @@ export const Hero: React.FC = () => {
               className="text-center lg:text-left"
             >
               <p className="text-rose-champagne/70 font-inter text-sm sm:text-base mb-4 px-4 sm:px-0">
-                <span className="hidden lg:inline">Cliquez sur le deck ou appuyez sur </span>
+                <span className="hidden lg:inline">Cliquez sur les cartes ou appuyez sur </span>
                 <span className="lg:hidden">Appuyez sur </span>
-                <kbd className="px-2 py-1 bg-imperial-gold/20 text-imperial-gold rounded text-xs font-mono">Espace</kbd> 
+                <kbd className="px-2 py-1 bg-imperial-gold/20 text-imperial-gold rounded text-xs font-mono">ESPACE</kbd> 
                 <span className="hidden lg:inline"> pour découvrir votre archétype</span>
                 <span className="lg:hidden"> pour révéler votre archétype</span>
               </p>
@@ -199,22 +197,13 @@ export const Hero: React.FC = () => {
         transition={{ delay: 2.5, duration: 0.5 }}
         className="hidden sm:block fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none"
       >
-        <div className="flex flex-col items-center text-rose-champagne/50">
-          <span className="text-xs font-inter mb-2">
-            Découvrir plus
-          </span>
-          <div className="w-5 h-8 border border-rose-champagne/30 rounded-full flex justify-center">
-            <motion.div
-              className="w-1 h-2 bg-imperial-gold rounded-full mt-2"
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </div>
+        <div className="bg-white/10 backdrop-blur-md rounded-full px-4 py-2 text-rose-champagne/70 text-sm font-inter">
+          Faites défiler pour explorer
         </div>
       </motion.div>
 
       {/* Signup Form Modal */}
-      <SignupForm 
+      <SignupForm
         drawnCard={drawnCard}
         isVisible={showSignupForm}
         onClose={handleCloseForm}

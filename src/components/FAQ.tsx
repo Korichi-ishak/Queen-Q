@@ -2,106 +2,135 @@ import React from 'react';
 
 interface FAQItem {
   question: string;
-  answer: React.ReactNode;
+  answer: string;
 }
 
-const faqItems: FAQItem[] = [
-  {
-    question: "Is joining the Royal Launch free?",
-    answer: (
-      <>
-        Yes, joining the waitlist costs nothing. Queen de Q is offering early access to a limited number of users who will receive special perks once the full app launches.
-      </>
-    ),
-  },
-  {
-    question: "How many archetype cards are in the deck?",
-    answer: (
-      <>
-        The Queen de Q deck features 54 unique archetype cards, each representing a different royal persona. The full app will provide detailed insights into your specific archetype and how it influences your life journey.
-      </>
-    ),
-  },
-  {
-    question: "When will the full app be released?",
-    answer: (
-      <>
-        The full Queen de Q experience is scheduled for release in Q3 2023. Royal Launch members will receive early access two weeks before the public launch, along with exclusive perks and features.
-      </>
-    ),
-  },
-  {
-    question: "How is my email data handled?",
-    answer: (
-      <>
-        We take your privacy seriously. Your email is stored securely and used only for Royal Launch communications. We never share or sell your data with third parties. You can unsubscribe at any time.
-      </>
-    ),
-  },
-  {
-    question: "Can I change my archetype later?",
-    answer: (
-      <>
-        Absolutely! While your initial card draw reveals one aspect of your royal persona, the full app will allow you to explore all 54 archetypes and discover which ones resonate most with different aspects of your life.
-      </>
-    ),
-  },
-];
-
 export const FAQ: React.FC = () => {
+  const faqItems: FAQItem[] = [
+    {
+      question: "Comment fonctionne la révélation d'archétype ?",
+      answer: "Notre système unique analyse vos réponses pour identifier votre archétype principal parmi 54 possibilités, basé sur des recherches en psychologie et symbolisme."
+    },
+    {
+      question: "Combien de temps dure le processus ?",
+      answer: "La révélation complète prend environ 15-20 minutes, incluant le questionnaire et l'analyse personnalisée de votre archétype."
+    },
+    {
+      question: "Puis-je refaire le test ?",
+      answer: "Oui, vous pouvez refaire l'expérience après 30 jours, car nous évoluons et notre archétype dominant peut changer avec le temps."
+    },
+    {
+      question: "Les résultats sont-ils fiables ?",
+      answer: "Nos archétypes sont basés sur des recherches approfondies en psychologie jungienne et validation par des experts en développement personnel."
+    }
+  ];
+
   return (
-    <section id="faq" className="py-16 sm:py-24 bg-gradient-to-b from-royal-purple/10 to-royal-purple/5">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-playfair font-bold text-imperial-gold mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg sm:text-xl text-rose-champagne/80 max-w-2xl mx-auto">
-            Everything you need to know about your royal journey
+    <section 
+      className="relative py-20 sm:py-32 overflow-hidden"
+      style={{
+        background: `linear-gradient(to bottom, 
+          #000000 0%, 
+          #000000 60%, 
+          rgba(59, 30, 80, 0.3) 80%, 
+          rgba(59, 30, 80, 0.6) 95%, 
+          rgba(59, 30, 80, 0.8) 100%)`
+      }}
+    >
+      {/* Étoiles animées mystiques similaires au footer */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`
+            }}
+          >
+            <div 
+              className="bg-imperial-gold rounded-full shadow-lg shadow-imperial-gold/30" 
+              style={{
+                width: `${Math.random() * 3 + 1}px`,
+                height: `${Math.random() * 3 + 1}px`
+              }}
+            />
+          </div>
+        ))}
+        {/* Particules dorées flottantes */}
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={`particle-${i}`}
+            className="absolute w-1 h-1 bg-imperial-gold/50 rounded-full animate-float"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.4}s`,
+              animationDuration: `${6 + Math.random() * 3}s`
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Header mystique */}
+        <div className="text-center mb-20">
+          <div className="inline-block relative">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-bold text-transparent bg-gradient-to-br from-imperial-gold via-yellow-300 to-imperial-gold bg-clip-text mb-6">
+              Mystères Révélés
+            </h2>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-40 h-0.5 bg-gradient-to-r from-transparent via-imperial-gold to-transparent animate-pulse"></div>
+          </div>
+          <p className="text-lg text-rose-champagne/70 mt-8 max-w-2xl mx-auto">
+            Les réponses aux questions qui éclairent votre chemin vers la révélation
           </p>
         </div>
 
-        {/* FAQ Accordion */}
-        <div className="space-y-1 sm:space-y-2">
+        {/* FAQ Items avec animations */}
+        <div className="space-y-8">
           {faqItems.map((item, index) => (
-            <details
+            <div
               key={index}
-              className="group border-b border-white/10 py-4 transition-all duration-300 ease-in-out"
+              className="group relative bg-gradient-to-r from-black via-royal-purple/20 to-black backdrop-blur-sm border border-imperial-gold/30 rounded-2xl p-8 hover:border-imperial-gold/60 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-imperial-gold/10"
+              style={{
+                animationDelay: `${index * 0.1}s`
+              }}
             >
-              <summary 
-                className="flex justify-between items-center cursor-pointer list-none"
-                aria-expanded="false"
-              >
-                <span className="text-lg sm:text-xl font-playfair font-medium text-rose-champagne group-open:text-imperial-gold transition-colors duration-300">
-                  {item.question}
-                </span>
-                <span className="text-imperial-gold transition-transform duration-300 group-open:rotate-180">
-                  <svg 
-                    xmlns="http://www.w3.org/2000/svg" 
-                    width="24" 
-                    height="24" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    strokeWidth="2" 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round"
-                    className="w-5 h-5"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </span>
-              </summary>
-              <div className="mt-4 overflow-hidden transition-[max-height] duration-300 ease-in-out">
-                <p className="text-rose-champagne/90 leading-relaxed">
-                  {item.answer}
-                </p>
+              {/* Effet de lumière au hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-imperial-gold/5 via-transparent to-imperial-gold/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+              
+              {/* Badge numéro mystique */}
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-imperial-gold to-yellow-600 rounded-full flex items-center justify-center text-black font-bold text-sm shadow-lg">
+                {index + 1}
               </div>
-            </details>
+
+              <h3 className="text-xl sm:text-2xl font-playfair font-bold text-imperial-gold mb-6 group-hover:text-yellow-300 transition-colors relative z-10">
+                {item.question}
+              </h3>
+              <p className="text-rose-champagne/90 leading-relaxed text-base sm:text-lg relative z-10">
+                {item.answer}
+              </p>
+
+              {/* Effet de particules au hover */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-1 h-1 bg-imperial-gold/40 rounded-full animate-ping"
+                    style={{
+                      left: `${20 + Math.random() * 60}%`,
+                      top: `${20 + Math.random() * 60}%`,
+                      animationDelay: `${i * 0.2}s`
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
-}; 
+};
