@@ -22,28 +22,61 @@ export const Hero: React.FC = () => {
     setShowSignupForm(false);
   };
 
-  // Typography animation variants
-  const container: Variants = { 
-    hidden: { opacity: 0 }, 
+  // New creative typography animation variants
+  const textReveal: Variants = {
+    hidden: { 
+      opacity: 0,
+      clipPath: "inset(0 100% 0 0)"
+    },
     show: { 
-      opacity: 1, 
-      transition: { 
-        staggerChildren: 0.05,
-        delayChildren: 0.2
-      } 
-    } 
+      opacity: 1,
+      clipPath: "inset(0 0% 0 0)",
+      transition: {
+        duration: 1.2,
+        ease: [0.76, 0, 0.24, 1]
+      }
+    }
   };
 
-  const item: Variants = { 
-    hidden: { y: 50, opacity: 0 }, 
+  const glowEffect: Variants = {
+    hidden: { 
+      opacity: 0,
+      scale: 0.8,
+      filter: "blur(10px)"
+    },
     show: { 
-      y: 0, 
-      opacity: 1
-    } 
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.8,
+        delay: 0.5,
+        ease: "easeOut"
+      }
+    }
   };
 
-  // Split text into words for stagger animation
-  const titleWords = t('hero.title').split(" ");
+  const floatingParticles: Variants = {
+    hidden: { 
+      opacity: 0,
+      y: 20
+    },
+    show: { 
+      opacity: [0, 1, 1, 0],
+      y: [-20, -40, -60, -80],
+      transition: {
+        duration: 3,
+        delay: 1,
+        repeat: Infinity,
+        repeatType: "loop",
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  // Split title into characters for wave effect
+  const titleText = t('hero.title');
+  const titleChars = titleText.split("");
 
   return (
     <>
@@ -52,46 +85,152 @@ export const Hero: React.FC = () => {
         <div className="relative bg-gradient-to-br from-royal-purple via-royal-purple/95 to-royal-purple/90 flex items-center justify-center p-4 sm:p-8 lg:p-16 min-h-screen">
           <div className="max-w-2xl w-full mx-auto">
             
-            {/* Animated Typography */}
-            <motion.div
-              variants={container}
-              initial="hidden"
-              animate="show"
-              className="mb-8 sm:mb-12"
-            >
-              {/* Main Title */}
-              <div className="mb-6 sm:mb-8">
-                {titleWords.map((word: string, index: number) => (
-                  <motion.span
-                    key={index}
-                    variants={item}
-                    className="inline-block text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold text-imperial-gold mr-3 sm:mr-6 leading-none"
-                  >
-                    {word}
-                  </motion.span>
+            {/* Creative Animated Typography */}
+            <div className="mb-8 sm:mb-12 relative">
+              {/* Floating Particles */}
+              <div className="absolute -top-4 -left-4 w-full h-full pointer-events-none overflow-hidden">
+                {[...Array(8)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    variants={floatingParticles}
+                    initial="hidden"
+                    animate="show"
+                    className="absolute w-1 h-1 bg-imperial-gold rounded-full"
+                    style={{
+                      left: `${20 + (i * 15)}%`,
+                      top: `${10 + (i * 8)}%`,
+                      animationDelay: `${i * 0.2}s`
+                    }}
+                  />
                 ))}
               </div>
 
-              {/* Subtitle */}
+              {/* Main Title with Wave Effect */}
+              <div className="mb-8 sm:mb-12 relative overflow-visible" style={{ minHeight: '120px' }}>
+                <motion.h1 
+                  variants={textReveal}
+                  initial="hidden"
+                  animate="show"
+                  className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold leading-relaxed relative pb-4"
+                  style={{ lineHeight: '1.2' }}
+                >
+                  {titleChars.map((char: string, index: number) => (
+                    <motion.span
+                      key={index}
+                      initial={{ 
+                        opacity: 0, 
+                        y: 50,
+                        rotateX: -90,
+                        scale: 0.5
+                      }}
+                      animate={{ 
+                        opacity: 1, 
+                        y: 0,
+                        rotateX: 0,
+                        scale: 1
+                      }}
+                      transition={{
+                        delay: 0.8 + (index * 0.03),
+                        duration: 0.6,
+                        ease: [0.25, 0.46, 0.45, 0.94],
+                        type: "spring",
+                        stiffness: 100,
+                        damping: 12
+                      }}
+                      className="inline-block text-imperial-gold"
+                                             style={{
+                         transformOrigin: "center center",
+                         textShadow: "0 0 20px rgba(214, 174, 96, 0.5)",
+                         display: "inline-block",
+                         marginBottom: "0.1em"
+                       }}
+                    >
+                      {char === " " ? "\u00A0" : char}
+                    </motion.span>
+                  ))}
+                </motion.h1>
+                
+                                 {/* Glow effect behind title */}
+                 <motion.div
+                   variants={glowEffect}
+                   initial="hidden"
+                   animate="show"
+                   className="absolute inset-0 text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-playfair font-bold text-imperial-gold/20 leading-relaxed blur-lg -z-10 pb-4"
+                   style={{ lineHeight: '1.2' }}
+                 >
+                   {titleText}
+                 </motion.div>
+              </div>
+
+              {/* Subtitle with Slide and Glow */}
               <motion.h2
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
-                className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-playfair font-bold text-rose-champagne mb-6 sm:mb-8 leading-relaxed"
+                initial={{ 
+                  x: -100, 
+                  opacity: 0,
+                  filter: "blur(5px)"
+                }}
+                animate={{ 
+                  x: 0, 
+                  opacity: 1,
+                  filter: "blur(0px)"
+                }}
+                transition={{ 
+                  delay: 1.8, 
+                  duration: 0.8,
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+                className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-playfair font-bold text-rose-champagne mb-6 sm:mb-8 leading-relaxed relative"
               >
-                {t('hero.subtitle')}
+                <span className="relative z-10">{t('hero.subtitle')}</span>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 2.2, duration: 0.6 }}
+                  className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-rose-champagne/50 to-transparent transform origin-left"
+                />
               </motion.h2>
 
-              {/* Description */}
-              <motion.p
-                initial={{ y: 30, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.6 }}
+              {/* Description with Typewriter Effect */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 2.5, duration: 0.8 }}
                 className="text-base sm:text-lg lg:text-xl text-rose-champagne/80 font-inter max-w-xl leading-relaxed mb-8 sm:mb-12"
               >
-                {t('hero.description')}
-              </motion.p>
-            </motion.div>
+                <motion.p
+                  initial="hidden"
+                  animate="show"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: {
+                        staggerChildren: 0.02,
+                        delayChildren: 0.1
+                      }
+                    }
+                  }}
+                >
+                  {t('hero.description').split("").map((char: string, index: number) => (
+                    <motion.span
+                      key={index}
+                      variants={{
+                        hidden: { opacity: 0, y: 10 },
+                        show: { 
+                          opacity: 1, 
+                          y: 0,
+                          transition: {
+                            duration: 0.1
+                          }
+                        }
+                      }}
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </motion.p>
+              </motion.div>
+            </div>
 
             {/* Glassmorphism Scarcity Badge */}
             <motion.div
