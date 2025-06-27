@@ -9,8 +9,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          ui: ['gsap', 'framer-motion']
+          vendor: ['react', 'react-dom']
         }
       }
     }
