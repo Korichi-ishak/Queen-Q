@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { useTranslation } from '../context/TranslationContext';
 
 export const Layout: React.FC = () => {
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -63,7 +65,7 @@ export const Layout: React.FC = () => {
                           : 'text-rose-champagne hover:text-imperial-gold'
                       } transition-colors`}
                     >
-                      <span className="relative z-10">Accueil</span>
+                      <span className="relative z-10">{t('nav.home')}</span>
                       {location.pathname === '/' && (
                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
                       )}
@@ -78,7 +80,7 @@ export const Layout: React.FC = () => {
                           : 'text-rose-champagne hover:text-imperial-gold'
                       } transition-colors`}
                     >
-                      <span className="relative z-10">Cartes</span>
+                      <span className="relative z-10">{t('nav.cards')}</span>
                       {location.pathname === '/cards' && (
                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
                       )}
@@ -98,7 +100,7 @@ export const Layout: React.FC = () => {
               <button 
                 className="flex flex-col justify-center items-center w-10 h-10 rounded-full border border-imperial-gold/30 focus:outline-none"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                aria-label="Menu"
+                aria-label={t('accessibility.menu')}
               >
                 <span className={`block w-5 h-0.5 bg-imperial-gold transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-1' : ''}`}></span>
                 <span className={`block w-5 h-0.5 bg-imperial-gold mt-1 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
@@ -125,7 +127,7 @@ export const Layout: React.FC = () => {
                       : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
                   } transition-colors`}
                 >
-                  Accueil
+                  {t('nav.home')}
                 </Link>
               </li>
               <li>
@@ -137,7 +139,7 @@ export const Layout: React.FC = () => {
                       : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
                   } transition-colors`}
                 >
-                  Cartes
+                  {t('nav.cards')}
                 </Link>
               </li>
             </ul>
@@ -176,20 +178,20 @@ export const Layout: React.FC = () => {
                 </div>
               </Link>
               <p className="text-rose-champagne/70 text-center md:text-left">
-                Découvrez les mystères de votre chemin personnel à travers nos archétypes uniques.
+                {t('footer.description')}
               </p>
             </div>
 
             {/* Colonne 2 - Navigation */}
             <div>
-              <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">Navigation</h3>
+              <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">{t('footer.navigation')}</h3>
               <ul className="flex flex-col space-y-2">
                 <li>
                   <Link to="/" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
                     <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
                     </svg>
-                    Accueil
+                    {t('nav.home')}
                   </Link>
                 </li>
                 <li>
@@ -197,7 +199,7 @@ export const Layout: React.FC = () => {
                     <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
-                    Cartes
+                    {t('nav.cards')}
                   </Link>
                 </li>
               </ul>
@@ -205,7 +207,7 @@ export const Layout: React.FC = () => {
 
             {/* Colonne 3 - Contact */}
             <div>
-              <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">Contact</h3>
+              <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">{t('links.contact')}</h3>
               <div className="flex flex-col space-y-2">
                 <a href="mailto:contact@queendeq.com" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
                   <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
@@ -221,14 +223,14 @@ export const Layout: React.FC = () => {
           <div className="border-t border-imperial-gold/20 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <p className="text-rose-champagne/60 text-sm">
-                © 2024 Queen de Q. Tous droits réservés.
+                {t('footer.copyright')}
               </p>
               <div className="flex space-x-6">
                 <Link to="/privacy" className="text-rose-champagne/60 hover:text-imperial-gold text-sm transition-colors">
-                  Politique de confidentialité
+                  {t('links.privacy')}
                 </Link>
                 <Link to="/terms" className="text-rose-champagne/60 hover:text-imperial-gold text-sm transition-colors">
-                  Conditions d'utilisation
+                  {t('links.terms')}
                 </Link>
               </div>
             </div>

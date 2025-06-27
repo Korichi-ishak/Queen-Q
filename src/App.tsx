@@ -1,18 +1,21 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { TranslationProvider } from './context/TranslationContext';
 import { Layout } from './layout/Layout';
 import { Home } from './pages/Home';
 import { Cards } from './pages/Cards';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="cards" element={<Cards />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <TranslationProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="cards" element={<Cards />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </TranslationProvider>
   );
 }
 

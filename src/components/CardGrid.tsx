@@ -3,29 +3,29 @@ import { archetypes } from '../data/archetypes';
 import { Link } from 'react-router-dom';
 import Tilt from 'react-parallax-tilt';
 import gsap from 'gsap';
-import { useTranslation } from '../hooks/useTranslation';
+import { useTranslation } from '../context/TranslationContext';
 
 // Import des images Ace
 import AceOfSpades from '../assets/Ace of Spades.jpeg';
 import AceOfDiamonds from '../assets/Ace of Diamonds.jpeg';
 
 // Générateur simple des cartes
-const generateCardPaths = () => {
+const generateCardPaths = (t: any) => {
   const cards = [];
   
   for (let i = 1; i <= 54; i++) {
     let cardPath = `/assets/cards/placeholder.svg`;
-    let cardName = archetypes[i - 1] || `Archétype n° ${i}`;
+    let cardName = archetypes[i - 1] || `${t('card.number')} ${i}`;
     let isSpecial = false;
 
     // Utiliser les images Ace pour les cartes 1 et 2
     if (i === 1) {
       cardPath = AceOfSpades;
-      cardName = "Ace of Spades";
+      cardName = t('cards.aceOfSpades');
       isSpecial = true;
     } else if (i === 2) {
       cardPath = AceOfDiamonds;
-      cardName = "Ace of Diamonds";
+      cardName = t('cards.aceOfDiamonds');
       isSpecial = true;
     }
 
@@ -40,7 +40,7 @@ const generateCardPaths = () => {
   return cards;
 };
 
-const cards = generateCardPaths();
+// Moved inside component
 
 interface CardProps {
   card: {
@@ -51,9 +51,10 @@ interface CardProps {
     isSpecial?: boolean;
   };
   index: number;
+  t: (key: any, variables?: any) => string;
 }
 
-const Card: React.FC<CardProps> = ({ card, index }) => {
+const Card: React.FC<CardProps> = ({ card, index, t }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -116,7 +117,7 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
           className="card-container aspect-[7/12] relative w-full h-full rounded-lg overflow-hidden shadow-lg focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-royal-purple border border-imperial-gold/20 hover:border-imperial-gold/40 transition-all duration-300 hover:shadow-imperial-gold/20"
           onClick={handleFlip}
           onKeyDown={(e: React.KeyboardEvent) => e.key === 'Enter' && handleFlip()}
-          aria-label={`Carte ${card.name}, numéro ${card.number}. Cliquez pour révéler.`}
+          aria-label={t('card.aria', { name: card.name, number: card.number })}
         >
           <div
             className={`card-inner w-full h-full relative transition-transform duration-500 transform-style-preserve-3d ${
@@ -130,7 +131,7 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
                   Queen de Q
                 </div>
                 <div className="text-rose-champagne/70 text-sm text-center">
-                  Archétype
+                  {t('card.archetype')}
                 </div>
               </div>
               
@@ -170,6 +171,7 @@ const Card: React.FC<CardProps> = ({ card, index }) => {
 export const CardGrid: React.FC = () => {
   const gridRef = useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
+  const cards = generateCardPaths(t);
 
   return (
     <section className="py-16 sm:py-24 bg-gradient-to-b from-royal-purple via-black to-royal-purple min-h-screen relative overflow-hidden">
@@ -204,7 +206,7 @@ export const CardGrid: React.FC = () => {
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-4 sm:gap-5 md:gap-6"
         >
           {cards.map((card, index) => (
-            <Card key={card.id} card={card} index={index} />
+            <Card key={card.id} card={card} index={index} t={t} />
           ))}
         </div>
         

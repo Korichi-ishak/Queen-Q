@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SuccessOverlay } from './SuccessOverlay';
+import { useTranslation } from '../context/TranslationContext';
 import gsap from 'gsap';
 
 interface SignupFormProps {
@@ -9,6 +10,7 @@ interface SignupFormProps {
 }
 
 export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, onClose }) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -54,7 +56,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
       await new Promise(resolve => setTimeout(resolve, 1500));
       setIsSuccess(true);
     } catch (err) {
-      setError('Une erreur est survenue. Veuillez réessayer.');
+      setError(t('common.error'));
     } finally {
       setIsLoading(false);
     }
@@ -89,11 +91,14 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
           {/* Bouton de fermeture simplifié */}
           <button
             ref={closeButtonRef}
-            onClick={handleClose}
-            className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-imperial-gold hover:text-yellow-300 transition-all duration-300 hover:rotate-90 group"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleClose();
+            }}
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-imperial-gold hover:text-yellow-300 transition-all duration-200 hover:rotate-90 group z-50 bg-black/20 hover:bg-black/40 rounded-full border border-imperial-gold/30 hover:border-imperial-gold/60"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
 
@@ -117,15 +122,15 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
               </div>
 
               <h2 className="text-2xl font-playfair font-bold text-imperial-gold mb-2 animate-cascade">
-                Commencez votre Révélation
+                {t('signup.title')}
               </h2>
               <p className="text-rose-champagne/80 animate-cascade">
-                Entrez votre email pour découvrir votre archétype
+                {t('signup.description')}
               </p>
               {drawnCard && (
                 <div className="mt-4 p-3 bg-imperial-gold/10 border border-imperial-gold/30 rounded-lg animate-cascade">
                   <p className="text-imperial-gold font-medium">
-                    Carte tirée : <span className="font-bold">{drawnCard}</span>
+                    {t('card.drawnCard')} : <span className="font-bold">{drawnCard}</span>
                   </p>
                 </div>
               )}
@@ -140,7 +145,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
 
               <div className="relative animate-cascade">
                 <label className="block text-rose-champagne font-medium mb-2">
-                  Email
+                  {t('signup.form.email')}
                 </label>
                 <div className="relative group">
                   <input
@@ -162,10 +167,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
                 {isLoading ? (
                   <div className="flex items-center justify-center">
                     <div className="w-5 h-5 border-2 border-royal-purple border-t-transparent rounded-full animate-spin mr-2"></div>
-                    Envoi en cours...
+                    {t('signup.loading')}
                   </div>
                 ) : (
-                  'Découvrir mon Archétype'
+                  t('signup.form.submit')
                 )}
               </button>
             </form>

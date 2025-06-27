@@ -1,27 +1,25 @@
 import React from 'react';
-
-interface FAQItem {
-  question: string;
-  answer: string;
-}
+import { useTranslation } from '../context/TranslationContext';
 
 export const FAQ: React.FC = () => {
-  const faqItems: FAQItem[] = [
+  const { t } = useTranslation();
+  
+  const faqItems = [
     {
-      question: "Comment fonctionne la révélation d'archétype ?",
-      answer: "Notre système unique analyse vos réponses pour identifier votre archétype principal parmi 54 possibilités, basé sur des recherches en psychologie et symbolisme."
+      question: t('faq.question1'),
+      answer: t('faq.answer1')
     },
     {
-      question: "Combien de temps dure le processus ?",
-      answer: "La révélation complète prend environ 15-20 minutes, incluant le questionnaire et l'analyse personnalisée de votre archétype."
+      question: t('faq.question2'),
+      answer: t('faq.answer2')
     },
     {
-      question: "Puis-je refaire le test ?",
-      answer: "Oui, vous pouvez refaire l'expérience après 30 jours, car nous évoluons et notre archétype dominant peut changer avec le temps."
+      question: t('faq.question3'),
+      answer: t('faq.answer3')
     },
     {
-      question: "Les résultats sont-ils fiables ?",
-      answer: "Nos archétypes sont basés sur des recherches approfondies en psychologie jungienne et validation par des experts en développement personnel."
+      question: t('faq.question4'),
+      answer: t('faq.answer4')
     }
   ];
 
@@ -76,15 +74,15 @@ export const FAQ: React.FC = () => {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header mystique */}
-        <div className="text-center mb-20">
+                  <div className="text-center mb-20">
           <div className="inline-block relative">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-bold text-transparent bg-gradient-to-br from-imperial-gold via-yellow-300 to-imperial-gold bg-clip-text mb-6">
-              Mystères Révélés
+              {t('faq.title')}
             </h2>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-40 h-0.5 bg-gradient-to-r from-transparent via-imperial-gold to-transparent animate-pulse"></div>
           </div>
           <p className="text-lg text-rose-champagne/70 mt-8 max-w-2xl mx-auto">
-            Les réponses aux questions qui éclairent votre chemin vers la révélation
+            {t('faq.subtitle')}
           </p>
         </div>
 

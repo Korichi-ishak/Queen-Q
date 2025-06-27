@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import gsap from 'gsap';
+import { useTranslation } from '../context/TranslationContext';
 
 export const NewsletterSection: React.FC = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -82,16 +84,16 @@ export const NewsletterSection: React.FC = () => {
 
           {/* Titre principal */}
           <h2 className="text-4xl md:text-5xl font-playfair font-bold text-imperial-gold mb-6">
-            Rejoignez la Révélation
+            {t('newsletter.title')}
           </h2>
 
           {/* Sous-titre mystique */}
           <p className="text-xl md:text-2xl text-rose-champagne/90 mb-4 max-w-3xl mx-auto leading-relaxed">
-            Découvrez les secrets cachés de votre âme et débloquez votre véritable potentiel
+            {t('newsletter.subtitle')}
           </p>
 
           <p className="text-lg text-rose-champagne/70 mb-12 max-w-2xl mx-auto">
-            Recevez des révélations exclusives, des insights mystiques et accédez en premier aux nouvelles cartes archétypes
+            {t('newsletter.description')}
           </p>
 
           {/* Formulaire d'inscription */}
@@ -103,7 +105,7 @@ export const NewsletterSection: React.FC = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Votre adresse email mystique"
+                    placeholder={t('newsletter.placeholder')}
                     required
                     className="w-full px-6 py-4 bg-royal-purple/20 border-2 border-imperial-gold/30 rounded-full text-rose-champagne placeholder-rose-champagne/50 focus:border-imperial-gold focus:outline-none transition-all duration-300 hover:bg-royal-purple/30 focus:bg-royal-purple/40 focus:shadow-lg focus:shadow-imperial-gold/20 text-center"
                   />
@@ -132,7 +134,7 @@ export const NewsletterSection: React.FC = () => {
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
                       )}
-                      {isLoading ? 'Initiation en cours...' : 'Commencer ma Révélation'}
+                      {isLoading ? t('newsletter.loading') : t('newsletter.button')}
                     </span>
                   </button>
                 </div>
@@ -151,11 +153,11 @@ export const NewsletterSection: React.FC = () => {
                 </div>
 
                 <h3 className="text-2xl font-playfair font-bold text-green-400 mb-4">
-                  Bienvenue dans la Communauté Mystique !
+                  {t('newsletter.success.title')}
                 </h3>
                 
                 <p className="text-rose-champagne/80 text-lg mb-6">
-                  Votre voyage vers la révélation commence maintenant. Surveillez votre boîte email pour des insights exclusifs.
+                  {t('newsletter.success.subtitle')}
                 </p>
 
                 <div className="w-24 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto"></div>
@@ -167,15 +169,15 @@ export const NewsletterSection: React.FC = () => {
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="text-3xl font-bold text-imperial-gold mb-2">10,000+</div>
-              <p className="text-rose-champagne/70">Âmes Révélées</p>
+              <p className="text-rose-champagne/70">{t('newsletter.stats.souls')}</p>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-imperial-gold mb-2">54</div>
-              <p className="text-rose-champagne/70">Archétypes Uniques</p>
+              <p className="text-rose-champagne/70">{t('newsletter.stats.archetypes')}</p>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-imperial-gold mb-2">95%</div>
-              <p className="text-rose-champagne/70">Transformations Réussies</p>
+              <p className="text-rose-champagne/70">{t('newsletter.stats.transformations')}</p>
             </div>
           </div>
         </div>

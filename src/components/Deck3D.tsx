@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
+import { useTranslation } from '../context/TranslationContext';
 
 interface Deck3DProps {
   onCardDraw: (cardName: string) => void;
@@ -41,6 +42,7 @@ const trackEvent = (eventName: string, props?: Record<string, string | number>) 
 };
 
 export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) => {
+  const { t } = useTranslation();
   const deckRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const [isDealing, setIsDealing] = useState(false);
@@ -132,7 +134,7 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
       ref={deckRef}
       onClick={dealCard}
       className={`relative z-20 w-56 h-80 md:w-72 md:h-96 cursor-pointer deck-container ${className}`}
-      aria-label="Deck de cartes – cliquez pour tirer"
+              aria-label={t('card.deckLabel')}
       aria-describedby="cardHint"
       tabIndex={0}
       role="button"
@@ -164,7 +166,7 @@ export const Deck3D: React.FC<Deck3DProps> = ({ onCardDraw, className = '' }) =>
       ))}
       
       {/* Screen reader hint */}
-      <p id="cardHint" className="sr-only">Press Space or click to draw a card</p>
+      <p id="cardHint" className="sr-only">{t('accessibility.pressSpaceOrClick')}</p>
     </div>
   );
 }; 

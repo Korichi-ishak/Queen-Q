@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useTranslation } from '../context/TranslationContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -77,6 +78,7 @@ const TransformationIcon = () => (
 );
 
 export const HowItWorks: React.FC = () => {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -151,21 +153,21 @@ export const HowItWorks: React.FC = () => {
   const steps = [
     {
       icon: <InscriptionIcon />,
-      title: "Inscription",
-      description: "Rejoignez notre univers mystique et créez votre profil unique pour débuter votre transformation personnelle.",
-      backText: "Votre voyage commence ici. Chaque grande révélation nécessite un premier pas courageux."
+      title: t('howItWorks.step1.title'),
+      description: t('howItWorks.step1.description'),
+      backText: t('howItWorks.step1.backText')
     },
     {
       icon: <RevelationIcon />,
-      title: "Révélation", 
-      description: "Découvrez votre archétype parmi nos 54 cartes sacrées à travers un processus de révélation personnalisé.",
-      backText: "Les mystères de votre âme se dévoilent. Laissez la magie opérer et révéler votre essence profonde."
+      title: t('howItWorks.step2.title'), 
+      description: t('howItWorks.step2.description'),
+      backText: t('howItWorks.step2.backText')
     },
     {
       icon: <TransformationIcon />,
-      title: "Transformation",
-      description: "Intégrez cette connaissance précieuse dans votre quotidien pour une transformation authentique et durable.",
-      backText: "La vraie magie réside dans l'application. Votre archétype devient la clé de votre évolution."
+      title: t('howItWorks.step3.title'),
+      description: t('howItWorks.step3.description'),
+      backText: t('howItWorks.step3.backText')
     }
   ];
 
@@ -189,15 +191,15 @@ export const HowItWorks: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header mystique */}
-        <div className="text-center mb-20">
+                  <div className="text-center mb-20">
           <div className="inline-block relative">
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-playfair font-bold text-transparent bg-gradient-to-br from-imperial-gold via-yellow-300 to-imperial-gold bg-clip-text mb-6">
-              Comment ça marche
+              {t('howItWorks.title')}
             </h2>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-0.5 bg-gradient-to-r from-transparent via-imperial-gold to-transparent animate-pulse"></div>
           </div>
           <p className="text-lg text-rose-champagne/70 mt-8 max-w-2xl mx-auto">
-            Découvrez votre archétype en trois étapes mystiques
+            {t('howItWorks.subtitle')}
           </p>
         </div>
 

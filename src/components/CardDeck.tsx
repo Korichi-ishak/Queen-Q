@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useTranslation } from '../context/TranslationContext';
 
 interface CardDeckProps {
   onCardDraw: (cardName: string) => void;
@@ -21,6 +22,7 @@ const ARCHETYPES = [
 ];
 
 export const CardDeck: React.FC<CardDeckProps> = ({ onCardDraw }) => {
+  const { t } = useTranslation();
   const cardRef = useRef<HTMLDivElement>(null);
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -111,7 +113,7 @@ export const CardDeck: React.FC<CardDeckProps> = ({ onCardDraw }) => {
         onKeyDown={handleKeyDown}
         tabIndex={0}
         role="button"
-        aria-label={isPlaying ? "Click to draw a card" : `Card drawn: ${drawnCard}`}
+                    aria-label={isPlaying ? t('accessibility.clickToDraw') : `${t('accessibility.cardDrawn')}: ${drawnCard}`}
         aria-live="polite"
       />
       
@@ -121,7 +123,7 @@ export const CardDeck: React.FC<CardDeckProps> = ({ onCardDraw }) => {
           onClick={handleCardDraw}
           className="mt-6 px-8 py-3 bg-imperial-gold hover:bg-imperial-gold/90 text-royal-purple font-playfair font-bold text-lg rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-imperial-gold/30"
         >
-          Deal me a card ↗
+          {t('cardDeck.dealCard')}
         </button>
       )}
 
@@ -129,7 +131,7 @@ export const CardDeck: React.FC<CardDeckProps> = ({ onCardDraw }) => {
       {!isPlaying && drawnCard && (
         <div className="mt-6 text-center">
           <h3 className="text-imperial-gold font-playfair font-bold text-xl mb-2">
-            Your Archetype
+            {t('cardDeck.yourArchetype')}
           </h3>
           <p className="text-rose-champagne font-inter text-lg">
             {drawnCard}

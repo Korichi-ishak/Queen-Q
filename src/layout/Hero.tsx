@@ -5,8 +5,10 @@ import { Deck3D } from '../components/Deck3D';
 import { ParticleCanvas } from '../components/ParticleCanvas';
 import { SignupForm } from '../components/SignupForm';
 import { useSpotsLeft } from '../hooks/useSpotsLeft';
+import { useTranslation } from '../context/TranslationContext';
 
 export const Hero: React.FC = () => {
+  const { t, language } = useTranslation();
   const [drawnCard, setDrawnCard] = useState<string>('');
   const [showSignupForm, setShowSignupForm] = useState(false);
   const { spotsLeft, isLoading } = useSpotsLeft();
@@ -41,7 +43,7 @@ export const Hero: React.FC = () => {
   };
 
   // Split text into words for stagger animation
-  const titleWords = "Queen de Q".split(" ");
+  const titleWords = t('hero.title').split(" ");
 
   return (
     <>
@@ -77,7 +79,7 @@ export const Hero: React.FC = () => {
                 transition={{ delay: 0.8, duration: 0.6 }}
                 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-playfair font-bold text-rose-champagne mb-6 sm:mb-8 leading-relaxed"
               >
-                Révélez les mystères de votre chemin personnel
+                {t('hero.subtitle')}
               </motion.h2>
 
               {/* Description */}
@@ -87,7 +89,7 @@ export const Hero: React.FC = () => {
                 transition={{ delay: 1, duration: 0.6 }}
                 className="text-base sm:text-lg lg:text-xl text-rose-champagne/80 font-inter max-w-xl leading-relaxed mb-8 sm:mb-12"
               >
-                Découvrez votre archétype unique à travers nos cartes divinatoires personnalisées. Une expérience mystique pour mieux vous connaître.
+                {t('hero.description')}
               </motion.p>
             </motion.div>
 
@@ -101,9 +103,9 @@ export const Hero: React.FC = () => {
               <div className="w-2 h-2 bg-imperial-gold rounded-full animate-pulse"></div>
               <span className="font-inter font-medium text-sm sm:text-base">
                 {isLoading ? (
-                  "Chargement..."
+                  t('common.loading')
                 ) : (
-                  `${spotsLeft || 0} places restantes`
+                  `${spotsLeft || 0} ${t('hero.spotsLeft')}`
                 )}
               </span>
             </motion.div>
@@ -121,7 +123,7 @@ export const Hero: React.FC = () => {
                 data-plausible-event="card_pick"
                 data-plausible-props='{"card": "The Mysterious"}'
               >
-                <span className="relative z-10">Commencer ma Révélation</span>
+                <span className="relative z-10">{t('hero.cta')}</span>
               </button>
             </motion.div>
 
@@ -133,11 +135,11 @@ export const Hero: React.FC = () => {
               className="text-center lg:text-left"
             >
               <p className="text-rose-champagne/70 font-inter text-sm sm:text-base mb-4 px-4 sm:px-0">
-                <span className="hidden lg:inline">Cliquez sur les cartes ou appuyez sur </span>
-                <span className="lg:hidden">Appuyez sur </span>
-                <kbd className="px-2 py-1 bg-imperial-gold/20 text-imperial-gold rounded text-xs font-mono">ESPACE</kbd> 
-                <span className="hidden lg:inline"> pour découvrir votre archétype</span>
-                <span className="lg:hidden"> pour révéler votre archétype</span>
+                <span className="hidden lg:inline">{t('instructions.clickCards')} </span>
+                                  <span className="lg:hidden">{t('instructions.pressSpace')} </span>
+                  <kbd className="px-2 py-1 bg-imperial-gold/20 text-imperial-gold rounded text-xs font-mono">{t('instructions.spaceKey')}</kbd> 
+                <span className="hidden lg:inline"> {t('instructions.toDiscover')}</span>
+                <span className="lg:hidden"> {t('instructions.toReveal')}</span>
               </p>
             </motion.div>
           </div>
@@ -190,17 +192,14 @@ export const Hero: React.FC = () => {
         </div>
       </section>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.5, duration: 0.5 }}
-        className="hidden sm:block fixed bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none"
-      >
+
+
+      {/* Scroll Indicator - Fixed Bottom Center */}
+      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-30 pointer-events-none">
         <div className="bg-white/10 backdrop-blur-md rounded-full px-4 py-2 text-rose-champagne/70 text-sm font-inter">
-          Faites défiler pour explorer
+          {t('hero.scrollText')}
         </div>
-      </motion.div>
+      </div>
 
       {/* Signup Form Modal */}
       <SignupForm
