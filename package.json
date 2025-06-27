@@ -6,9 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:prod": "vite build --mode production",
-    "vercel-build": "vite build --mode production",
-    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {

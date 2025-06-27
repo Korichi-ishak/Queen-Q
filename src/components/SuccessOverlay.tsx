@@ -138,21 +138,14 @@ export const SuccessOverlay: React.FC<SuccessOverlayProps> = ({ isVisible, onClo
           <div className="absolute top-2/3 right-1/3 w-1.5 h-1.5 bg-imperial-gold/30 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
           <div className="absolute top-1/2 right-1/4 w-1 h-1 bg-imperial-gold/50 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
         </div>
-        {/* Bouton de fermeture ultra-créatif */}
+        {/* Bouton de fermeture simplifié */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-imperial-gold/20 hover:bg-imperial-gold/30 transition-all duration-500 text-imperial-gold hover:rotate-180 group overflow-hidden"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center text-imperial-gold hover:text-yellow-300 transition-all duration-300 hover:rotate-90 group"
         >
-          {/* Effet de cercles concentriques */}
-          <div className="absolute inset-0 rounded-full border-2 border-imperial-gold/30 animate-ping opacity-0 group-hover:opacity-100"></div>
-          <div className="absolute inset-1 rounded-full border border-imperial-gold/20 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDelay: '0.1s' }}></div>
-          <div className="absolute inset-2 rounded-full border border-imperial-gold/10 animate-ping opacity-0 group-hover:opacity-100" style={{ animationDelay: '0.2s' }}></div>
-          
-          {/* Croix morphique 3D */}
-          <div className="relative w-5 h-5 transform group-hover:rotateY-180 transition-transform duration-500">
-            <div className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-current transform -translate-x-1/2 -translate-y-1/2 rotate-45 group-hover:scale-150 group-hover:bg-yellow-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-yellow-300/50"></div>
-            <div className="absolute top-1/2 left-1/2 w-4 h-0.5 bg-current transform -translate-x-1/2 -translate-y-1/2 -rotate-45 group-hover:scale-150 group-hover:bg-yellow-300 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-yellow-300/50"></div>
-          </div>
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
         </button>
 
         {/* Icône de succès mystique avec halo */}

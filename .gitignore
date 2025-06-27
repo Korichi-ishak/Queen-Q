@@ -35,4 +35,7 @@ logs
 .parcel-cache/
 
 # Coverage
-coverage/ 
+coverage/
+
+# Vercel
+.vercel/ 

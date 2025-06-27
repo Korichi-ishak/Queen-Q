@@ -182,7 +182,7 @@ export const NewsletterSection: React.FC = () => {
       </div>
 
       {/* CSS pour les animations flottantes */}
-      <style jsx>{`
+      <style>{`
         .floating-particle {
           animation: float 6s ease-in-out infinite;
         }
