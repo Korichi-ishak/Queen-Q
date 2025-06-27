@@ -86,6 +86,21 @@ export const Layout: React.FC = () => {
                       )}
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      to="/quiz" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/quiz' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">{t('nav.quiz')}</span>
+                      {location.pathname === '/quiz' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
                 </ul>
               </nav>
               
@@ -140,6 +155,18 @@ export const Layout: React.FC = () => {
                   } transition-colors`}
                 >
                   {t('nav.cards')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/quiz" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/quiz' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  {t('nav.quiz')}
                 </Link>
               </li>
             </ul>

@@ -3,6 +3,7 @@ import { TranslationProvider } from './context/TranslationContext';
 import { Layout } from './layout/Layout';
 import { Home } from './pages/Home';
 import { Cards } from './pages/Cards';
+import { Quiz } from './pages/Quiz';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="cards" element={<Cards />} />
           </Route>
+          <Route path="quiz" element={<Quiz />} />
         </Routes>
       </BrowserRouter>
     </TranslationProvider>

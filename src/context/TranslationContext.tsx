@@ -11,6 +11,7 @@ const translations = {
     // Navigation
     'nav.home': 'Accueil',
     'nav.cards': 'Cartes',
+    'nav.quiz': 'Quiz',
     
     // Cards page
     'cards.title': 'Explorez vos archétypes',
@@ -143,6 +144,7 @@ const translations = {
     // Navigation
     'nav.home': 'Home',
     'nav.cards': 'Cards',
+    'nav.quiz': 'Quiz',
     
     // Cards page
     'cards.title': 'Explore your archetypes',
