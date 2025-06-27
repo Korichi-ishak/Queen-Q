@@ -10,8 +10,9 @@ gsap.registerPlugin(Flip);
 interface QuizOption {
   id: string;
   text: string;
-  icon: JSX.Element;
+  cardSymbol: JSX.Element;
   value: string;
+  suit: string;
 }
 
 interface QuizQuestion {
@@ -24,78 +25,77 @@ interface QueenResult {
   id: string;
   name: string;
   description: string;
-  color: string;
-  pattern: string;
-  element: string;
+  suit: string;
+  cardNumber: string;
+  cardImage: JSX.Element;
+  power: string;
 }
 
-// Creative SVG Icons
-const CreativeIcons = {
-  brain: (
+// Tarot Card Symbols
+const CardSymbols = {
+  // Coeurs - Intuition
+  hearts: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="heartsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#D6AE60" />
-          <stop offset="100%" stopColor="#C4A569" />
+          <stop offset="100%" stopColor="#E4C97A" />
         </linearGradient>
       </defs>
-      <path d="M30 25 Q50 15 70 25 Q80 35 75 50 Q70 65 50 70 Q30 65 25 50 Q20 35 30 25 Z" 
-            fill="url(#brainGrad)" stroke="#D6AE60" strokeWidth="2"/>
-      <circle cx="40" cy="40" r="3" fill="#FFF" opacity="0.8"/>
-      <circle cx="60" cy="45" r="2" fill="#FFF" opacity="0.6"/>
+      <path d="M50 80 C30 60, 10 40, 30 25 C40 20, 50 30, 50 30 C50 30, 60 20, 70 25 C90 40, 70 60, 50 80 Z" 
+            fill="url(#heartsGrad)" stroke="#D6AE60" strokeWidth="1"/>
+      <circle cx="35" cy="35" r="3" fill="#FFF" opacity="0.6"/>
+      <circle cx="65" cy="35" r="3" fill="#FFF" opacity="0.6"/>
     </svg>
   ),
-  intuition: (
+  
+  // Piques - Sagesse
+  spades: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <radialGradient id="intuitionGrad" cx="50%" cy="30%">
-          <stop offset="0%" stopColor="#E4C97A" />
+        <linearGradient id="spadesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#C4A569" />
           <stop offset="100%" stopColor="#D6AE60" />
-        </radialGradient>
+        </linearGradient>
       </defs>
-      <path d="M50 20 L58 35 L45 35 Z" fill="url(#intuitionGrad)"/>
-      <circle cx="50" cy="45" r="15" fill="none" stroke="#D6AE60" strokeWidth="2" strokeDasharray="5,5"/>
-      <path d="M35 55 Q50 70 65 55" stroke="#D6AE60" strokeWidth="2" fill="none"/>
+      <path d="M50 20 C30 40, 20 60, 40 70 C45 72, 50 65, 50 65 C50 65, 55 72, 60 70 C80 60, 70 40, 50 20 Z" 
+            fill="url(#spadesGrad)" stroke="#D6AE60" strokeWidth="1"/>
+      <rect x="47" y="65" width="6" height="15" fill="url(#spadesGrad)"/>
+      <circle cx="50" cy="45" r="2" fill="#FFF" opacity="0.8"/>
     </svg>
   ),
-  creativity: (
+  
+  // Carreaux - Créativité
+  diamonds: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <linearGradient id="creativityGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="diamondsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#E4C97A" />
           <stop offset="50%" stopColor="#D6AE60" />
           <stop offset="100%" stopColor="#C4A569" />
         </linearGradient>
       </defs>
-      <path d="M20 50 Q35 25 50 50 Q65 25 80 50 Q65 75 50 50 Q35 75 20 50 Z" 
-            fill="url(#creativityGrad)" opacity="0.8"/>
-      <circle cx="50" cy="50" r="8" fill="#FFF" opacity="0.9"/>
+      <polygon points="50,25 70,50 50,75 30,50" 
+               fill="url(#diamondsGrad)" stroke="#D6AE60" strokeWidth="1"/>
+      <polygon points="50,35 60,50 50,65 40,50" 
+               fill="#FFF" opacity="0.3"/>
     </svg>
   ),
-  boldness: (
+  
+  // Trèfles - Courage
+  clubs: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <linearGradient id="boldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <linearGradient id="clubsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#D6AE60" />
-          <stop offset="100%" stopColor="#E4C97A" />
+          <stop offset="100%" stopColor="#C4A569" />
         </linearGradient>
       </defs>
-      <polygon points="50,25 40,45 25,45 35,60 30,75 50,65 70,75 65,60 75,45 60,45" 
-               fill="url(#boldGrad)" stroke="#D6AE60" strokeWidth="1"/>
-    </svg>
-  ),
-  nature: (
-    <svg viewBox="0 0 100 100" className="w-full h-full">
-      <path d="M50 75 Q40 60 35 45 Q45 35 50 45 Q55 35 65 45 Q60 60 50 75 Z" 
-            fill="#D6AE60" opacity="0.8"/>
-      <rect x="47" y="70" width="6" height="15" fill="#C4A569"/>
-    </svg>
-  ),
-  adventure: (
-    <svg viewBox="0 0 100 100" className="w-full h-full">
-      <polygon points="20,70 30,30 50,25 70,30 80,70 70,75 50,80 30,75" 
-               fill="none" stroke="#D6AE60" strokeWidth="2"/>
-      <path d="M35 50 L50 40 L65 50" stroke="#D6AE60" strokeWidth="2" fill="none"/>
+      <circle cx="40" cy="45" r="12" fill="url(#clubsGrad)"/>
+      <circle cx="60" cy="45" r="12" fill="url(#clubsGrad)"/>
+      <circle cx="50" cy="35" r="12" fill="url(#clubsGrad)"/>
+      <rect x="47" y="55" width="6" height="20" fill="url(#clubsGrad)"/>
+      <circle cx="50" cy="42" r="3" fill="#FFF" opacity="0.7"/>
     </svg>
   )
 };
@@ -108,11 +108,12 @@ export const Quiz: React.FC = () => {
   const [showResult, setShowResult] = useState(false);
   const [result, setResult] = useState<QueenResult | null>(null);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isShuffling, setIsShuffling] = useState(true);
   
   const containerRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLElement[]>([]);
-  const particlesRef = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
 
   // Check for reduced motion preference
   useEffect(() => {
@@ -125,185 +126,225 @@ export const Quiz: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Floating particles animation
+  // Card shuffling animation on page load
   useEffect(() => {
-    if (!prefersReducedMotion && particlesRef.current) {
-      const particles = particlesRef.current.children;
-      Array.from(particles).forEach((particle, index) => {
-        gsap.to(particle, {
+    if (!prefersReducedMotion && cardsRef.current) {
+      const cards = cardsRef.current.children;
+      Array.from(cards).forEach((card, index) => {
+        gsap.set(card, { 
+          rotation: "random(-15, 15)",
+          x: "random(-30, 30)",
           y: "random(-20, 20)",
-          x: "random(-20, 20)",
-          rotation: "random(-360, 360)",
-          duration: "random(3, 6)",
-          repeat: -1,
-          yoyo: true,
-          delay: index * 0.2,
-          ease: "sine.inOut"
+          scale: 0.9
+        });
+        
+        gsap.to(card, {
+          rotation: 0,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          delay: index * 0.1,
+          ease: "back.out(1.2)",
+          onComplete: () => {
+            if (index === cards.length - 1) {
+              setIsShuffling(false);
+            }
+          }
         });
       });
+    } else {
+      setTimeout(() => setIsShuffling(false), 1000);
     }
-  }, [prefersReducedMotion]);
+  }, [currentQuestion, prefersReducedMotion]);
 
-  // Quiz questions with creative options
+  // Quiz questions with tarot card theme
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "Face à l'inconnu, votre première réaction est de...",
+      question: "L'Oracle vous montre une situation inattendue. Quelle carte tirez-vous ?",
       options: [
-        { id: "1a", text: "Analyser chaque détail", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "1b", text: "Faire confiance à votre ressenti", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "1c", text: "Imaginer les possibilités", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "1d", text: "Foncer tête première", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "1a", text: "L'Hermite\n(Réflexion profonde)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "1b", text: "La Lune\n(Intuition mystique)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "1c", text: "L'Étoile\n(Inspiration créatrice)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "1d", text: "Le Chariot\n(Action immédiate)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 2,
-      question: "Votre environnement idéal pour vous ressourcer ?",
+      question: "Votre sanctuaire spirituel révèle votre essence. Quelle carte vous appelle ?",
       options: [
-        { id: "2a", text: "Une forêt silencieuse", icon: CreativeIcons.nature, value: "intuitive" },
-        { id: "2b", text: "Un atelier d'artiste", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "2c", text: "Une bibliothèque ancienne", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "2d", text: "Un sommet de montagne", icon: CreativeIcons.adventure, value: "bold" }
+        { id: "2a", text: "Quatre de Cœur\n(Temple de nature)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "2b", text: "As de Carreau\n(Atelier de création)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "2c", text: "Roi de Pique\n(Bibliothèque sacrée)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "2d", text: "Cavalier de Trèfle\n(Sommet du monde)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 3,
-      question: "Quand vous prenez une décision importante...",
+      question: "Face à un choix crucial, les cartes révèlent votre méthode. Laquelle résonne ?",
       options: [
-        { id: "3a", text: "Vous méditez longuement", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "3b", text: "Vous explorez toutes les options", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "3c", text: "Vous pesez le pour et le contre", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "3d", text: "Vous suivez votre instinct d'action", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "3a", text: "La Papesse\n(Méditation silencieuse)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "3b", text: "Le Bateleur\n(Exploration magique)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "3c", text: "La Justice\n(Équilibre des forces)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "3d", text: "La Force\n(Pouvoir intérieur)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 4,
-      question: "Votre plus grande source d'inspiration ?",
+      question: "Les étoiles vous montrent votre source d'inspiration. Quelle arcane choisissez-vous ?",
       options: [
-        { id: "4a", text: "Les mystères de l'univers", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "4b", text: "L'art sous toutes ses formes", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "4c", text: "Les découvertes scientifiques", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "4d", text: "Les défis impossibles", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "4a", text: "L'Étoile\n(Mystères cosmiques)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "4b", text: "Le Monde\n(Arts universels)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "4c", text: "Le Pendu\n(Sagesse ancienne)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "4d", text: "La Tour\n(Défis titanesques)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 5,
-      question: "Dans un groupe, vous êtes naturellement...",
+      question: "Dans le cercle magique, votre rôle naturel se révèle. Quelle carte vous représente ?",
       options: [
-        { id: "5a", text: "L'âme spirituelle", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "5b", text: "La source d'idées", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "5c", text: "Le conseiller sage", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "5d", text: "Le leader d'action", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "5a", text: "Dame de Cœur\n(Âme mystique)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "5b", text: "Valet de Carreau\n(Messager créatif)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "5c", text: "Roi de Pique\n(Sage conseiller)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "5d", text: "Cavalier de Trèfle\n(Chef de guerre)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 6,
-      question: "Votre rapport au temps est plutôt...",
+      question: "Le temps révèle sa nature dans votre tirage. Quelle carte pulse avec votre rythme ?",
       options: [
-        { id: "6a", text: "Cyclique et spirituel", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "6b", text: "Créatif et fluide", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "6c", text: "Structuré et optimisé", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "6d", text: "Urgent et intense", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "6a", text: "La Roue de Fortune\n(Cycles éternels)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "6b", text: "Le Fou\n(Liberté temporelle)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "6c", text: "Deux de Pique\n(Structure parfaite)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "6d", text: "Sept de Trèfle\n(Urgence puissante)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 7,
-      question: "Ce qui vous motive le plus profondément ?",
+      question: "Votre motivation profonde s'illumine dans les arcanes. Quelle carte brille pour vous ?",
       options: [
-        { id: "7a", text: "La connexion authentique", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "7b", text: "L'expression créative", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "7c", text: "La compréhension profonde", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "7d", text: "L'impact transformateur", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "7a", text: "Les Amoureux\n(Connexion sacrée)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "7b", text: "L'Impératrice\n(Création divine)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "7c", text: "L'Empereur\n(Maîtrise absolue)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "7d", text: "Le Jugement\n(Transformation totale)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     },
     {
       id: 8,
-      question: "Votre vision de l'avenir idéal ?",
+      question: "L'Oracle final révèle votre destinée. Quelle carte couronne votre avenir ?",
       options: [
-        { id: "8a", text: "Harmonie et paix intérieure", icon: CreativeIcons.intuition, value: "intuitive" },
-        { id: "8b", text: "Innovation et beauté", icon: CreativeIcons.creativity, value: "creative" },
-        { id: "8c", text: "Sagesse et équilibre", icon: CreativeIcons.brain, value: "analytical" },
-        { id: "8d", text: "Liberté et aventures", icon: CreativeIcons.boldness, value: "bold" }
+        { id: "8a", text: "Le Soleil\n(Harmonie lumineuse)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
+        { id: "8b", text: "Le Monde\n(Beauté éternelle)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
+        { id: "8c", text: "La Tempérance\n(Sagesse équilibrée)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
+        { id: "8d", text: "Le Chariot\n(Liberté conquise)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
       ]
     }
   ];
 
-  // Queen results with rich descriptions
+  // Queen results as Tarot Archetypes
   const queenResults: Record<string, QueenResult> = {
     intuitive: {
       id: "intuitive",
-      name: "La Mystique des Profondeurs",
-      description: "Vous naviguez dans les eaux profondes de l'intuition avec une grâce naturelle. Votre connexion aux énergies subtiles vous permet de percevoir ce que d'autres ne voient pas. Vous êtes une guide spirituelle née, capable de révéler les vérités cachées et d'éclairer les chemins obscurs.",
-      color: "from-purple-600 via-violet-500 to-indigo-600",
-      pattern: "radial",
-      element: "L'Eau Sacrée"
+      name: "La Dame de Cœur Mystique",
+      description: "Votre âme navigue dans les eaux profondes de l'intuition sacrée. Comme la Grande Prêtresse des anciens tarots, vous percevez les vérités cachées derrière le voile de l'illusion. Les cartes vous révèlent que votre pouvoir réside dans la connexion aux énergies subtiles et à la sagesse ancestrale.",
+      suit: "Cœur",
+      cardNumber: "Dame",
+      power: "Vision Mystique",
+      cardImage: (
+        <svg viewBox="0 0 200 300" className="w-full h-full">
+          <defs>
+            <linearGradient id="heartQueenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#8B5A96" />
+              <stop offset="50%" stopColor="#D6AE60" />
+              <stop offset="100%" stopColor="#6B46C1" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="180" height="280" rx="15" fill="url(#heartQueenGrad)" stroke="#D6AE60" strokeWidth="3"/>
+          <circle cx="100" cy="80" r="25" fill="#FFF" opacity="0.9"/>
+          <path d="M100 140 C80 120, 60 100, 80 85 C90 80, 100 90, 100 90 C100 90, 110 80, 120 85 C140 100, 120 120, 100 140 Z" fill="#D6AE60"/>
+          <text x="100" y="200" textAnchor="middle" fill="#FFF" fontSize="16" fontFamily="serif">DAME</text>
+          <text x="100" y="220" textAnchor="middle" fill="#FFF" fontSize="12" fontFamily="serif">♥</text>
+        </svg>
+      )
     },
     creative: {
       id: "creative", 
-      name: "L'Architecte des Rêves",
-      description: "Votre imagination est un portail vers des mondes infinis. Vous transformez le vide en beauté, l'ordinaire en extraordinaire. Chaque pensée devient art, chaque vision devient réalité. Vous êtes celle qui peint l'impossible et sculpte l'avenir avec ses mains créatrices.",
-      color: "from-orange-500 via-amber-400 to-yellow-500",
-      pattern: "conic",
-      element: "Le Feu Créateur"
+      name: "La Reine de Carreau Créatrice",
+      description: "Votre essence rayonne comme l'Impératrice des tarots, créatrice de mondes et de beauté. Les carreaux de votre existence brillent de mille feux créatifs. Vous transformez le vide en chef-d'œuvre, l'ordinaire en extraordinaire. Votre magie réside dans votre capacité à manifester l'impossible.",
+      suit: "Carreau",
+      cardNumber: "Reine",
+      power: "Manifestation Créatrice",
+      cardImage: (
+        <svg viewBox="0 0 200 300" className="w-full h-full">
+          <defs>
+            <linearGradient id="diamondQueenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#F59E0B" />
+              <stop offset="50%" stopColor="#D6AE60" />
+              <stop offset="100%" stopColor="#DC2626" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="180" height="280" rx="15" fill="url(#diamondQueenGrad)" stroke="#D6AE60" strokeWidth="3"/>
+          <circle cx="100" cy="80" r="25" fill="#FFF" opacity="0.9"/>
+          <polygon points="100,105 120,130 100,155 80,130" fill="#D6AE60"/>
+          <text x="100" y="200" textAnchor="middle" fill="#FFF" fontSize="16" fontFamily="serif">REINE</text>
+          <text x="100" y="220" textAnchor="middle" fill="#FFF" fontSize="12" fontFamily="serif">♦</text>
+        </svg>
+      )
     },
     analytical: {
       id: "analytical",
-      name: "La Gardienne de la Sagesse",
-      description: "Dans le temple de votre esprit résident mille bibliothèques. Vous déchiffrez les mystères de l'existence avec la précision d'un maître horloger. Votre intelligence illumine les ténèbres de l'ignorance et votre sagesse guide les âmes perdues vers la vérité.",
-      color: "from-blue-600 via-cyan-500 to-teal-500",
-      pattern: "linear",
-      element: "L'Air de la Connaissance"
+      name: "La Souveraine de Pique Sage",
+      description: "Tel l'Empereur dans son royaume de sagesse, vous régnez sur le domaine de la connaissance et de l'analyse. Les piques de votre intellect transpercent les mystères les plus complexes. Votre trône se dresse dans la bibliothèque universelle, et votre sceptre est fait de vérité pure.",
+      suit: "Pique",
+      cardNumber: "Roi",
+      power: "Sagesse Souveraine",
+      cardImage: (
+        <svg viewBox="0 0 200 300" className="w-full h-full">
+          <defs>
+            <linearGradient id="spadeKingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#1E40AF" />
+              <stop offset="50%" stopColor="#D6AE60" />
+              <stop offset="100%" stopColor="#059669" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="180" height="280" rx="15" fill="url(#spadeKingGrad)" stroke="#D6AE60" strokeWidth="3"/>
+          <circle cx="100" cy="80" r="25" fill="#FFF" opacity="0.9"/>
+          <path d="M100 105 C80 125, 70 145, 90 155 C95 157, 100 150, 100 150 C100 150, 105 157, 110 155 C130 145, 120 125, 100 105 Z" fill="#D6AE60"/>
+          <text x="100" y="200" textAnchor="middle" fill="#FFF" fontSize="16" fontFamily="serif">ROI</text>
+          <text x="100" y="220" textAnchor="middle" fill="#FFF" fontSize="12" fontFamily="serif">♠</text>
+        </svg>
+      )
     },
     bold: {
       id: "bold",
-      name: "La Conquérante des Impossibles", 
-      description: "Votre courage enflamme les cœurs et votre détermination déplace les montagnes. Vous êtes la tempête qui brise les chaînes, la force qui transforme les obstacles en tremplins. Face à l'adversité, vous ne reculez jamais - vous avancez, toujours plus loin.",
-      color: "from-red-600 via-rose-500 to-pink-500",
-      pattern: "diagonal",
-      element: "La Terre Inébranlable"
+      name: "La Guerrière de Trèfle Conquérante", 
+      description: "Comme la Force incarnée des arcanes majeurs, vous dominez par votre courage et votre détermination. Les trèfles de votre destine fleurissent sur les champs de bataille que vous transformez en jardins de victoire. Votre pouvoir brise toutes les chaînes et ouvre tous les chemins.",
+      suit: "Trèfle",
+      cardNumber: "Cavalier",
+      power: "Force Conquérante",
+      cardImage: (
+        <svg viewBox="0 0 200 300" className="w-full h-full">
+          <defs>
+            <linearGradient id="clubKnightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#DC2626" />
+              <stop offset="50%" stopColor="#D6AE60" />
+              <stop offset="100%" stopColor="#7C2D12" />
+            </linearGradient>
+          </defs>
+          <rect x="10" y="10" width="180" height="280" rx="15" fill="url(#clubKnightGrad)" stroke="#D6AE60" strokeWidth="3"/>
+          <circle cx="100" cy="80" r="25" fill="#FFF" opacity="0.9"/>
+          <circle cx="90" cy="125" r="8" fill="#D6AE60"/>
+          <circle cx="110" cy="125" r="8" fill="#D6AE60"/>
+          <circle cx="100" cy="115" r="8" fill="#D6AE60"/>
+          <text x="100" y="200" textAnchor="middle" fill="#FFF" fontSize="14" fontFamily="serif">CAVALIER</text>
+          <text x="100" y="220" textAnchor="middle" fill="#FFF" fontSize="12" fontFamily="serif">♣</text>
+        </svg>
+      )
     }
   };
 
-  // Page entrance animation
-  useEffect(() => {
-    if (containerRef.current && !prefersReducedMotion) {
-      gsap.fromTo(containerRef.current, 
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-      );
-    }
-  }, [prefersReducedMotion]);
-
-  // Progress bar animation
-  useEffect(() => {
-    if (progressRef.current && !showResult) {
-      const progress = ((currentQuestion + 1) / questions.length) * 100;
-      gsap.to(progressRef.current, {
-        width: `${progress}%`,
-        duration: 0.8,
-        ease: "power2.out"
-      });
-    }
-  }, [currentQuestion, showResult]);
-
-  // Stagger options entrance
-  useEffect(() => {
-    if (!prefersReducedMotion && optionsRef.current.length > 0) {
-      gsap.fromTo(optionsRef.current,
-        { scale: 0.9, opacity: 0, y: 30, rotationX: -15 },
-        { 
-          scale: 1, 
-          opacity: 1, 
-          y: 0,
-          rotationX: 0,
-          duration: 0.6,
-          stagger: 0.12,
-          ease: "back.out(1.4)"
-        }
-      );
-    }
-  }, [currentQuestion, prefersReducedMotion]);
-
+  // Enhanced card flip animation
   const handleOptionSelect = (optionValue: string, optionId: string) => {
     setSelectedOption(optionId);
     
@@ -313,20 +354,27 @@ export const Quiz: React.FC = () => {
       );
       
       if (selectedElement) {
+        // Card flip animation
         gsap.to(selectedElement, {
-          scale: 1.1,
-          rotationY: 360,
-          duration: 0.6,
-          ease: "power2.out",
+          rotationY: 180,
+          scale: 1.05,
+          duration: 0.3,
+          ease: "power2.inOut",
           onComplete: () => {
-            proceedToNext(optionValue);
+            gsap.to(selectedElement, {
+              rotationY: 0,
+              scale: 1,
+              duration: 0.3,
+              ease: "power2.inOut",
+              onComplete: () => proceedToNext(optionValue)
+            });
           }
         });
       } else {
         proceedToNext(optionValue);
       }
     } else {
-      setTimeout(() => proceedToNext(optionValue), 400);
+      setTimeout(() => proceedToNext(optionValue), 600);
     }
   };
 
@@ -351,28 +399,18 @@ export const Quiz: React.FC = () => {
       setResult(queenResults[dominantType]);
       setShowResult(true);
       
-      // Enhanced confetti
+      // Enhanced card-themed confetti
       setTimeout(() => {
-        const colors = ['#D6AE60', '#C4A569', '#E4C97A', '#F5E6B3'];
+        const suits = ['♠', '♥', '♦', '♣'];
         confetti({
           particleCount: 100,
           spread: 100,
           origin: { y: 0.6 },
-          colors: colors,
-          shapes: ['star', 'circle'],
-          scalar: 1.2
+          colors: ['#D6AE60', '#C4A569', '#E4C97A', '#8B5A96'],
+          shapes: suits.map(() => 'square'),
+          scalar: 1.5
         });
-        
-        // Second burst
-        setTimeout(() => {
-          confetti({
-            particleCount: 50,
-            spread: 60,
-            origin: { y: 0.8 },
-            colors: colors
-          });
-        }, 200);
-      }, 800);
+      }, 1000);
 
       // Analytics
       if (typeof window !== 'undefined' && (window as any).plausible) {
@@ -389,27 +427,19 @@ export const Quiz: React.FC = () => {
     setSelectedOption(null);
     setShowResult(false);
     setResult(null);
+    setIsShuffling(true);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a0b2e] via-[#3B1E50] to-[#2d1444] py-20">
-      {/* Background Particles */}
-      <div ref={particlesRef} className="fixed inset-0 pointer-events-none overflow-hidden">
-        {Array.from({ length: 15 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-1 h-1 bg-imperial-gold rounded-full opacity-30"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
+      {/* Mystical Background Pattern */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-20">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,_#D6AE60_1px,_transparent_1px),radial-gradient(circle_at_75%_75%,_#E4C97A_1px,_transparent_1px)] bg-[length:50px_50px]"></div>
       </div>
 
       <motion.div
         ref={containerRef}
-        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
+        className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -419,94 +449,115 @@ export const Quiz: React.FC = () => {
             <motion.div
               key={currentQuestion}
               className="relative"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.4 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
             >
-              {/* Mystical Header */}
-              <div className="text-center mb-12">
+              {/* Tarot Header */}
+              <div className="text-center mb-16">
                 <motion.div
-                  className="inline-block"
-                  initial={{ rotateY: -180, opacity: 0 }}
-                  animate={{ rotateY: 0, opacity: 1 }}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent mb-4">
-                    Révélation de votre Essence
+                    Oracle des Queens
                   </h1>
-                  <div className="w-32 h-1 bg-gradient-to-r from-transparent via-imperial-gold to-transparent mx-auto mb-6"></div>
+                  <p className="text-rose-champagne/80 text-xl mb-8">
+                    Les cartes révèlent votre archétype royal
+                  </p>
+                  <div className="w-40 h-1 bg-gradient-to-r from-transparent via-imperial-gold to-transparent mx-auto"></div>
                 </motion.div>
               </div>
 
-              {/* Progress Section */}
+              {/* Progress as Cards */}
               <div className="mb-16">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-rose-champagne/80 text-lg font-medium">
-                    Étape {currentQuestion + 1} sur {questions.length}
-                  </span>
-                  <span className="text-imperial-gold text-lg font-bold">
-                    {Math.round(((currentQuestion + 1) / questions.length) * 100)}%
-                  </span>
+                <div className="flex justify-center items-center mb-8">
+                  <div className="flex space-x-2">
+                    {Array.from({ length: questions.length }).map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-8 h-12 rounded border-2 transition-all duration-500 ${
+                          index <= currentQuestion
+                            ? 'bg-imperial-gold border-imperial-gold shadow-lg shadow-imperial-gold/50'
+                            : 'bg-white/10 border-white/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
-                
-                <div className="relative w-full h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
-                  <div
-                    ref={progressRef}
-                    className="absolute top-0 left-0 h-full bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold rounded-full shadow-lg shadow-imperial-gold/30"
-                    style={{ width: `${((currentQuestion + 1) / questions.length) * 100}%` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"></div>
-                </div>
+                <p className="text-center text-rose-champagne/80">
+                  Carte {currentQuestion + 1} de {questions.length}
+                </p>
               </div>
 
-              {/* Question Section */}
+              {/* Question */}
               <fieldset className="mb-16">
                 <legend className="sr-only">Question {currentQuestion + 1}</legend>
                 <motion.h2 
                   className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold text-center mb-16 leading-relaxed"
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
                 >
-                  <span className="bg-gradient-to-r from-white via-rose-champagne to-white bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-white via-imperial-gold to-white bg-clip-text text-transparent">
                     {questions[currentQuestion].question}
                   </span>
                 </motion.h2>
 
-                {/* Options Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                {/* Card Options */}
+                <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                   {questions[currentQuestion].options.map((option, index) => (
                     <motion.button
                       key={option.id}
                       ref={el => optionsRef.current[index] = el!}
                       data-option-id={option.id}
-                      onClick={() => handleOptionSelect(option.value, option.id)}
-                      disabled={selectedOption !== null}
-                      className="group relative bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-md border border-white/20 hover:border-imperial-gold/50 rounded-3xl p-8 transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 overflow-hidden"
-                      style={{ perspective: '1000px' }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      onClick={() => !isShuffling && handleOptionSelect(option.value, option.id)}
+                      disabled={selectedOption !== null || isShuffling}
+                      className="group relative bg-gradient-to-b from-white/15 to-white/5 backdrop-blur-md border-2 border-imperial-gold/30 hover:border-imperial-gold rounded-2xl p-8 transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-imperial-gold focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 overflow-hidden transform hover:scale-105 card-shadow"
+                      style={{ 
+                        perspective: '1000px',
+                        transformStyle: 'preserve-3d'
+                      }}
+                      initial={{ rotateY: 180, opacity: 0 }}
+                      animate={{ rotateY: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.1, duration: 0.6 }}
                     >
-                      {/* Background Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-imperial-gold/10 via-transparent to-rose-champagne/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      {/* Card Back Pattern when shuffling */}
+                      {isShuffling && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-imperial-gold/20 to-royal-purple/20 flex items-center justify-center">
+                          <div className="text-imperial-gold text-6xl">♠♥♦♣</div>
+                        </div>
+                      )}
                       
-                      {/* Icon Container */}
-                      <div className="relative mb-6">
-                        <div className="w-20 h-20 mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-500">
-                          {option.icon}
+                      {/* Card Front */}
+                      <div className={`transition-opacity duration-500 ${isShuffling ? 'opacity-0' : 'opacity-100'}`}>
+                        {/* Suit indicator */}
+                        <div className="absolute top-4 left-4 text-xs text-imperial-gold font-bold">
+                          {option.suit}
+                        </div>
+                        <div className="absolute bottom-4 right-4 text-xs text-imperial-gold font-bold transform rotate-180">
+                          {option.suit}
+                        </div>
+                        
+                        {/* Card Symbol */}
+                        <div className="w-24 h-24 mx-auto mb-6 transform group-hover:scale-110 transition-transform duration-500">
+                          {option.cardSymbol}
+                        </div>
+
+                        {/* Card Text */}
+                        <div className="text-center">
+                          <p className="text-white font-medium text-lg leading-relaxed whitespace-pre-line group-hover:text-imperial-gold transition-colors duration-300">
+                            {option.text}
+                          </p>
                         </div>
                       </div>
 
-                      {/* Text */}
-                      <p className="relative text-white font-medium text-lg leading-relaxed group-hover:text-imperial-gold transition-colors duration-300">
-                        {option.text}
-                      </p>
-
-                      {/* Selection Indicator */}
+                      {/* Selection Glow */}
                       {selectedOption === option.id && (
                         <motion.div
-                          className="absolute inset-0 border-2 border-imperial-gold rounded-3xl"
+                          className="absolute inset-0 border-2 border-imperial-gold rounded-2xl shadow-lg shadow-imperial-gold/50"
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
                           transition={{ duration: 0.3 }}
@@ -518,39 +569,33 @@ export const Quiz: React.FC = () => {
               </fieldset>
             </motion.div>
           ) : (
-            // Enhanced Result Screen
+            // Enhanced Tarot Result
             <motion.div
               className="text-center relative"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: "back.out(1.2)" }}
+              transition={{ duration: 1, ease: "back.out(1.2)" }}
             >
               {result && (
                 <>
-                  {/* Result Background Pattern */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${result.color} opacity-5 rounded-3xl blur-3xl`}></div>
-                  
-                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-3xl p-12 border border-white/20">
-                    {/* Crown Symbol */}
+                  <div className="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md rounded-3xl p-12 border-2 border-imperial-gold/50 shadow-2xl shadow-imperial-gold/20">
+                    {/* Tarot Card Result */}
                     <motion.div
-                      className="mb-8"
-                      initial={{ scale: 0, rotate: -180 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.3, duration: 1, ease: "back.out(1.4)" }}
+                      className="w-48 h-72 mx-auto mb-8"
+                      initial={{ rotateY: 180, scale: 0 }}
+                      animate={{ rotateY: 0, scale: 1 }}
+                      transition={{ delay: 0.5, duration: 1, ease: "back.out(1.4)" }}
                     >
-                      <svg className="w-24 h-24 mx-auto text-imperial-gold" viewBox="0 0 100 100" fill="currentColor">
-                        <path d="M50 15 L40 35 L20 30 L30 50 L20 70 L40 65 L50 85 L60 65 L80 70 L70 50 L80 30 L60 35 Z"/>
-                        <circle cx="50" cy="50" r="8" fill="#FFF"/>
-                      </svg>
+                      {result.cardImage}
                     </motion.div>
 
                     <motion.h2
-                      className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold mb-6"
+                      className="text-3xl md:text-4xl lg:text-5xl font-playfair font-bold mb-4"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.5, duration: 0.8 }}
+                      transition={{ delay: 0.8, duration: 0.8 }}
                     >
-                      <span className={`bg-gradient-to-r ${result.color} bg-clip-text text-transparent`}>
+                      <span className="bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent">
                         {result.name}
                       </span>
                     </motion.h2>
@@ -559,18 +604,21 @@ export const Quiz: React.FC = () => {
                       className="mb-8"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.7, duration: 0.8 }}
+                      transition={{ delay: 1, duration: 0.8 }}
                     >
-                      <div className="inline-block px-6 py-3 bg-gradient-to-r from-imperial-gold/20 to-rose-champagne/20 rounded-full border border-imperial-gold/30 mb-6">
-                        <span className="text-imperial-gold font-medium">Élément: {result.element}</span>
+                      <div className="inline-block px-6 py-3 bg-gradient-to-r from-imperial-gold/20 to-rose-champagne/20 rounded-full border border-imperial-gold/30 mb-4">
+                        <span className="text-imperial-gold font-medium">{result.cardNumber} de {result.suit}</span>
+                      </div>
+                      <div className="inline-block px-6 py-3 bg-gradient-to-r from-royal-purple/20 to-imperial-gold/20 rounded-full border border-rose-champagne/30 ml-4">
+                        <span className="text-rose-champagne font-medium">Pouvoir: {result.power}</span>
                       </div>
                     </motion.div>
 
                     <motion.p
-                      className="text-rose-champagne/90 text-xl md:text-2xl leading-relaxed mb-12 max-w-3xl mx-auto"
+                      className="text-rose-champagne/90 text-xl md:text-2xl leading-relaxed mb-12 max-w-4xl mx-auto"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.9, duration: 0.8 }}
+                      transition={{ delay: 1.2, duration: 0.8 }}
                     >
                       {result.description}
                     </motion.p>
@@ -579,23 +627,23 @@ export const Quiz: React.FC = () => {
                       className="flex flex-col sm:flex-row gap-6 justify-center"
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 1.1, duration: 0.8 }}
+                      transition={{ delay: 1.4, duration: 0.8 }}
                     >
                       <motion.button
                         onClick={() => {
                           if (navigator.share) {
                             navigator.share({
                               title: `Je suis ${result.name} !`,
-                              text: result.description,
+                              text: `${result.description}`,
                               url: window.location.href
                             });
                           }
                         }}
-                        className="px-8 py-4 bg-gradient-to-r from-imperial-gold to-rose-champagne hover:from-rose-champagne hover:to-imperial-gold text-royal-purple font-bold rounded-xl transition-all duration-300 shadow-lg shadow-imperial-gold/30 hover:shadow-imperial-gold/50 transform hover:scale-105"
+                        className="px-8 py-4 bg-gradient-to-r from-imperial-gold to-rose-champagne hover:from-rose-champagne hover:to-imperial-gold text-royal-purple font-bold rounded-xl transition-all duration-300 shadow-lg shadow-imperial-gold/30 hover:shadow-imperial-gold/50"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Partager ma Révélation
+                        Partager ma Carte Révélatrice
                       </motion.button>
                       
                       <motion.button
@@ -604,7 +652,7 @@ export const Quiz: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Rejoindre la Communauté Royale
+                        Rejoindre le Royaume Royal
                       </motion.button>
 
                       <motion.button
@@ -613,7 +661,7 @@ export const Quiz: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Recommencer le Voyage
+                        Nouveau Tirage Oracle
                       </motion.button>
                     </motion.div>
                   </div>
@@ -623,6 +671,21 @@ export const Quiz: React.FC = () => {
           )}
         </AnimatePresence>
       </motion.div>
+
+      <style jsx>{`
+        .card-shadow {
+          box-shadow: 
+            0 4px 6px -1px rgba(214, 174, 96, 0.1),
+            0 2px 4px -1px rgba(214, 174, 96, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .card-shadow:hover {
+          box-shadow: 
+            0 20px 25px -5px rgba(214, 174, 96, 0.3),
+            0 10px 10px -5px rgba(214, 174, 96, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+      `}</style>
     </div>
   );
 }; 
