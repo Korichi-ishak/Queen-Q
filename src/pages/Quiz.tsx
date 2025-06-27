@@ -31,71 +31,137 @@ interface QueenResult {
   power: string;
 }
 
-// Tarot Card Symbols
+// Enseignes de Cartes Créatives
 const CardSymbols = {
-  // Coeurs - Intuition
+  // Cœurs - Intuition mystique
   hearts: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <linearGradient id="heartsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#D6AE60" />
-          <stop offset="100%" stopColor="#E4C97A" />
-        </linearGradient>
+        <radialGradient id="heartsGrad" cx="50%" cy="30%">
+          <stop offset="0%" stopColor="#F8E7B3" />
+          <stop offset="40%" stopColor="#E4C97A" />
+          <stop offset="80%" stopColor="#D6AE60" />
+          <stop offset="100%" stopColor="#C4A569" />
+        </radialGradient>
+        <filter id="heartGlow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge> 
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <path d="M50 80 C30 60, 10 40, 30 25 C40 20, 50 30, 50 30 C50 30, 60 20, 70 25 C90 40, 70 60, 50 80 Z" 
-            fill="url(#heartsGrad)" stroke="#D6AE60" strokeWidth="1"/>
-      <circle cx="35" cy="35" r="3" fill="#FFF" opacity="0.6"/>
-      <circle cx="65" cy="35" r="3" fill="#FFF" opacity="0.6"/>
+      {/* Main heart shape */}
+      <path d="M50 85 C30 62, 15 45, 25 30 C35 20, 45 25, 50 35 C55 25, 65 20, 75 30 C85 45, 70 62, 50 85 Z" 
+            fill="url(#heartsGrad)" stroke="#D6AE60" strokeWidth="2" filter="url(#heartGlow)"/>
+      {/* Inner sparkles */}
+      <circle cx="42" cy="38" r="2" fill="#FFF" opacity="0.9"/>
+      <circle cx="58" cy="42" r="1.5" fill="#FFF" opacity="0.7"/>
+      <circle cx="50" cy="55" r="1" fill="#FFF" opacity="0.8"/>
+      {/* Mystical lines */}
+      <path d="M35 40 Q50 50 65 40" stroke="#FFF" strokeWidth="1" opacity="0.4" fill="none"/>
     </svg>
   ),
   
-  // Piques - Sagesse
+  // Piques - Sagesse ancienne
   spades: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
         <linearGradient id="spadesGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#C4A569" />
-          <stop offset="100%" stopColor="#D6AE60" />
+          <stop offset="0%" stopColor="#F8E7B3" />
+          <stop offset="30%" stopColor="#E4C97A" />
+          <stop offset="70%" stopColor="#D6AE60" />
+          <stop offset="100%" stopColor="#8B7355" />
         </linearGradient>
+        <filter id="spadeGlow">
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <path d="M50 20 C30 40, 20 60, 40 70 C45 72, 50 65, 50 65 C50 65, 55 72, 60 70 C80 60, 70 40, 50 20 Z" 
-            fill="url(#spadesGrad)" stroke="#D6AE60" strokeWidth="1"/>
-      <rect x="47" y="65" width="6" height="15" fill="url(#spadesGrad)"/>
-      <circle cx="50" cy="45" r="2" fill="#FFF" opacity="0.8"/>
+      {/* Main spade blade */}
+      <path d="M50 15 C35 35, 25 55, 40 68 C44 71, 48 68, 50 68 C52 68, 56 71, 60 68 C75 55, 65 35, 50 15 Z" 
+            fill="url(#spadesGrad)" stroke="#D6AE60" strokeWidth="2" filter="url(#spadeGlow)"/>
+      {/* Stem */}
+      <rect x="47" y="68" width="6" height="20" fill="url(#spadesGrad)" rx="3"/>
+      {/* Ancient symbols */}
+      <circle cx="50" cy="40" r="1.5" fill="#FFF" opacity="0.8"/>
+      <path d="M45 30 L55 30 M45 50 L55 50" stroke="#FFF" strokeWidth="1" opacity="0.5"/>
+      {/* Ornamental details */}
+      <circle cx="42" cy="55" r="0.8" fill="#FFF" opacity="0.6"/>
+      <circle cx="58" cy="55" r="0.8" fill="#FFF" opacity="0.6"/>
     </svg>
   ),
   
-  // Carreaux - Créativité
+  // Carreaux - Créativité flamboyante
   diamonds: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
         <linearGradient id="diamondsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#E4C97A" />
-          <stop offset="50%" stopColor="#D6AE60" />
-          <stop offset="100%" stopColor="#C4A569" />
+          <stop offset="0%" stopColor="#FFF2D6" />
+          <stop offset="25%" stopColor="#F8E7B3" />
+          <stop offset="50%" stopColor="#E4C97A" />
+          <stop offset="75%" stopColor="#D6AE60" />
+          <stop offset="100%" stopColor="#B8954F" />
         </linearGradient>
+        <filter id="diamondGlow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <polygon points="50,25 70,50 50,75 30,50" 
-               fill="url(#diamondsGrad)" stroke="#D6AE60" strokeWidth="1"/>
-      <polygon points="50,35 60,50 50,65 40,50" 
-               fill="#FFF" opacity="0.3"/>
+      {/* Main diamond */}
+      <polygon points="50,20 75,50 50,80 25,50" 
+               fill="url(#diamondsGrad)" stroke="#D6AE60" strokeWidth="2" filter="url(#diamondGlow)"/>
+      {/* Inner facets for brilliance */}
+      <polygon points="50,30 65,50 50,70 35,50" fill="#FFF" opacity="0.3"/>
+      <polygon points="50,25 60,50 50,75 40,50" fill="none" stroke="#FFF" strokeWidth="1" opacity="0.5"/>
+      {/* Creative sparkles */}
+      <circle cx="43" cy="43" r="1" fill="#FFF" opacity="0.9"/>
+      <circle cx="57" cy="43" r="1" fill="#FFF" opacity="0.9"/>
+      <circle cx="43" cy="57" r="1" fill="#FFF" opacity="0.9"/>
+      <circle cx="57" cy="57" r="1" fill="#FFF" opacity="0.9"/>
+      {/* Central star */}
+      <path d="M50 45 L52 48 L50 55 L48 48 Z" fill="#FFF" opacity="0.7"/>
     </svg>
   ),
   
-  // Trèfles - Courage
+  // Trèfles - Force vitale
   clubs: (
     <svg viewBox="0 0 100 100" className="w-full h-full">
       <defs>
-        <linearGradient id="clubsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#D6AE60" />
-          <stop offset="100%" stopColor="#C4A569" />
-        </linearGradient>
+        <radialGradient id="clubsGrad" cx="50%" cy="40%">
+          <stop offset="0%" stopColor="#F8E7B3" />
+          <stop offset="30%" stopColor="#E4C97A" />
+          <stop offset="70%" stopColor="#D6AE60" />
+          <stop offset="100%" stopColor="#A67C52" />
+        </radialGradient>
+        <filter id="clubGlow">
+          <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
       </defs>
-      <circle cx="40" cy="45" r="12" fill="url(#clubsGrad)"/>
-      <circle cx="60" cy="45" r="12" fill="url(#clubsGrad)"/>
-      <circle cx="50" cy="35" r="12" fill="url(#clubsGrad)"/>
-      <rect x="47" y="55" width="6" height="20" fill="url(#clubsGrad)"/>
-      <circle cx="50" cy="42" r="3" fill="#FFF" opacity="0.7"/>
+      {/* Three leaf clover */}
+      <circle cx="38" cy="42" r="14" fill="url(#clubsGrad)" stroke="#D6AE60" strokeWidth="1.5" filter="url(#clubGlow)"/>
+      <circle cx="62" cy="42" r="14" fill="url(#clubsGrad)" stroke="#D6AE60" strokeWidth="1.5" filter="url(#clubGlow)"/>
+      <circle cx="50" cy="30" r="14" fill="url(#clubsGrad)" stroke="#D6AE60" strokeWidth="1.5" filter="url(#clubGlow)"/>
+      {/* Stem */}
+      <rect x="46" y="56" width="8" height="22" fill="url(#clubsGrad)" rx="4" stroke="#D6AE60" strokeWidth="1"/>
+      {/* Leaf veins and details */}
+      <circle cx="38" cy="40" r="2" fill="#FFF" opacity="0.6"/>
+      <circle cx="62" cy="40" r="2" fill="#FFF" opacity="0.6"/>
+      <circle cx="50" cy="28" r="2" fill="#FFF" opacity="0.6"/>
+      {/* Natural texture lines */}
+      <path d="M42 38 Q46 42 42 46" stroke="#FFF" strokeWidth="0.8" opacity="0.4" fill="none"/>
+      <path d="M58 38 Q54 42 58 46" stroke="#FFF" strokeWidth="0.8" opacity="0.4" fill="none"/>
+      <path d="M46 26 Q50 30 54 26" stroke="#FFF" strokeWidth="0.8" opacity="0.4" fill="none"/>
     </svg>
   )
 };
@@ -158,99 +224,99 @@ export const Quiz: React.FC = () => {
     }
   }, [currentQuestion, prefersReducedMotion]);
 
-  // Quiz questions with tarot card theme
+  // Quiz questions with dynamic translations
   const questions: QuizQuestion[] = [
     {
       id: 1,
-      question: "L'Oracle vous montre une situation inattendue. Quelle carte tirez-vous ?",
+      question: t('quiz.q1.text'),
       options: [
-        { id: "1a", text: "L'Hermite\n(Réflexion profonde)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "1b", text: "La Lune\n(Intuition mystique)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "1c", text: "L'Étoile\n(Inspiration créatrice)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "1d", text: "Le Chariot\n(Action immédiate)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "1a", text: t('quiz.q1.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "1b", text: t('quiz.q1.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "1c", text: t('quiz.q1.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "1d", text: t('quiz.q1.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 2,
-      question: "Votre sanctuaire spirituel révèle votre essence. Quelle carte vous appelle ?",
+      question: t('quiz.q2.text'),
       options: [
-        { id: "2a", text: "Quatre de Cœur\n(Temple de nature)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "2b", text: "As de Carreau\n(Atelier de création)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "2c", text: "Roi de Pique\n(Bibliothèque sacrée)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "2d", text: "Cavalier de Trèfle\n(Sommet du monde)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "2a", text: t('quiz.q2.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "2b", text: t('quiz.q2.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "2c", text: t('quiz.q2.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "2d", text: t('quiz.q2.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 3,
-      question: "Face à un choix crucial, les cartes révèlent votre méthode. Laquelle résonne ?",
+      question: t('quiz.q3.text'),
       options: [
-        { id: "3a", text: "La Papesse\n(Méditation silencieuse)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "3b", text: "Le Bateleur\n(Exploration magique)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "3c", text: "La Justice\n(Équilibre des forces)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "3d", text: "La Force\n(Pouvoir intérieur)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "3a", text: t('quiz.q3.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "3b", text: t('quiz.q3.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "3c", text: t('quiz.q3.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "3d", text: t('quiz.q3.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 4,
-      question: "Les étoiles vous montrent votre source d'inspiration. Quelle arcane choisissez-vous ?",
+      question: t('quiz.q4.text'),
       options: [
-        { id: "4a", text: "L'Étoile\n(Mystères cosmiques)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "4b", text: "Le Monde\n(Arts universels)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "4c", text: "Le Pendu\n(Sagesse ancienne)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "4d", text: "La Tour\n(Défis titanesques)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "4a", text: t('quiz.q4.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "4b", text: t('quiz.q4.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "4c", text: t('quiz.q4.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "4d", text: t('quiz.q4.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 5,
-      question: "Dans le cercle magique, votre rôle naturel se révèle. Quelle carte vous représente ?",
+      question: t('quiz.q5.text'),
       options: [
-        { id: "5a", text: "Dame de Cœur\n(Âme mystique)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "5b", text: "Valet de Carreau\n(Messager créatif)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "5c", text: "Roi de Pique\n(Sage conseiller)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "5d", text: "Cavalier de Trèfle\n(Chef de guerre)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "5a", text: t('quiz.q5.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "5b", text: t('quiz.q5.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "5c", text: t('quiz.q5.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "5d", text: t('quiz.q5.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 6,
-      question: "Le temps révèle sa nature dans votre tirage. Quelle carte pulse avec votre rythme ?",
+      question: t('quiz.q6.text'),
       options: [
-        { id: "6a", text: "La Roue de Fortune\n(Cycles éternels)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "6b", text: "Le Fou\n(Liberté temporelle)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "6c", text: "Deux de Pique\n(Structure parfaite)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "6d", text: "Sept de Trèfle\n(Urgence puissante)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "6a", text: t('quiz.q6.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "6b", text: t('quiz.q6.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "6c", text: t('quiz.q6.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "6d", text: t('quiz.q6.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 7,
-      question: "Votre motivation profonde s'illumine dans les arcanes. Quelle carte brille pour vous ?",
+      question: t('quiz.q7.text'),
       options: [
-        { id: "7a", text: "Les Amoureux\n(Connexion sacrée)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "7b", text: "L'Impératrice\n(Création divine)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "7c", text: "L'Empereur\n(Maîtrise absolue)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "7d", text: "Le Jugement\n(Transformation totale)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "7a", text: t('quiz.q7.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "7b", text: t('quiz.q7.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "7c", text: t('quiz.q7.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "7d", text: t('quiz.q7.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     },
     {
       id: 8,
-      question: "L'Oracle final révèle votre destinée. Quelle carte couronne votre avenir ?",
+      question: t('quiz.q8.text'),
       options: [
-        { id: "8a", text: "Le Soleil\n(Harmonie lumineuse)", cardSymbol: CardSymbols.hearts, value: "intuitive", suit: "Cœur" },
-        { id: "8b", text: "Le Monde\n(Beauté éternelle)", cardSymbol: CardSymbols.diamonds, value: "creative", suit: "Carreau" },
-        { id: "8c", text: "La Tempérance\n(Sagesse équilibrée)", cardSymbol: CardSymbols.spades, value: "analytical", suit: "Pique" },
-        { id: "8d", text: "Le Chariot\n(Liberté conquise)", cardSymbol: CardSymbols.clubs, value: "bold", suit: "Trèfle" }
+        { id: "8a", text: t('quiz.q8.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
+        { id: "8b", text: t('quiz.q8.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
+        { id: "8c", text: t('quiz.q8.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
+        { id: "8d", text: t('quiz.q8.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
       ]
     }
   ];
 
-  // Queen results as Tarot Archetypes
+  // Queen results with dynamic translations
   const queenResults: Record<string, QueenResult> = {
-    intuitive: {
-      id: "intuitive",
-      name: "La Dame de Cœur Mystique",
-      description: "Votre âme navigue dans les eaux profondes de l'intuition sacrée. Comme la Grande Prêtresse des anciens tarots, vous percevez les vérités cachées derrière le voile de l'illusion. Les cartes vous révèlent que votre pouvoir réside dans la connexion aux énergies subtiles et à la sagesse ancestrale.",
+    hearts: {
+      id: "hearts",
+      name: t('quiz.results.hearts.title'),
+      description: t('quiz.results.hearts.description'),
       suit: "Cœur",
       cardNumber: "Dame",
-      power: "Vision Mystique",
+      power: t('quiz.results.hearts.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
           <defs>
@@ -268,13 +334,13 @@ export const Quiz: React.FC = () => {
         </svg>
       )
     },
-    creative: {
-      id: "creative", 
-      name: "La Reine de Carreau Créatrice",
-      description: "Votre essence rayonne comme l'Impératrice des tarots, créatrice de mondes et de beauté. Les carreaux de votre existence brillent de mille feux créatifs. Vous transformez le vide en chef-d'œuvre, l'ordinaire en extraordinaire. Votre magie réside dans votre capacité à manifester l'impossible.",
+    diamonds: {
+      id: "diamonds", 
+      name: t('quiz.results.diamonds.title'),
+      description: t('quiz.results.diamonds.description'),
       suit: "Carreau",
       cardNumber: "Reine",
-      power: "Manifestation Créatrice",
+      power: t('quiz.results.diamonds.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
           <defs>
@@ -292,13 +358,13 @@ export const Quiz: React.FC = () => {
         </svg>
       )
     },
-    analytical: {
-      id: "analytical",
-      name: "La Souveraine de Pique Sage",
-      description: "Tel l'Empereur dans son royaume de sagesse, vous régnez sur le domaine de la connaissance et de l'analyse. Les piques de votre intellect transpercent les mystères les plus complexes. Votre trône se dresse dans la bibliothèque universelle, et votre sceptre est fait de vérité pure.",
+    spades: {
+      id: "spades",
+      name: t('quiz.results.spades.title'),
+      description: t('quiz.results.spades.description'),
       suit: "Pique",
       cardNumber: "Roi",
-      power: "Sagesse Souveraine",
+      power: t('quiz.results.spades.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
           <defs>
@@ -316,13 +382,13 @@ export const Quiz: React.FC = () => {
         </svg>
       )
     },
-    bold: {
-      id: "bold",
-      name: "La Guerrière de Trèfle Conquérante", 
-      description: "Comme la Force incarnée des arcanes majeurs, vous dominez par votre courage et votre détermination. Les trèfles de votre destine fleurissent sur les champs de bataille que vous transformez en jardins de victoire. Votre pouvoir brise toutes les chaînes et ouvre tous les chemins.",
+    clubs: {
+      id: "clubs",
+      name: t('quiz.results.clubs.title'),
+      description: t('quiz.results.clubs.description'),
       suit: "Trèfle",
       cardNumber: "Cavalier",
-      power: "Force Conquérante",
+      power: t('quiz.results.clubs.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
           <defs>
@@ -462,10 +528,10 @@ export const Quiz: React.FC = () => {
                   transition={{ delay: 0.2, duration: 0.8 }}
                 >
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent mb-4">
-                    Oracle des Queens
+                    {t('quiz.title')}
                   </h1>
                   <p className="text-rose-champagne/80 text-xl mb-8">
-                    Les cartes révèlent votre archétype royal
+                    {t('quiz.subtitle')}
                   </p>
                   <div className="w-40 h-1 bg-gradient-to-r from-transparent via-imperial-gold to-transparent mx-auto"></div>
                 </motion.div>
@@ -488,13 +554,13 @@ export const Quiz: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-center text-rose-champagne/80">
-                  Carte {currentQuestion + 1} de {questions.length}
+                  {t('quiz.question')} {currentQuestion + 1} {t('quiz.of')} {questions.length}
                 </p>
               </div>
 
               {/* Question */}
               <fieldset className="mb-16">
-                <legend className="sr-only">Question {currentQuestion + 1}</legend>
+                <legend className="sr-only">{t('quiz.question')} {currentQuestion + 1}</legend>
                 <motion.h2 
                   className="text-2xl md:text-3xl lg:text-4xl font-playfair font-bold text-center mb-16 leading-relaxed"
                   initial={{ y: 20, opacity: 0 }}
@@ -643,7 +709,7 @@ export const Quiz: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Partager ma Carte Révélatrice
+                        {t('quiz.results.shareResult')}
                       </motion.button>
                       
                       <motion.button
@@ -661,7 +727,7 @@ export const Quiz: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Nouveau Tirage Oracle
+                        {t('quiz.retakeQuiz')}
                       </motion.button>
                     </motion.div>
                   </div>
@@ -672,7 +738,7 @@ export const Quiz: React.FC = () => {
         </AnimatePresence>
       </motion.div>
 
-      <style jsx>{`
+      <style>{`
         .card-shadow {
           box-shadow: 
             0 4px 6px -1px rgba(214, 174, 96, 0.1),
