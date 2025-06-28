@@ -181,6 +181,8 @@ export const Quiz: React.FC = () => {
   const optionsRef = useRef<HTMLElement[]>([]);
   const cardsRef = useRef<HTMLDivElement>(null);
 
+
+
   // Check for reduced motion preference
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -230,92 +232,92 @@ export const Quiz: React.FC = () => {
       id: 1,
       question: t('quiz.q1.text'),
       options: [
-        { id: "1a", text: t('quiz.q1.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "1b", text: t('quiz.q1.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "1c", text: t('quiz.q1.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "1d", text: t('quiz.q1.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "1a", text: t('quiz.q1.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "1b", text: t('quiz.q1.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "1c", text: t('quiz.q1.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "1d", text: t('quiz.q1.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 2,
       question: t('quiz.q2.text'),
       options: [
-        { id: "2a", text: t('quiz.q2.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "2b", text: t('quiz.q2.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "2c", text: t('quiz.q2.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "2d", text: t('quiz.q2.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "2a", text: t('quiz.q2.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "2b", text: t('quiz.q2.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "2c", text: t('quiz.q2.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "2d", text: t('quiz.q2.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 3,
       question: t('quiz.q3.text'),
       options: [
-        { id: "3a", text: t('quiz.q3.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "3b", text: t('quiz.q3.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "3c", text: t('quiz.q3.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "3d", text: t('quiz.q3.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "3a", text: t('quiz.q3.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "3b", text: t('quiz.q3.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "3c", text: t('quiz.q3.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "3d", text: t('quiz.q3.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 4,
       question: t('quiz.q4.text'),
       options: [
-        { id: "4a", text: t('quiz.q4.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "4b", text: t('quiz.q4.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "4c", text: t('quiz.q4.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "4d", text: t('quiz.q4.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "4a", text: t('quiz.q4.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "4b", text: t('quiz.q4.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "4c", text: t('quiz.q4.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "4d", text: t('quiz.q4.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 5,
       question: t('quiz.q5.text'),
       options: [
-        { id: "5a", text: t('quiz.q5.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "5b", text: t('quiz.q5.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "5c", text: t('quiz.q5.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "5d", text: t('quiz.q5.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "5a", text: t('quiz.q5.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "5b", text: t('quiz.q5.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "5c", text: t('quiz.q5.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "5d", text: t('quiz.q5.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 6,
       question: t('quiz.q6.text'),
       options: [
-        { id: "6a", text: t('quiz.q6.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "6b", text: t('quiz.q6.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "6c", text: t('quiz.q6.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "6d", text: t('quiz.q6.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "6a", text: t('quiz.q6.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "6b", text: t('quiz.q6.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "6c", text: t('quiz.q6.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "6d", text: t('quiz.q6.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 7,
       question: t('quiz.q7.text'),
       options: [
-        { id: "7a", text: t('quiz.q7.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "7b", text: t('quiz.q7.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "7c", text: t('quiz.q7.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "7d", text: t('quiz.q7.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "7a", text: t('quiz.q7.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "7b", text: t('quiz.q7.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "7c", text: t('quiz.q7.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "7d", text: t('quiz.q7.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     },
     {
       id: 8,
       question: t('quiz.q8.text'),
       options: [
-        { id: "8a", text: t('quiz.q8.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: "Cœur" },
-        { id: "8b", text: t('quiz.q8.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: "Pique" },
-        { id: "8c", text: t('quiz.q8.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: "Carreau" },
-        { id: "8d", text: t('quiz.q8.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: "Trèfle" }
+        { id: "8a", text: t('quiz.q8.hearts'), cardSymbol: CardSymbols.hearts, value: "hearts", suit: t('suits.hearts') },
+        { id: "8b", text: t('quiz.q8.spades'), cardSymbol: CardSymbols.spades, value: "spades", suit: t('suits.spades') },
+        { id: "8c", text: t('quiz.q8.diamonds'), cardSymbol: CardSymbols.diamonds, value: "diamonds", suit: t('suits.diamonds') },
+        { id: "8d", text: t('quiz.q8.clubs'), cardSymbol: CardSymbols.clubs, value: "clubs", suit: t('suits.clubs') }
       ]
     }
   ];
 
   // Queen results with dynamic translations
-  const queenResults: Record<string, QueenResult> = {
+  const queenResults: Record<string, QueenResult> = React.useMemo(() => ({
     hearts: {
       id: "hearts",
       name: t('quiz.results.hearts.title'),
       description: t('quiz.results.hearts.description'),
-      suit: "Cœur",
-      cardNumber: "Dame",
+      suit: t('suits.hearts'),
+      cardNumber: t('ranks.dame'),
       power: t('quiz.results.hearts.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
@@ -338,8 +340,8 @@ export const Quiz: React.FC = () => {
       id: "diamonds", 
       name: t('quiz.results.diamonds.title'),
       description: t('quiz.results.diamonds.description'),
-      suit: "Carreau",
-      cardNumber: "Reine",
+      suit: t('suits.diamonds'),
+      cardNumber: t('ranks.reine'),
       power: t('quiz.results.diamonds.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
@@ -362,8 +364,8 @@ export const Quiz: React.FC = () => {
       id: "spades",
       name: t('quiz.results.spades.title'),
       description: t('quiz.results.spades.description'),
-      suit: "Pique",
-      cardNumber: "Roi",
+      suit: t('suits.spades'),
+      cardNumber: t('ranks.roi'),
       power: t('quiz.results.spades.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
@@ -386,8 +388,8 @@ export const Quiz: React.FC = () => {
       id: "clubs",
       name: t('quiz.results.clubs.title'),
       description: t('quiz.results.clubs.description'),
-      suit: "Trèfle",
-      cardNumber: "Cavalier",
+      suit: t('suits.clubs'),
+      cardNumber: t('ranks.cavalier'),
       power: t('quiz.results.clubs.subtitle'),
       cardImage: (
         <svg viewBox="0 0 200 300" className="w-full h-full">
@@ -408,7 +410,7 @@ export const Quiz: React.FC = () => {
         </svg>
       )
     }
-  };
+  }), [t]);
 
   // Enhanced card flip animation
   const handleOptionSelect = (optionValue: string, optionId: string) => {
@@ -449,10 +451,11 @@ export const Quiz: React.FC = () => {
     setAnswers(newAnswers);
     setSelectedOption(null);
 
-    if (currentQuestion + 1 < questions.length) {
+    // Check if we have completed all questions (8 questions total)
+    if (newAnswers.length < questions.length) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
-      // Calculate result
+      // Calculate result - all 8 questions answered
       const counts = newAnswers.reduce((acc, answer) => {
         acc[answer] = (acc[answer] || 0) + 1;
         return acc;
@@ -462,8 +465,16 @@ export const Quiz: React.FC = () => {
         counts[a[0]] > counts[b[0]] ? a : b
       )[0];
 
-      setResult(queenResults[dominantType]);
-      setShowResult(true);
+      const selectedResult = queenResults[dominantType];
+      
+      if (selectedResult) {
+        setResult(selectedResult);
+        setShowResult(true);
+      } else {
+        // Fallback to hearts if no result found
+        setResult(queenResults.hearts);
+        setShowResult(true);
+      }
       
       // Enhanced card-themed confetti
       setTimeout(() => {
@@ -640,7 +651,7 @@ export const Quiz: React.FC = () => {
               className="text-center relative"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: "back.out(1.2)" }}
+              transition={{ duration: 1, ease: "backOut" }}
             >
               {result && (
                 <>
@@ -650,7 +661,7 @@ export const Quiz: React.FC = () => {
                       className="w-48 h-72 mx-auto mb-8"
                       initial={{ rotateY: 180, scale: 0 }}
                       animate={{ rotateY: 0, scale: 1 }}
-                      transition={{ delay: 0.5, duration: 1, ease: "back.out(1.4)" }}
+                      transition={{ delay: 0.5, duration: 1, ease: "backOut" }}
                     >
                       {result.cardImage}
                     </motion.div>
@@ -676,7 +687,7 @@ export const Quiz: React.FC = () => {
                         <span className="text-imperial-gold font-medium">{result.cardNumber} de {result.suit}</span>
                       </div>
                       <div className="inline-block px-6 py-3 bg-gradient-to-r from-royal-purple/20 to-imperial-gold/20 rounded-full border border-rose-champagne/30 ml-4">
-                        <span className="text-rose-champagne font-medium">Pouvoir: {result.power}</span>
+                        <span className="text-rose-champagne font-medium">{t('quiz.results.powerLabel')}: {result.power}</span>
                       </div>
                     </motion.div>
 
@@ -699,7 +710,7 @@ export const Quiz: React.FC = () => {
                         onClick={() => {
                           if (navigator.share) {
                             navigator.share({
-                              title: `Je suis ${result.name} !`,
+                              title: t('quiz.results.shareTitle', { title: result.name }),
                               text: `${result.description}`,
                               url: window.location.href
                             });
@@ -718,7 +729,7 @@ export const Quiz: React.FC = () => {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Rejoindre le Royaume Royal
+                        {t('quiz.results.joinKingdom')}
                       </motion.button>
 
                       <motion.button

@@ -203,7 +203,18 @@ const translations = {
     'quiz.results.diamonds.description': 'Votre royaume brille de créativité et d\'innovation. Vous transformez le monde par votre vision artistique et votre capacité à matérialiser la beauté. Votre pouvoir réside dans l\'inspiration divine et la capacité à créer des merveilles qui transcendent l\'ordinaire.',
     'quiz.results.clubs.title': 'Guerrière de Trèfle Conquérante',
     'quiz.results.clubs.subtitle': 'La Force Triomphante',
-    'quiz.results.clubs.description': 'Vous êtes une leader née, une conquérante qui avance avec détermination et courage. Votre force vitale inspire et motive les autres à surpasser leurs limites. Vous régnez par l\'exemple, l\'action directe et une volonté inébranlable de transformer le monde.'
+    'quiz.results.clubs.description': 'Vous êtes une leader née, une conquérante qui avance avec détermination et courage. Votre force vitale inspire et motive les autres à surpasser leurs limites. Vous régnez par l\'exemple, l\'action directe et une volonté inébranlable de transformer le monde.',
+    'quiz.results.shareTitle': 'Je suis {title} !',
+    'quiz.results.joinKingdom': 'Rejoindre le Royaume Royal',
+    'quiz.results.powerLabel': 'Pouvoir',
+    'suits.hearts': 'Cœur',
+    'suits.spades': 'Pique', 
+    'suits.diamonds': 'Carreau',
+    'suits.clubs': 'Trèfle',
+    'ranks.dame': 'Dame',
+    'ranks.reine': 'Reine',
+    'ranks.roi': 'Roi', 
+    'ranks.cavalier': 'Cavalier'
   },
   en: {
     // Navigation
@@ -401,7 +412,18 @@ const translations = {
     'quiz.results.diamonds.description': 'Your kingdom shines with creativity and innovation. You transform the world through your artistic vision and ability to materialize beauty. Your power lies in divine inspiration and the ability to create wonders that transcend the ordinary.',
     'quiz.results.clubs.title': 'Conquering Warrior of Clubs',
     'quiz.results.clubs.subtitle': 'Triumphant Force',
-    'quiz.results.clubs.description': 'You are a born leader, a conqueror who advances with determination and courage. Your vital force inspires and motivates others to surpass their limits. You reign through example, direct action and an unwavering will to transform the world.'
+    'quiz.results.clubs.description': 'You are a born leader, a conqueror who advances with determination and courage. Your vital force inspires and motivates others to surpass their limits. You reign through example, direct action and an unwavering will to transform the world.',
+    'quiz.results.shareTitle': 'I am {title}!',
+    'quiz.results.joinKingdom': 'Join the Royal Kingdom',
+    'quiz.results.powerLabel': 'Power',
+    'suits.hearts': 'Hearts',
+    'suits.spades': 'Spades',
+    'suits.diamonds': 'Diamonds', 
+    'suits.clubs': 'Clubs',
+    'ranks.dame': 'Dame',
+    'ranks.reine': 'Queen',
+    'ranks.roi': 'King',
+    'ranks.cavalier': 'Knight'
   }
 };
 
