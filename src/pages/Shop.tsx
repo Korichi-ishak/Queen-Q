@@ -68,21 +68,21 @@ export const Shop: React.FC = () => {
 
   const getCategoryIcon = (category: string) => {
     switch (category) {
-      case 'cards': return <Star className="w-6 h-6 text-amber-400" />;
-      case 'clothing': return <Shirt className="w-6 h-6 text-purple-400" />;
-      case 'protection': return <Shield className="w-6 h-6 text-rose-400" />;
-      case 'accessories': return <Heart className="w-6 h-6 text-indigo-400" />;
-      default: return <ShoppingBag className="w-6 h-6 text-gray-400" />;
+      case 'cards': return <Star className="w-6 h-6 text-imperial-gold" />;
+      case 'clothing': return <Shirt className="w-6 h-6 text-royal-purple" />;
+      case 'protection': return <Shield className="w-6 h-6 text-rose-champagne" />;
+      case 'accessories': return <Heart className="w-6 h-6 text-patina-gold" />;
+      default: return <ShoppingBag className="w-6 h-6 text-amber-smoke" />;
     }
   };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'cards': return 'from-amber-400 to-yellow-600';
-      case 'clothing': return 'from-purple-400 to-purple-600';
-      case 'protection': return 'from-rose-400 to-pink-600';
-      case 'accessories': return 'from-indigo-400 to-blue-600';
-      default: return 'from-gray-400 to-gray-600';
+      case 'cards': return 'from-imperial-gold to-smoky-gold';
+      case 'clothing': return 'from-royal-purple to-vintage-aubergine';
+      case 'protection': return 'from-rose-champagne to-antique-rose';
+      case 'accessories': return 'from-patina-gold to-amber-smoke';
+      default: return 'from-velvet-black to-ink-black';
     }
   };
 
@@ -91,7 +91,7 @@ export const Shop: React.FC = () => {
     : shopItems.filter(item => item.category === selectedCategory);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-royal-purple via-purple-900 to-black px-6 pt-32 pb-12 relative overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-br from-royal-purple via-vintage-aubergine to-inked-indigo px-6 pt-32 pb-12 relative overflow-hidden">
       {/* Animated Background Stars */}
       {starPositions.map((star, i) => (
         <motion.div
@@ -121,7 +121,7 @@ export const Shop: React.FC = () => {
             <Crown className="w-16 h-16 text-imperial-gold mx-auto mb-4" />
           </motion.div>
           
-          <h1 className="font-playfair font-bold text-5xl bg-gradient-to-r from-imperial-gold via-rose-champagne to-purple-300 bg-clip-text text-transparent mb-4">
+          <h1 className="font-playfair font-bold text-5xl bg-gradient-to-r from-imperial-gold via-rose-champagne to-antique-rose bg-clip-text text-transparent mb-4">
             {t('shop.title')}
           </h1>
           <p className="text-rose-champagne/80 text-xl max-w-3xl mx-auto leading-relaxed">

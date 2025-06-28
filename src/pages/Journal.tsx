@@ -82,10 +82,11 @@ export const Journal: React.FC = () => {
 
   const getMoodColor = (mood: string) => {
     switch (mood) {
-      case 'positive': return 'from-emerald-400 to-teal-500';
-      case 'negative': return 'from-blue-400 to-indigo-500';
-      case 'reflective': return 'from-purple-400 to-violet-500';
-      default: return 'from-gray-400 to-gray-500';
+      case 'positive': return 'from-rose-champagne to-antique-rose';
+      case 'neutral': return 'from-smoky-gold to-patina-gold';
+      case 'reflective': return 'from-royal-purple to-vintage-aubergine';
+      case 'melancholic': return 'from-inked-indigo to-amber-smoke';
+      default: return 'from-velvet-black to-ink-black';
     }
   };
 

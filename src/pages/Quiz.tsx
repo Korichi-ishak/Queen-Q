@@ -519,10 +519,10 @@ export const Quiz: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a0b2e] via-[#3B1E50] to-[#2d1444] py-20">
+    <div className="min-h-screen bg-gradient-to-br from-inked-indigo via-royal-purple to-vintage-aubergine py-20">
       {/* Mystical Background Pattern */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-20">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,_#D6AE60_1px,_transparent_1px),radial-gradient(circle_at_75%_75%,_#E4C97A_1px,_transparent_1px)] bg-[length:50px_50px]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,_#D6AE60_1px,_transparent_1px),radial-gradient(circle_at_75%_75%,_#C8A96B_1px,_transparent_1px)] bg-[length:50px_50px]"></div>
       </div>
 
       <motion.div

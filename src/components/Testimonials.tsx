@@ -55,7 +55,7 @@ export const Testimonials: React.FC = () => {
       archetype: t('testimonials.julie.archetype'),
       text: t('testimonials.julie.text'),
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b188?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
+      avatar: "https://images.unsplash.com/photo-1554151228-14d9def656e4?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
       mood: 'mystical'
     },
     {
@@ -64,7 +64,7 @@ export const Testimonials: React.FC = () => {
       archetype: t('testimonials.camille.archetype'),
       text: t('testimonials.camille.text'),
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
+      avatar: "https://images.unsplash.com/photo-1488716820095-cbe80883c496?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
       mood: 'powerful'
     }
   ];
@@ -100,34 +100,34 @@ export const Testimonials: React.FC = () => {
   const getMoodColors = (mood: string) => {
     switch (mood) {
       case 'warm': return {
-        bg: 'from-orange-900/20 via-amber-900/10 to-yellow-900/20',
-        border: 'border-amber-500/30',
-        glow: 'shadow-amber-500/20',
-        accent: 'text-amber-400'
+        bg: 'from-parchment-cream/20 via-powder-rose/10 to-antique-rose/20',
+        border: 'border-smoky-gold/30',
+        glow: 'shadow-smoky-gold/20',
+        accent: 'text-smoky-gold'
       };
       case 'mystical': return {
-        bg: 'from-purple-900/20 via-indigo-900/10 to-blue-900/20',
-        border: 'border-indigo-500/30',
-        glow: 'shadow-indigo-500/20',
-        accent: 'text-indigo-400'
+        bg: 'from-royal-purple/20 via-vintage-aubergine/10 to-inked-indigo/20',
+        border: 'border-royal-purple/30',
+        glow: 'shadow-royal-purple/20',
+        accent: 'text-royal-purple'
       };
       case 'energetic': return {
-        bg: 'from-red-900/20 via-pink-900/10 to-rose-900/20',
-        border: 'border-pink-500/30',
-        glow: 'shadow-pink-500/20',
-        accent: 'text-pink-400'
+        bg: 'from-rose-champagne/20 via-antique-rose/10 to-powder-rose/20',
+        border: 'border-rose-champagne/30',
+        glow: 'shadow-rose-champagne/20',
+        accent: 'text-rose-champagne'
       };
       case 'powerful': return {
-        bg: 'from-slate-900/20 via-gray-900/10 to-zinc-900/20',
-        border: 'border-slate-500/30',
-        glow: 'shadow-slate-500/20',
-        accent: 'text-slate-300'
+        bg: 'from-inked-indigo/20 via-velvet-black/10 to-amber-smoke/20',
+        border: 'border-patina-gold/30',
+        glow: 'shadow-patina-gold/20',
+        accent: 'text-patina-gold'
       };
       case 'serene': return {
-        bg: 'from-emerald-900/20 via-teal-900/10 to-cyan-900/20',
-        border: 'border-teal-500/30',
-        glow: 'shadow-teal-500/20',
-        accent: 'text-teal-400'
+        bg: 'from-moon-milk/20 via-warm-pearl/10 to-parchment-cream/20',
+        border: 'border-imperial-gold/30',
+        glow: 'shadow-imperial-gold/20',
+        accent: 'text-imperial-gold'
       };
       default: return {
         bg: 'from-imperial-gold/20 via-royal-purple/10 to-imperial-gold/20',

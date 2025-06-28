@@ -21,7 +21,7 @@ export const LiveTeaBanner: React.FC = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-amber-600 via-rose-500 to-purple-600 text-white py-3 px-4 shadow-lg"
+          className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-imperial-gold via-rose-champagne to-royal-purple text-warm-pearl py-3 px-4 shadow-lg"
           initial={{ y: 100 }}
           animate={{ 
             y: 0,
@@ -101,7 +101,7 @@ export const LiveTeaBanner: React.FC = () => {
       
       {/* Sparkle Effects */}
       <motion.div
-        className="absolute top-2 left-20 w-1 h-1 bg-yellow-300 rounded-full"
+        className="absolute top-2 left-20 w-1 h-1 bg-imperial-gold rounded-full"
         animate={{
           scale: [0, 1, 0],
           opacity: [0, 1, 0]
@@ -113,7 +113,7 @@ export const LiveTeaBanner: React.FC = () => {
         }}
       />
       <motion.div
-        className="absolute top-4 right-32 w-1 h-1 bg-pink-300 rounded-full"
+        className="absolute top-4 right-32 w-1 h-1 bg-rose-champagne rounded-full"
         animate={{
           scale: [0, 1, 0],
           opacity: [0, 1, 0]
