@@ -127,11 +127,27 @@ export const Journal: React.FC = () => {
   const getStickerIcon = (type: 'heart' | 'spade' | 'crown') => {
     switch (type) {
       case 'heart':
-        return <Heart className="w-8 h-8 text-red-500 fill-current" />;
+        return (
+          <div className="relative">
+            <Heart className="w-8 h-8 text-red-500 fill-current drop-shadow-lg" />
+            <div className="absolute inset-0 bg-red-500/20 rounded-full blur-md scale-150"></div>
+          </div>
+        );
       case 'spade':
-        return <Spade className="w-8 h-8 text-gray-800 fill-current" />;
+        return (
+          <div className="relative">
+            <Spade className="w-8 h-8 text-royal-purple fill-current drop-shadow-lg" />
+            <div className="absolute inset-0 bg-royal-purple/20 rounded-full blur-md scale-150"></div>
+          </div>
+        );
       case 'crown':
-        return <Crown className="w-8 h-8 text-imperial-gold fill-current" />;
+        return (
+          <div className="relative">
+            <Crown className="w-8 h-8 text-imperial-gold fill-current drop-shadow-lg" />
+            <div className="absolute inset-0 bg-imperial-gold/20 rounded-full blur-md scale-150"></div>
+            <div className="absolute top-0 right-0 w-1 h-1 bg-imperial-gold rounded-full animate-ping"></div>
+          </div>
+        );
     }
   };
 
@@ -146,10 +162,10 @@ export const Journal: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h1 className="font-playfair font-bold text-4xl text-royal-purple mb-4">
-            Journal d'Âme
+            {t('journal.title')}
           </h1>
           <p className="text-royal-purple/70 text-lg">
-            Créez votre page personnelle avec des autocollants magiques
+            {t('journal.subtitle')}
           </p>
         </motion.div>
 
@@ -162,14 +178,14 @@ export const Journal: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h2 className="font-playfair font-bold text-xl text-royal-purple mb-4 text-center">
-              Autocollants
+              {t('journal.stickers')}
             </h2>
             
             <div className="space-y-4">
               {[
-                { type: 'heart' as const, label: 'Cœur' },
-                { type: 'spade' as const, label: 'Pique' },
-                { type: 'crown' as const, label: 'Couronne' }
+                { type: 'heart' as const, label: t('journal.heart') },
+                { type: 'spade' as const, label: t('journal.spade') },
+                { type: 'crown' as const, label: t('journal.crown') }
               ].map(({ type, label }) => (
                 <div
                   key={type}
@@ -192,7 +208,7 @@ export const Journal: React.FC = () => {
               aria-label="Effacer tous les autocollants"
             >
               <RefreshCw size={18} />
-              <span>Reset</span>
+              <span>{t('journal.reset')}</span>
             </button>
           </motion.div>
 
@@ -224,12 +240,12 @@ export const Journal: React.FC = () => {
               {/* Paper Texture Overlay */}
               <div className="absolute inset-0 opacity-30 bg-gradient-to-br from-transparent via-white/20 to-transparent pointer-events-none" />
               
-              {/* Drop Zone Hint */}
-              {stickers.length === 0 && (
-                <div className="absolute inset-0 flex items-center justify-center text-royal-purple/40 font-medium text-lg pointer-events-none">
-                  Glissez des autocollants ici pour créer votre page
-                </div>
-              )}
+                             {/* Drop Zone Hint */}
+               {stickers.length === 0 && (
+                 <div className="absolute inset-0 flex items-center justify-center text-royal-purple/40 font-medium text-lg pointer-events-none">
+                   {t('journal.dragHint')}
+                 </div>
+               )}
 
               {/* Stickers */}
               <AnimatePresence>
@@ -262,7 +278,7 @@ export const Journal: React.FC = () => {
             </div>
             
             <div className="mt-4 text-center text-royal-purple/60 text-sm">
-              {stickers.length} autocollant{stickers.length !== 1 ? 's' : ''} placé{stickers.length !== 1 ? 's' : ''}
+              {stickers.length} {stickers.length !== 1 ? t('journal.countPlural') : t('journal.count')} {stickers.length !== 1 ? t('journal.placedPlural') : t('journal.placed')}
             </div>
           </motion.div>
         </div>
@@ -270,16 +286,16 @@ export const Journal: React.FC = () => {
         {/* Save Toast */}
         <AnimatePresence>
           {showToast && (
-            <motion.div
-              className="fixed bottom-8 right-8 bg-green-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-2 z-50"
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 50, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Save size={18} />
-              <span>Sauvegardé 📒</span>
-            </motion.div>
+                         <motion.div
+               className="fixed bottom-8 right-8 bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-full shadow-lg flex items-center space-x-2 z-50"
+               initial={{ opacity: 0, y: 50, scale: 0.9 }}
+               animate={{ opacity: 1, y: 0, scale: 1 }}
+               exit={{ opacity: 0, y: 50, scale: 0.9 }}
+               transition={{ duration: 0.3 }}
+             >
+               <Save size={18} />
+               <span>{t('journal.saved')}</span>
+             </motion.div>
           )}
         </AnimatePresence>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Filter, Search, Star, Heart, ShoppingBag } from 'lucide-react';
+import { Filter, Search, Star, Heart, ShoppingBag, Sparkles, Moon, Sun, Gem, Compass, Flame, Scroll } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
 interface Product {
@@ -16,39 +16,57 @@ interface Product {
 const mockProducts: Product[] = [
   {
     id: '1',
-    name: 'Deck Queen de Q - Édition Limitée',
-    price: 39.99,
+    name: 'shop.products.oracle.name',
+    price: 67.99,
     image: '/assets/cards/placeholder.svg',
     category: 'cartes',
-    badge: 'Exclu Premium',
+    badge: 'shop.badges.limitedEdition',
     rating: 4.9
   },
   {
     id: '2',
-    name: 'T-Shirt Royal Purple',
-    price: 24.99,
+    name: 'shop.products.crystal.name',
+    price: 89.99,
     image: '/assets/cards/placeholder.svg',
-    category: 'vetements',
-    badge: 'Nouveau',
-    rating: 4.7
-  },
-  {
-    id: '3',
-    name: 'Cartes Oracle Mystiques',
-    price: 29.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'cartes',
-    badge: 'Populaire',
+    category: 'accessoires',
+    badge: 'shop.badges.handcrafted',
     rating: 4.8
   },
   {
-    id: '4',
-    name: 'Sweat à Capuche Imperial Gold',
-    price: 49.99,
+    id: '3',
+    name: 'shop.products.journal.name',
+    price: 45.99,
     image: '/assets/cards/placeholder.svg',
-    category: 'vetements',
-    badge: 'Exclu Premium',
+    category: 'accessoires',
+    badge: 'shop.badges.bestseller',
+    rating: 4.7
+  },
+  {
+    id: '4',
+    name: 'shop.products.pendulum.name',
+    price: 124.99,
+    image: '/assets/cards/placeholder.svg',
+    category: 'accessoires',
+    badge: 'shop.badges.artisan',
+    rating: 4.9
+  },
+  {
+    id: '5',
+    name: 'shop.products.candles.name',
+    price: 34.99,
+    image: '/assets/cards/placeholder.svg',
+    category: 'accessoires',
+    badge: 'shop.badges.organic',
     rating: 4.6
+  },
+  {
+    id: '6',
+    name: 'shop.products.tarotCloth.name',
+    price: 56.99,
+    image: '/assets/cards/placeholder.svg',
+    category: 'accessoires',
+    badge: 'shop.badges.exclusive',
+    rating: 4.8
   }
 ];
 
@@ -59,17 +77,16 @@ export const Shop: React.FC = () => {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
 
   const categories = [
-    { value: 'tous', label: 'Tous les produits' },
-    { value: 'cartes', label: 'Jeux de cartes' },
-    { value: 'vetements', label: 'Vêtements' },
-    { value: 'accessoires', label: 'Accessoires' }
+    { value: 'tous', label: t('shop.categories.all') },
+    { value: 'cartes', label: t('shop.categories.cards') },
+    { value: 'accessoires', label: t('shop.categories.accessories') }
   ];
 
   const priceRanges = [
-    { value: 'tous', label: 'Tous les prix' },
-    { value: '0-25', label: '0€ - 25€' },
-    { value: '25-50', label: '25€ - 50€' },
-    { value: '50+', label: '50€+' }
+    { value: 'tous', label: t('shop.priceRanges.all') },
+    { value: '0-50', label: t('shop.priceRanges.low') },
+    { value: '50-100', label: t('shop.priceRanges.medium') },
+    { value: '100+', label: t('shop.priceRanges.high') }
   ];
 
   const toggleFavorite = (productId: string) => {
@@ -82,24 +99,80 @@ export const Shop: React.FC = () => {
     setFavorites(newFavorites);
   };
 
+  const getProductIcon = (productId: string) => {
+    const iconProps = { className: "w-12 h-12", strokeWidth: 1.5 };
+    
+    switch (productId) {
+      case '1': // Oracle
+        return (
+          <div className="relative">
+            <Sparkles {...iconProps} className="w-12 h-12 text-imperial-gold" />
+            <div className="absolute inset-0 bg-gradient-to-br from-imperial-gold/20 to-rose-champagne/20 rounded-full blur-md"></div>
+          </div>
+        );
+      case '2': // Crystal Sphere
+        return (
+          <div className="relative">
+            <Gem {...iconProps} className="w-12 h-12 text-purple-400" />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-blue-400/20 rounded-full blur-md"></div>
+          </div>
+        );
+      case '3': // Grimoire
+        return (
+          <div className="relative">
+            <Scroll {...iconProps} className="w-12 h-12 text-amber-600" />
+            <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 to-orange-400/20 rounded-full blur-md"></div>
+          </div>
+        );
+      case '4': // Pendulum
+        return (
+          <div className="relative">
+            <Compass {...iconProps} className="w-12 h-12 text-rose-gold" />
+            <div className="absolute inset-0 bg-gradient-to-br from-rose-champagne/20 to-imperial-gold/20 rounded-full blur-md"></div>
+          </div>
+        );
+      case '5': // Candles
+        return (
+          <div className="relative flex space-x-1">
+            <Flame className="w-6 h-12 text-orange-400" strokeWidth={1.5} />
+            <Flame className="w-6 h-12 text-yellow-400" strokeWidth={1.5} />
+            <Flame className="w-6 h-12 text-orange-400" strokeWidth={1.5} />
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-yellow-400/20 rounded-full blur-md"></div>
+          </div>
+        );
+      case '6': // Tarot Cloth
+        return (
+          <div className="relative">
+            <div className="flex items-center space-x-1">
+              <Moon className="w-6 h-8 text-blue-300" strokeWidth={1.5} />
+              <Sun className="w-6 h-8 text-yellow-400" strokeWidth={1.5} />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-300/20 to-yellow-400/20 rounded-full blur-md"></div>
+          </div>
+        );
+      default:
+        return <ShoppingBag className="w-12 h-12 text-royal-purple/60" />;
+    }
+  };
+
   const filteredProducts = mockProducts.filter(product => {
     if (selectedCategory !== 'tous' && product.category !== selectedCategory) {
       return false;
     }
     
-    if (priceRange !== 'tous') {
-      const price = product.price;
-      switch (priceRange) {
-        case '0-25':
-          return price <= 25;
-        case '25-50':
-          return price > 25 && price <= 50;
-        case '50+':
-          return price > 50;
-        default:
-          return true;
+          if (priceRange !== 'tous') {
+        const price = product.price;
+        switch (priceRange) {
+          case '0-50':
+            return price <= 50;
+          case '50-100':
+            return price > 50 && price <= 100;
+          case '100+':
+            return price > 100;
+          default:
+            return true;
+        }
       }
-    }
     
     return true;
   });
@@ -115,10 +188,10 @@ export const Shop: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h1 className="font-playfair font-bold text-5xl text-royal-purple mb-4">
-            Boutique Royale
+            {t('shop.title')}
           </h1>
           <p className="text-royal-purple/70 text-xl max-w-2xl mx-auto">
-            Découvrez notre collection exclusive de cartes, vêtements et accessoires
+            {t('shop.subtitle')}
           </p>
         </motion.div>
 
@@ -135,7 +208,7 @@ export const Shop: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-royal-purple/40" size={20} />
               <input
                 type="text"
-                placeholder="Rechercher un produit..."
+                placeholder={t('shop.search')}
                 disabled
                 className="w-full pl-10 pr-4 py-3 bg-white/80 border border-rose-champagne/30 rounded-xl text-royal-purple placeholder-royal-purple/50 cursor-not-allowed opacity-60"
                 aria-label="Recherche de produits (indisponible)"
@@ -189,15 +262,43 @@ export const Shop: React.FC = () => {
               whileHover={{ y: -5 }}
             >
               {/* Product Image */}
-              <div className="relative aspect-square bg-gradient-to-br from-royal-purple/10 to-imperial-gold/10 flex items-center justify-center overflow-hidden">
-                <div className="w-20 h-20 bg-royal-purple/20 rounded-full flex items-center justify-center">
-                  <ShoppingBag className="w-10 h-10 text-royal-purple/60" />
+              <div className="relative aspect-square bg-gradient-to-br from-royal-purple/5 via-imperial-gold/5 to-rose-champagne/5 flex items-center justify-center overflow-hidden">
+                <motion.div 
+                  className="relative"
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {getProductIcon(product.id)}
+                </motion.div>
+                
+                {/* Magical Sparkles */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  {[...Array(3)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      className="absolute w-1 h-1 bg-imperial-gold rounded-full"
+                      style={{
+                        left: `${20 + i * 30}%`,
+                        top: `${15 + i * 25}%`
+                      }}
+                      animate={{
+                        opacity: [0, 1, 0],
+                        scale: [0.5, 1, 0.5]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        delay: i * 0.7,
+                        ease: "easeInOut"
+                      }}
+                    />
+                  ))}
                 </div>
                 
                 {/* Badge */}
                 {product.badge && (
-                  <div className="absolute top-3 left-3 bg-imperial-gold text-white px-2 py-1 rounded-full text-xs font-medium">
-                    {product.badge}
+                  <div className="absolute top-3 left-3 bg-gradient-to-r from-imperial-gold to-rose-champagne text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                    {t(product.badge as any)}
                   </div>
                 )}
                 
@@ -219,8 +320,8 @@ export const Shop: React.FC = () => {
 
               {/* Product Info */}
               <div className="p-4">
-                <h3 className="font-playfair font-bold text-lg text-royal-purple mb-2 line-clamp-2">
-                  {product.name}
+                <h3 className="font-playfair font-bold text-lg text-royal-purple mb-2 line-clamp-2 leading-tight">
+                  {t(product.name as any)}
                 </h3>
                 
                 <div className="flex items-center mb-3">
@@ -242,16 +343,23 @@ export const Shop: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl text-royal-purple">
-                    {product.price.toFixed(2)}€
-                  </span>
-                  <button
+                  <div className="flex flex-col">
+                    <span className="font-bold text-xl text-royal-purple">
+                      ${product.price.toFixed(2)} CAD
+                    </span>
+                    <span className="text-xs text-royal-purple/50">
+                      Livraison incluse
+                    </span>
+                  </div>
+                  <motion.button
                     disabled
-                    className="px-4 py-2 bg-imperial-gold/30 text-imperial-gold rounded-xl font-medium cursor-not-allowed opacity-40 hover:opacity-40 transition-opacity duration-200"
+                    className="px-4 py-2 bg-gradient-to-r from-imperial-gold/20 to-rose-champagne/20 text-imperial-gold rounded-xl font-medium cursor-not-allowed opacity-40 border border-imperial-gold/30"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     aria-label="Ajouter au panier (indisponible)"
                   >
-                    Ajouter
-                  </button>
+                    {t('shop.addToCart')}
+                  </motion.button>
                 </div>
               </div>
             </motion.div>
@@ -270,10 +378,10 @@ export const Shop: React.FC = () => {
               <Search className="w-12 h-12 text-royal-purple/40" />
             </div>
             <h3 className="font-playfair font-bold text-2xl text-royal-purple mb-2">
-              Aucun produit trouvé
+              {t('shop.noProducts')}
             </h3>
             <p className="text-royal-purple/70">
-              Essayez de modifier vos filtres pour voir plus de produits.
+              {t('shop.noProductsDesc')}
             </p>
           </motion.div>
         )}
@@ -286,11 +394,10 @@ export const Shop: React.FC = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
         >
           <h2 className="font-playfair font-bold text-3xl mb-4">
-            Boutique en Construction
+            {t('shop.comingSoon')}
           </h2>
           <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            Notre boutique royale sera bientôt disponible avec une sélection exclusive 
-            de produits Queen de Q. Restez connectés pour les dernières nouveautés !
+            {t('shop.comingSoonDesc')}
           </p>
         </motion.div>
       </div>
