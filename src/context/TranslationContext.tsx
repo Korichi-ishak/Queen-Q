@@ -12,6 +12,9 @@ const translations = {
     'nav.home': 'Accueil',
     'nav.cards': 'Cartes',
     'nav.quiz': 'Quiz',
+    'nav.chat': 'Chat',
+    'nav.journal': 'Journal',
+    'nav.shop': 'Boutique',
     
     // Cards page
     'cards.title': 'Explorez vos archétypes',
@@ -221,6 +224,9 @@ const translations = {
     'nav.home': 'Home',
     'nav.cards': 'Cards',
     'nav.quiz': 'Quiz',
+    'nav.chat': 'Chat',
+    'nav.journal': 'Journal',
+    'nav.shop': 'Shop',
     
     // Cards page
     'cards.title': 'Explore your archetypes',

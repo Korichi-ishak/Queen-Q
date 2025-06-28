@@ -278,4 +278,59 @@ Des prototypes haute-fidélité mais légers démontrent la valeur UX sans code 
 justinmind.com
 uxdesigninstitute.com
 .----------
-  
+
+
+
+  ## 🗂  Sprint — Trois écrans Coming-Soon
+
+### 1. Créer trois routes
+| Page | URL | Wrapper full-screen |
+|------|-----|---------------------|
+| Chat « Afternoon Tea » | /chat | main.min-h-screen.bg-royalPurple.flex.items-center.justify-center.p-6 |
+| Journal d’âme | /journal | main.min-h-screen.bg-[#f9f5ef].flex.items-center.justify-center.p-6 |
+| Boutique | /shop | main.min-h-screen.bg-royalPurple/5.px-6.py-12 |
+
+---
+
+### 2. Chat « Afternoon Tea »
+* Fenêtre 360×540 px, glassmorphisme (`bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl`).
+* Header : avatar grand-mère 👑 + titre **Reine-Mère**.
+* Zone messages :  
+  * bulle violet utilisateur : « Hello… »  
+  * bulle dorée Reine-Mère : **« Coming soon… »**
+* Input désactivé, placeholder « Bientôt disponible ».
+* Animation d’entrée : fade + slide-up 40 px (500 ms).  
+* A11y : `role="dialog"`, focus-trap, Esc ferme la fenêtre.
+
+---
+
+### 3. Journal d’âme
+* Canvas 800×500 px (fond papier).  
+* 3 autocollants SVG (cœur, pique, couronne) affichés dans une palette latérale.  
+* Drag-and-drop basique ; positions sauvegardées en `localStorage`.  
+* Toast “Sauvegardé 📒” après drop.  
+* Bouton **Reset** qui vide stickers + localStorage.
+
+---
+
+### 4. Boutique mock
+* Grid responsive (2 col mobile / 4 col desktop) – 4 produits fictifs.  
+* Carte : image placeholder, nom, prix, badge “Exclu Premium”.  
+* Filtres décoratifs top (select Catégorie / Prix) non connectés.  
+* Bouton **Ajouter** désactivé (`opacity-40 cursor-not-allowed`).  
+* Hover : légère élévation + ombre douce.
+
+---
+
+### 5. Accessibilité & performance
+* Tous éléments focusables ; aria-labels clairs (« Ouvrir chat », « Déplacer sticker », etc.).  
+* `prefers-reduced-motion` : animations remplacées par fade.  
+* Images `loading="lazy"` ; pages Lighthouse ≥ 90 Perf / 100 A11y.
+
+---
+
+### 6. Commit & preview
+```bash
+git add .
+git commit -m "feat: coming-soon trio (chat • journal • shop) with placeholder UI"
+git push && vercel --prod

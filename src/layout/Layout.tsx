@@ -101,6 +101,51 @@ export const Layout: React.FC = () => {
                       )}
                     </Link>
                   </li>
+                  <li>
+                    <Link 
+                      to="/chat" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/chat' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">{t('nav.chat')}</span>
+                      {location.pathname === '/chat' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/journal" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/journal' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">{t('nav.journal')}</span>
+                      {location.pathname === '/journal' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
+                      to="/shop" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/shop' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">{t('nav.shop')}</span>
+                      {location.pathname === '/shop' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
                 </ul>
               </nav>
               
@@ -167,6 +212,42 @@ export const Layout: React.FC = () => {
                   } transition-colors`}
                 >
                   {t('nav.quiz')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/chat" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/chat' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  {t('nav.chat')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/journal" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/journal' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  {t('nav.journal')}
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/shop" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/shop' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  {t('nav.shop')}
                 </Link>
               </li>
             </ul>
