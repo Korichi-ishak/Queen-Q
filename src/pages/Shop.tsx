@@ -136,19 +136,32 @@ export const Shop: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {['all', 'cards', 'clothing', 'protection', 'accessories'].map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                selectedCategory === category
-                  ? 'bg-imperial-gold text-royal-purple shadow-lg shadow-imperial-gold/30'
-                  : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
-              }`}
-            >
-              {t(`shop.categories.${category}`)}
-            </button>
-          ))}
+          {(['all', 'cards', 'clothing', 'protection', 'accessories'] as const).map((category) => {
+            const getCategoryLabel = (cat: string) => {
+              switch (cat) {
+                case 'all': return t('shop.categories.all');
+                case 'cards': return t('shop.categories.cards');
+                case 'clothing': return t('shop.categories.clothing');
+                case 'protection': return t('shop.categories.protection');
+                case 'accessories': return t('shop.categories.accessories');
+                default: return t('shop.categories.all');
+              }
+            };
+
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-imperial-gold text-royal-purple shadow-lg shadow-imperial-gold/30'
+                    : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+                }`}
+              >
+                {getCategoryLabel(category)}
+              </button>
+            );
+          })}
         </motion.div>
 
         {/* Products Grid */}
