@@ -62,6 +62,8 @@ const translations = {
     'chat.teaTime': 'Le thé de l\'après-midi arrive bientôt...',
     'chat.teaTimeAvailable': 'Le thé sera bientôt prêt...',
     'chat.inputPlaceholder': 'Écrivez votre message... (bientôt disponible)',
+    'chat.typing': 'Reine-Mère tape...',
+    'chat.sendDisabled': 'Envoyer message (indisponible)',
     'chat.description': 'Fenêtre de chat avec la Reine-Mère, actuellement indisponible',
     'chat.timestamp1': '14:32',
     'chat.timestamp2': '14:33',
@@ -169,6 +171,12 @@ const translations = {
     'testimonials.clara.name': 'Clara D.',
     'testimonials.clara.archetype': 'Évitait les Protecteurs',
     'testimonials.clara.text': 'Je fuyais les hommes stables et aimants. Comprendre ce pattern m\'a aidée à accepter l\'amour sain.',
+    'testimonials.julie.name': 'Julie R.',
+    'testimonials.julie.archetype': 'Attirait des Narcissiques',
+    'testimonials.julie.text': 'J\'étais toujours avec des hommes qui ne parlaient que d\'eux. Queen de Q m\'a ouvert les yeux sur ce pattern destructeur.',
+    'testimonials.camille.name': 'Camille S.',
+    'testimonials.camille.archetype': 'Évitait l\'Engagement',
+    'testimonials.camille.text': 'Je sabotais toujours mes relations sérieuses. Comprendre mes peurs m\'a permis de construire une relation stable.',
     
     // Layout/Footer
     'footer.description': 'Comprenez vos patterns d\'attraction masculine et transformez vos relations amoureuses.',
@@ -293,6 +301,8 @@ const translations = {
     'chat.teaTime': 'Afternoon tea coming soon...',
     'chat.teaTimeAvailable': 'Tea will be ready soon...',
     'chat.inputPlaceholder': 'Write your message... (coming soon)',
+    'chat.typing': 'Queen Mother typing...',
+    'chat.sendDisabled': 'Send message (unavailable)',
     'chat.description': 'Chat window with Queen Mother, currently unavailable',
     'chat.timestamp1': '14:32',
     'chat.timestamp2': '14:33',
@@ -400,6 +410,12 @@ const translations = {
     'testimonials.clara.name': 'Clara D.',
     'testimonials.clara.archetype': 'Avoided Protectors',
     'testimonials.clara.text': 'I was running away from stable and loving men. Understanding this pattern helped me accept healthy love.',
+    'testimonials.julie.name': 'Julie R.',
+    'testimonials.julie.archetype': 'Attracted Narcissists',
+    'testimonials.julie.text': 'I was always with men who only talked about themselves. Queen de Q opened my eyes to this destructive pattern.',
+    'testimonials.camille.name': 'Camille S.',
+    'testimonials.camille.archetype': 'Avoided Commitment',
+    'testimonials.camille.text': 'I always sabotaged my serious relationships. Understanding my fears allowed me to build a stable relationship.',
     
     // Layout/Footer
     'footer.description': 'Understand your masculine attraction patterns and transform your romantic relationships.',

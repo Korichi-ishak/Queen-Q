@@ -20,7 +20,7 @@ export const Testimonials: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeCard, setActiveCard] = useState<string | null>(null);
 
-  // Use translation system for testimonials
+  // Use translation system for testimonials - All women
   const testimonials: Testimonial[] = [
     {
       id: 'marie',
@@ -32,15 +32,6 @@ export const Testimonials: React.FC = () => {
       mood: 'warm'
     },
     {
-      id: 'thomas',
-      name: t('testimonials.thomas.name'),
-      archetype: t('testimonials.thomas.archetype'),
-      text: t('testimonials.thomas.text'),
-      rating: 5,
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
-      mood: 'mystical'
-    },
-    {
       id: 'sophie',
       name: t('testimonials.sophie.name'),
       archetype: t('testimonials.sophie.archetype'),
@@ -50,22 +41,31 @@ export const Testimonials: React.FC = () => {
       mood: 'energetic'
     },
     {
-      id: 'alex',
-      name: t('testimonials.alex.name'),
-      archetype: t('testimonials.alex.archetype'),
-      text: t('testimonials.alex.text'),
-      rating: 5,
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
-      mood: 'powerful'
-    },
-    {
-      id: 'luna',
-      name: t('testimonials.luna.name'),
-      archetype: t('testimonials.luna.archetype'),
-      text: t('testimonials.luna.text'),
+      id: 'clara',
+      name: t('testimonials.clara.name'),
+      archetype: t('testimonials.clara.archetype'),
+      text: t('testimonials.clara.text'),
       rating: 5,
       avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
       mood: 'serene'
+    },
+    {
+      id: 'julie',
+      name: t('testimonials.julie.name'),
+      archetype: t('testimonials.julie.archetype'),
+      text: t('testimonials.julie.text'),
+      rating: 5,
+      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b188?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
+      mood: 'mystical'
+    },
+    {
+      id: 'camille',
+      name: t('testimonials.camille.name'),
+      archetype: t('testimonials.camille.archetype'),
+      text: t('testimonials.camille.text'),
+      rating: 5,
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face&auto=format&q=80",
+      mood: 'powerful'
     }
   ];
 

@@ -132,7 +132,7 @@ export const Chat: React.FC = () => {
               >
                 <div className="bg-white/60 backdrop-blur-sm px-5 py-4 rounded-2xl rounded-bl-md border border-rose-champagne/20">
                   <div className="flex items-center space-x-2 text-royal-purple/70">
-                    <span className="text-xs">Reine-Mère tape...</span>
+                    <span className="text-xs">{t('chat.typing')}</span>
                     <div className="flex space-x-1">
                       <motion.div
                         className="w-2 h-2 bg-rose-champagne rounded-full"
@@ -168,7 +168,7 @@ export const Chat: React.FC = () => {
                 <button
                   disabled
                   className="p-3 bg-gradient-to-r from-rose-champagne/40 to-imperial-gold/40 text-royal-purple rounded-2xl cursor-not-allowed opacity-50 border border-rose-champagne/30"
-                  aria-label="Envoyer message (indisponible)"
+                  aria-label={t('chat.sendDisabled')}
                 >
                   <Send size={18} />
                 </button>
