@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Heart, Gem, Sparkles, Moon, Eye, Zap, Crown } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
+type TranslationFunction = ReturnType<typeof useTranslation>['t'];
+
 interface MysticalItem {
   id: string;
   name: string;
@@ -13,7 +15,7 @@ interface MysticalItem {
   description: string;
 }
 
-const getMysticalItems = (t: (key: any) => string): MysticalItem[] => [
+const getMysticalItems = (t: TranslationFunction): MysticalItem[] => [
   {
     id: '1',
     name: t('shop.items.orb.name'),

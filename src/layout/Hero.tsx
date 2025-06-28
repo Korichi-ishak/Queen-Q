@@ -237,7 +237,7 @@ export const Hero: React.FC = () => {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.5 }}
-              className="bg-white/10 backdrop-blur-md ring-1 ring-white/15 rounded-full px-6 py-2 flex items-center gap-2 text-rose-champagne inline-flex mb-8 sm:mb-12"
+              className="bg-white/10 backdrop-blur-md ring-1 ring-white/15 rounded-full px-6 py-2 inline-flex items-center gap-2 text-rose-champagne mb-8 sm:mb-12"
             >
               <div className="w-2 h-2 bg-imperial-gold rounded-full animate-pulse"></div>
               <span className="font-inter font-medium text-sm sm:text-base">

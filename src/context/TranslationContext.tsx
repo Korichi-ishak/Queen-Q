@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 
 // Types
 type Language = 'fr' | 'en';
-type TranslationKey = keyof typeof translations.fr;
 
 // Translations data
 const translations = {
@@ -282,6 +281,7 @@ const translations = {
     'liveTeaTime.title': 'Live Tea Time',
     'liveTeaTime.date': '29 juin à 19:00 UTC+1',
     'liveTeaTime.reminder': 'Me rappeler',
+    'liveTeaTime.close': 'Fermer la bannière',
     // Contact
     'contact.email': 'contact@queendeq.com',
     
@@ -583,6 +583,7 @@ const translations = {
     'liveTeaTime.title': 'Live Tea Time',
     'liveTeaTime.date': 'June 29th at 7:00 PM UTC+1',
     'liveTeaTime.reminder': 'Remind me',
+    'liveTeaTime.close': 'Close banner',
     // Contact
     'contact.email': 'contact@queendeq.com',
     
@@ -610,6 +611,9 @@ const translations = {
     'currency.cad': 'CAD',
   }
 };
+
+// Define TranslationKey after translations object is complete
+type TranslationKey = keyof typeof translations.fr;
 
 // Context
 interface TranslationContextType {

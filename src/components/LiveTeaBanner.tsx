@@ -1,24 +1,38 @@
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Bell } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
 export const LiveTeaBanner: React.FC = () => {
   const { t } = useTranslation();
   const steamRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     // GSAP steam animation would go here
     // For now using CSS animations
   }, []);
 
+  const handleClose = () => {
+    setIsVisible(false);
+  };
+
   return (
-    <motion.div
-      className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-amber-600 via-rose-500 to-purple-600 text-white py-3 px-4 shadow-lg"
-      initial={{ y: 100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, delay: 2 }}
-    >
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-amber-600 via-rose-500 to-purple-600 text-white py-3 px-4 shadow-lg"
+          initial={{ y: 100 }}
+          animate={{ 
+            y: 0,
+            transition: { duration: 0.5, delay: 2 }
+          }}
+          exit={{ 
+            y: 100, 
+            opacity: 0,
+            transition: { duration: 0.3, delay: 0 }
+          }}
+        >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {/* Tea Cup Icon with Steam */}
@@ -75,7 +89,11 @@ export const LiveTeaBanner: React.FC = () => {
             <span className="text-sm font-medium">{t('liveTeaTime.reminder')}</span>
           </motion.button>
           
-          <button className="p-2 hover:bg-white/20 rounded-full transition-colors duration-200">
+          <button 
+            onClick={handleClose}
+            className="p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
+            aria-label={t('liveTeaTime.close')}
+          >
             <X size={18} />
           </button>
         </div>
@@ -106,6 +124,8 @@ export const LiveTeaBanner: React.FC = () => {
           delay: 2
         }}
       />
-    </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }; 
