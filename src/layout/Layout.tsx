@@ -30,8 +30,8 @@ export const Layout: React.FC = () => {
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
-            ? 'bg-gradient-to-b from-black/40 via-royal-purple/30 to-transparent backdrop-blur-md py-3 shadow-lg shadow-black/10' 
-            : 'bg-gradient-to-b from-black/20 via-royal-purple/10 to-transparent py-5'
+            ? 'bg-gradient-to-b from-black/40 via-royal-purple/30 to-transparent backdrop-blur-md py-2 shadow-lg shadow-black/10' 
+            : 'bg-gradient-to-b from-black/20 via-royal-purple/10 to-transparent py-3'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -44,19 +44,19 @@ export const Layout: React.FC = () => {
               <div className="absolute -inset-2 bg-gradient-to-r from-imperial-gold/20 via-imperial-gold/40 to-imperial-gold/20 rounded-lg blur-md opacity-70 group-hover:opacity-100 transition duration-500"></div>
               <div className="relative flex items-center">
                 {/* Couronne SVG personnalisée */}
-                <svg width="28" height="28" viewBox="0 0 24 24" className="mr-2 text-imperial-gold" fill="currentColor">
+                <svg width="24" height="24" viewBox="0 0 24 24" className="mr-2 text-imperial-gold" fill="currentColor">
                   <path d="M12,1L8,5H3L5,9L3,13H8L12,17L16,13H21L19,9L21,5H16L12,1M12,3.441L14.4,5.841H17.241L16.241,8.241L17.241,10.641H14.4L12,13.041L9.6,10.641H6.759L7.759,8.241L6.759,5.841H9.6L12,3.441Z" />
                 </svg>
-                <span className="font-playfair font-bold text-xl bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent">
+                <span className="font-playfair font-bold text-lg bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent">
                   Queen de Q
                 </span>
               </div>
             </Link>
 
             {/* Navigation - Desktop */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               <nav>
-                <ul className="flex space-x-8">
+                <ul className="flex space-x-6">
                   <li>
                     <Link 
                       to="/" 
@@ -174,7 +174,7 @@ export const Layout: React.FC = () => {
         {/* Menu mobile */}
         <div 
           className={`md:hidden absolute top-full left-0 right-0 bg-black/60 backdrop-blur-md shadow-lg shadow-black/20 transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? 'max-h-60 py-4' : 'max-h-0'
+            isMenuOpen ? 'max-h-80 py-4' : 'max-h-0'
           }`}
         >
           <nav className="max-w-7xl mx-auto px-4 sm:px-6">

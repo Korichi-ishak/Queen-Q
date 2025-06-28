@@ -49,24 +49,6 @@ const mockProducts: Product[] = [
     category: 'accessoires',
     badge: 'shop.badges.artisan',
     rating: 4.9
-  },
-  {
-    id: '5',
-    name: 'shop.products.candles.name',
-    price: 34.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'accessoires',
-    badge: 'shop.badges.organic',
-    rating: 4.6
-  },
-  {
-    id: '6',
-    name: 'shop.products.tarotCloth.name',
-    price: 56.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'accessoires',
-    badge: 'shop.badges.exclusive',
-    rating: 4.8
   }
 ];
 
@@ -262,42 +244,14 @@ export const Shop: React.FC = () => {
               whileHover={{ y: -5 }}
             >
               {/* Product Image */}
-              <div className="relative aspect-square bg-gradient-to-br from-royal-purple/5 via-imperial-gold/5 to-rose-champagne/5 flex items-center justify-center overflow-hidden">
-                <motion.div 
-                  className="relative"
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {getProductIcon(product.id)}
-                </motion.div>
-                
-                {/* Magical Sparkles */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute w-1 h-1 bg-imperial-gold rounded-full"
-                      style={{
-                        left: `${20 + i * 30}%`,
-                        top: `${15 + i * 25}%`
-                      }}
-                      animate={{
-                        opacity: [0, 1, 0],
-                        scale: [0.5, 1, 0.5]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: i * 0.7,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  ))}
+              <div className="relative aspect-square bg-gradient-to-br from-royal-purple/10 to-imperial-gold/10 flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 bg-royal-purple/20 rounded-full flex items-center justify-center">
+                  <ShoppingBag className="w-10 h-10 text-royal-purple/60" />
                 </div>
                 
                 {/* Badge */}
                 {product.badge && (
-                  <div className="absolute top-3 left-3 bg-gradient-to-r from-imperial-gold to-rose-champagne text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg">
+                  <div className="absolute top-3 left-3 bg-imperial-gold text-white px-2 py-1 rounded-full text-xs font-medium">
                     {t(product.badge as any)}
                   </div>
                 )}
@@ -343,23 +297,16 @@ export const Shop: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex flex-col">
-                    <span className="font-bold text-xl text-royal-purple">
-                      ${product.price.toFixed(2)} CAD
-                    </span>
-                    <span className="text-xs text-royal-purple/50">
-                      Livraison incluse
-                    </span>
-                  </div>
-                  <motion.button
+                  <span className="font-bold text-xl text-royal-purple">
+                    ${product.price.toFixed(2)} CAD
+                  </span>
+                  <button
                     disabled
-                    className="px-4 py-2 bg-gradient-to-r from-imperial-gold/20 to-rose-champagne/20 text-imperial-gold rounded-xl font-medium cursor-not-allowed opacity-40 border border-imperial-gold/30"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    className="px-4 py-2 bg-imperial-gold/30 text-imperial-gold rounded-xl font-medium cursor-not-allowed opacity-40 hover:opacity-40 transition-opacity duration-200"
                     aria-label="Ajouter au panier (indisponible)"
                   >
                     {t('shop.addToCart')}
-                  </motion.button>
+                  </button>
                 </div>
               </div>
             </motion.div>

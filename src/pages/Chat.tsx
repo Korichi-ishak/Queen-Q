@@ -80,50 +80,22 @@ export const Chat: React.FC = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
-                <div className="max-w-[80%] bg-gradient-to-r from-royal-purple via-royal-purple/90 to-royal-purple/80 text-white px-4 py-3 rounded-2xl rounded-br-md shadow-lg relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-2 h-2 bg-white/20 rounded-full animate-pulse"></div>
-                  <p className="text-sm">Bonjour Reine-Mère... J'aimerais connaître mon avenir... 🔮</p>
+                <div className="max-w-[80%] bg-gradient-to-r from-royal-purple to-royal-purple/80 text-white px-4 py-3 rounded-2xl rounded-br-md shadow-lg">
+                  <p className="text-sm">Bonjour... 👋</p>
                   <span className="text-xs text-white/70 mt-1 block">14:32</span>
                 </div>
               </motion.div>
 
-              {/* Queen Mother Message 1 */}
+              {/* Queen Mother Message */}
               <motion.div
                 className="flex justify-start"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8, duration: 0.4 }}
+                transition={{ delay: 0.6, duration: 0.4 }}
               >
-                <div className="max-w-[80%] bg-gradient-to-r from-imperial-gold via-imperial-gold/90 to-rose-champagne text-royal-purple px-4 py-3 rounded-2xl rounded-bl-md shadow-lg relative overflow-hidden">
-                  <div className="absolute top-1 left-1 w-1 h-1 bg-royal-purple/30 rounded-full animate-ping"></div>
-                  <p className="text-sm font-medium">Ah, ma chère enfant... ✨</p>
+                <div className="max-w-[80%] bg-gradient-to-r from-imperial-gold to-rose-champagne text-royal-purple px-4 py-3 rounded-2xl rounded-bl-md shadow-lg">
+                  <p className="text-sm font-medium">Coming soon... ✨</p>
                   <span className="text-xs text-royal-purple/70 mt-1 block">14:33</span>
-                </div>
-              </motion.div>
-
-              {/* Queen Mother Message 2 */}
-              <motion.div
-                className="flex justify-start"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2, duration: 0.4 }}
-              >
-                <div className="max-w-[80%] bg-gradient-to-r from-imperial-gold via-imperial-gold/90 to-rose-champagne text-royal-purple px-4 py-3 rounded-2xl rounded-bl-md shadow-lg relative">
-                  <p className="text-sm font-medium">Les mystères du thé de l'après-midi révèleront bientôt tous les secrets... 🍃✨</p>
-                  <span className="text-xs text-royal-purple/70 mt-1 block">14:34</span>
-                </div>
-              </motion.div>
-
-              {/* Queen Mother Message 3 */}
-              <motion.div
-                className="flex justify-start"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.6, duration: 0.4 }}
-              >
-                <div className="max-w-[80%] bg-gradient-to-r from-imperial-gold via-imperial-gold/90 to-rose-champagne text-royal-purple px-4 py-3 rounded-2xl rounded-bl-md shadow-lg">
-                  <p className="text-sm font-medium">Patience, mon enfant... La magie opère dans l'ombre... 🌙</p>
-                  <span className="text-xs text-royal-purple/70 mt-1 block">14:35</span>
                 </div>
               </motion.div>
 
@@ -132,7 +104,7 @@ export const Chat: React.FC = () => {
                 className="flex justify-start"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 0.4 }}
+                transition={{ delay: 0.9, duration: 0.4 }}
               >
                 <div className="bg-white/10 backdrop-blur-sm px-4 py-3 rounded-2xl rounded-bl-md">
                   <div className="flex space-x-1">
