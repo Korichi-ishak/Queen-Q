@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { LiveTeaBanner } from '../components/LiveTeaBanner';
 import { useTranslation } from '../context/TranslationContext';
 
 export const Layout: React.FC = () => {
@@ -258,6 +259,8 @@ export const Layout: React.FC = () => {
       <main>
         <Outlet />
       </main>
+
+      <LiveTeaBanner />
 
       <footer className="relative py-16 bg-gradient-to-b from-royal-purple to-black overflow-hidden">
         {/* Particules dorées décoratives */}
