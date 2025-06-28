@@ -167,7 +167,7 @@ const CardSymbols = {
 };
 
 export const Quiz: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, language } = useTranslation();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -182,7 +182,7 @@ export const Quiz: React.FC = () => {
   const cardsRef = useRef<HTMLDivElement>(null);
 
 
-
+  
   // Check for reduced motion preference
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -411,6 +411,17 @@ export const Quiz: React.FC = () => {
       )
     }
   }), [t]);
+
+  // Update result when language changes
+  useEffect(() => {
+    if (result && showResult) {
+      // Recalculate result with new language
+      const updatedResult = queenResults[result.id];
+      if (updatedResult) {
+        setResult(updatedResult);
+      }
+    }
+  }, [language, queenResults, result, showResult]);
 
   // Enhanced card flip animation
   const handleOptionSelect = (optionValue: string, optionId: string) => {
