@@ -320,11 +320,11 @@ export const Layout: React.FC = () => {
             <div>
               <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">{t('links.contact')}</h3>
               <div className="flex flex-col space-y-2">
-                <a href="mailto:contact@queendeq.com" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
+                <a href={`mailto:${t('contact.email')}`} className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
                   <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                   </svg>
-                  contact@queendeq.com
+                  {t('contact.email')}
                 </a>
               </div>
             </div>

@@ -1,350 +1,275 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Filter, Search, Star, Heart, ShoppingBag, Sparkles, Moon, Sun, Gem, Compass, Flame, Scroll } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Star, Heart, Gem, Sparkles, Moon, Eye, Zap, Crown } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
-interface Product {
+interface MysticalItem {
   id: string;
   name: string;
   price: number;
-  image: string;
-  category: 'cartes' | 'vetements' | 'accessoires';
-  badge?: string;
-  rating: number;
+  rarity: 'common' | 'rare' | 'legendary' | 'mythical';
+  power: string;
+  element: 'fire' | 'water' | 'earth' | 'air' | 'spirit';
+  description: string;
 }
 
-const mockProducts: Product[] = [
+const getMysticalItems = (t: (key: any) => string): MysticalItem[] => [
   {
     id: '1',
-    name: 'shop.products.oracle.name',
-    price: 67.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'cartes',
-    badge: 'shop.badges.limitedEdition',
-    rating: 4.9
+    name: t('shop.items.orb.name'),
+    price: 89.99,
+    rarity: 'legendary',
+    power: t('shop.items.orb.power'),
+    element: 'spirit',
+    description: t('shop.items.orb.description')
   },
   {
     id: '2',
-    name: 'shop.products.crystal.name',
-    price: 89.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'accessoires',
-    badge: 'shop.badges.handcrafted',
-    rating: 4.8
+    name: t('shop.items.pendulum.name'),
+    price: 124.99,
+    rarity: 'mythical',
+    power: t('shop.items.pendulum.power'),
+    element: 'earth',
+    description: t('shop.items.pendulum.description')
   },
   {
     id: '3',
-    name: 'shop.products.journal.name',
-    price: 45.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'accessoires',
-    badge: 'shop.badges.bestseller',
-    rating: 4.7
+    name: t('shop.items.cards.name'),
+    price: 67.99,
+    rarity: 'rare',
+    power: t('shop.items.cards.power'),
+    element: 'air',
+    description: t('shop.items.cards.description')
   },
   {
     id: '4',
-    name: 'shop.products.pendulum.name',
-    price: 124.99,
-    image: '/assets/cards/placeholder.svg',
-    category: 'accessoires',
-    badge: 'shop.badges.artisan',
-    rating: 4.9
+    name: t('shop.items.essence.name'),
+    price: 156.99,
+    rarity: 'mythical',
+    power: t('shop.items.essence.power'),
+    element: 'water',
+    description: t('shop.items.essence.description')
   }
 ];
 
 export const Shop: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedCategory, setSelectedCategory] = useState<string>('tous');
-  const [priceRange, setPriceRange] = useState<string>('tous');
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+  const [hoveredElement, setHoveredElement] = useState<string | null>(null);
+  const [starPositions, setStarPositions] = useState<Array<{x: number, y: number, delay: number}>>([]);
+  
+  const mysticalItems = getMysticalItems(t);
 
-  const categories = [
-    { value: 'tous', label: t('shop.categories.all') },
-    { value: 'cartes', label: t('shop.categories.cards') },
-    { value: 'accessoires', label: t('shop.categories.accessories') }
-  ];
+  useEffect(() => {
+    // Generate random star positions for background
+    const stars = Array.from({ length: 20 }, (_, i) => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      delay: Math.random() * 2
+    }));
+    setStarPositions(stars);
+  }, []);
 
-  const priceRanges = [
-    { value: 'tous', label: t('shop.priceRanges.all') },
-    { value: '0-50', label: t('shop.priceRanges.low') },
-    { value: '50-100', label: t('shop.priceRanges.medium') },
-    { value: '100+', label: t('shop.priceRanges.high') }
-  ];
-
-  const toggleFavorite = (productId: string) => {
-    const newFavorites = new Set(favorites);
-    if (newFavorites.has(productId)) {
-      newFavorites.delete(productId);
-    } else {
-      newFavorites.add(productId);
-    }
-    setFavorites(newFavorites);
-  };
-
-  const getProductIcon = (productId: string) => {
-    const iconProps = { className: "w-12 h-12", strokeWidth: 1.5 };
-    
-    switch (productId) {
-      case '1': // Oracle
-        return (
-          <div className="relative">
-            <Sparkles {...iconProps} className="w-12 h-12 text-imperial-gold" />
-            <div className="absolute inset-0 bg-gradient-to-br from-imperial-gold/20 to-rose-champagne/20 rounded-full blur-md"></div>
-          </div>
-        );
-      case '2': // Crystal Sphere
-        return (
-          <div className="relative">
-            <Gem {...iconProps} className="w-12 h-12 text-purple-400" />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-400/20 to-blue-400/20 rounded-full blur-md"></div>
-          </div>
-        );
-      case '3': // Grimoire
-        return (
-          <div className="relative">
-            <Scroll {...iconProps} className="w-12 h-12 text-amber-600" />
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-600/20 to-orange-400/20 rounded-full blur-md"></div>
-          </div>
-        );
-      case '4': // Pendulum
-        return (
-          <div className="relative">
-            <Compass {...iconProps} className="w-12 h-12 text-rose-gold" />
-            <div className="absolute inset-0 bg-gradient-to-br from-rose-champagne/20 to-imperial-gold/20 rounded-full blur-md"></div>
-          </div>
-        );
-      case '5': // Candles
-        return (
-          <div className="relative flex space-x-1">
-            <Flame className="w-6 h-12 text-orange-400" strokeWidth={1.5} />
-            <Flame className="w-6 h-12 text-yellow-400" strokeWidth={1.5} />
-            <Flame className="w-6 h-12 text-orange-400" strokeWidth={1.5} />
-            <div className="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-yellow-400/20 rounded-full blur-md"></div>
-          </div>
-        );
-      case '6': // Tarot Cloth
-        return (
-          <div className="relative">
-            <div className="flex items-center space-x-1">
-              <Moon className="w-6 h-8 text-blue-300" strokeWidth={1.5} />
-              <Sun className="w-6 h-8 text-yellow-400" strokeWidth={1.5} />
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-300/20 to-yellow-400/20 rounded-full blur-md"></div>
-          </div>
-        );
-      default:
-        return <ShoppingBag className="w-12 h-12 text-royal-purple/60" />;
+  const getRarityColor = (rarity: string) => {
+    switch (rarity) {
+      case 'common': return 'from-gray-400 to-gray-600';
+      case 'rare': return 'from-blue-400 to-purple-600';
+      case 'legendary': return 'from-purple-500 to-pink-600';
+      case 'mythical': return 'from-amber-400 to-rose-500';
+      default: return 'from-gray-400 to-gray-600';
     }
   };
 
-  const filteredProducts = mockProducts.filter(product => {
-    if (selectedCategory !== 'tous' && product.category !== selectedCategory) {
-      return false;
+  const getElementIcon = (element: string) => {
+    switch (element) {
+      case 'fire': return <Zap className="w-6 h-6 text-orange-400" />;
+      case 'water': return <Moon className="w-6 h-6 text-blue-400" />;
+      case 'earth': return <Gem className="w-6 h-6 text-green-400" />;
+      case 'air': return <Sparkles className="w-6 h-6 text-purple-400" />;
+      case 'spirit': return <Eye className="w-6 h-6 text-indigo-400" />;
+      default: return <Star className="w-6 h-6 text-gray-400" />;
     }
-    
-          if (priceRange !== 'tous') {
-        const price = product.price;
-        switch (priceRange) {
-          case '0-50':
-            return price <= 50;
-          case '50-100':
-            return price > 50 && price <= 100;
-          case '100+':
-            return price > 100;
-          default:
-            return true;
-        }
-      }
-    
-    return true;
-  });
+  };
 
   return (
-    <main className="min-h-screen bg-royal-purple/5 px-6 py-12">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
+    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black px-6 pt-32 pb-12 relative overflow-hidden">
+      {/* Animated Background Stars */}
+      {starPositions.map((star, i) => (
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: -30 }}
+          key={i}
+          className="absolute w-1 h-1 bg-white rounded-full"
+          style={{ left: `${star.x}%`, top: `${star.y}%` }}
+          animate={{ opacity: [0.3, 1, 0.3], scale: [1, 1.5, 1] }}
+          transition={{ duration: 3, repeat: Infinity, delay: star.delay }}
+        />
+      ))}
+
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Mystical Header */}
+        <motion.div
+          className="text-center mb-16 relative"
+          initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <h1 className="font-playfair font-bold text-5xl text-royal-purple mb-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/20 to-transparent blur-3xl"></div>
+          <motion.div
+            className="relative"
+            animate={{ rotateY: [0, 5, 0, -5, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          >
+            <Crown className="w-16 h-16 text-amber-400 mx-auto mb-6" />
+          </motion.div>
+          
+          <h1 className="font-playfair font-bold text-6xl bg-gradient-to-r from-amber-200 via-purple-300 to-rose-300 bg-clip-text text-transparent mb-6">
             {t('shop.title')}
           </h1>
-          <p className="text-royal-purple/70 text-xl max-w-2xl mx-auto">
+          <p className="text-purple-200/80 text-xl max-w-3xl mx-auto leading-relaxed">
             {t('shop.subtitle')}
           </p>
+          
+          {/* Floating Orbs */}
+          <motion.div
+            className="absolute -top-10 left-1/4 w-4 h-4 bg-purple-400 rounded-full blur-sm"
+            animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          />
+          <motion.div
+            className="absolute -top-5 right-1/4 w-3 h-3 bg-amber-400 rounded-full blur-sm"
+            animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
+            transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+          />
         </motion.div>
 
-        {/* Search and Filters */}
-        <motion.div
-          className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 mb-8 shadow-lg border border-rose-champagne/20"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            {/* Search */}
-            <div className="relative flex-1 min-w-64">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-royal-purple/40" size={20} />
-              <input
-                type="text"
-                placeholder={t('shop.search')}
-                disabled
-                className="w-full pl-10 pr-4 py-3 bg-white/80 border border-rose-champagne/30 rounded-xl text-royal-purple placeholder-royal-purple/50 cursor-not-allowed opacity-60"
-                aria-label="Recherche de produits (indisponible)"
-              />
-            </div>
-
-            {/* Category Filter */}
-            <div className="relative">
-              <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-royal-purple/40" size={18} />
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="pl-10 pr-8 py-3 bg-white/80 border border-rose-champagne/30 rounded-xl text-royal-purple appearance-none cursor-pointer min-w-48"
-                aria-label="Filtrer par catégorie"
-              >
-                {categories.map(category => (
-                  <option key={category.value} value={category.value}>
-                    {category.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Price Filter */}
-            <div className="relative">
-              <select
-                value={priceRange}
-                onChange={(e) => setPriceRange(e.target.value)}
-                className="pl-4 pr-8 py-3 bg-white/80 border border-rose-champagne/30 rounded-xl text-royal-purple appearance-none cursor-pointer min-w-40"
-                aria-label="Filtrer par prix"
-              >
-                {priceRanges.map(range => (
-                  <option key={range.value} value={range.value}>
-                    {range.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product, index) => (
+        {/* Mystical Items Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {mysticalItems.map((item, index) => (
             <motion.div
-              key={product.id}
-              className="group bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-rose-champagne/20 hover:shadow-xl hover:scale-105 transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
+              key={item.id}
+              className="group relative"
+              initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 * index }}
-              whileHover={{ y: -5 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              onHoverStart={() => setHoveredElement(item.element)}
+              onHoverEnd={() => setHoveredElement(null)}
             >
-              {/* Product Image */}
-              <div className="relative aspect-square bg-gradient-to-br from-royal-purple/10 to-imperial-gold/10 flex items-center justify-center overflow-hidden">
-                <div className="w-20 h-20 bg-royal-purple/20 rounded-full flex items-center justify-center">
-                  <ShoppingBag className="w-10 h-10 text-royal-purple/60" />
+              {/* Mystical Card */}
+              <div className="relative bg-gradient-to-br from-indigo-800/40 to-purple-900/60 backdrop-blur-xl rounded-3xl p-6 border border-purple-400/30 shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105">
+                
+                {/* Rarity Glow */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${getRarityColor(item.rarity)} opacity-0 group-hover:opacity-20 rounded-3xl blur-xl transition-all duration-500`}></div>
+                
+                {/* Element Badge */}
+                <div className="absolute -top-3 -right-3 w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center border-2 border-purple-300/50">
+                  {getElementIcon(item.element)}
                 </div>
-                
-                {/* Badge */}
-                {product.badge && (
-                  <div className="absolute top-3 left-3 bg-imperial-gold text-white px-2 py-1 rounded-full text-xs font-medium">
-                    {t(product.badge as any)}
-                  </div>
-                )}
-                
-                {/* Favorite Button */}
-                <button
-                  onClick={() => toggleFavorite(product.id)}
-                  className="absolute top-3 right-3 p-2 bg-white/90 rounded-full hover:bg-white transition-colors duration-200"
-                  aria-label={`${favorites.has(product.id) ? 'Retirer des' : 'Ajouter aux'} favoris`}
-                >
-                  <Heart 
-                    className={`w-4 h-4 ${
-                      favorites.has(product.id) 
-                        ? 'text-red-500 fill-current' 
-                        : 'text-royal-purple/60'
-                    }`}
-                  />
-                </button>
-              </div>
 
-              {/* Product Info */}
-              <div className="p-4">
-                <h3 className="font-playfair font-bold text-lg text-royal-purple mb-2 line-clamp-2 leading-tight">
-                  {t(product.name as any)}
+                {/* Mystical Center */}
+                <div className="relative text-center mb-6">
+                  <motion.div
+                    className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-400/30 to-indigo-500/30 rounded-full flex items-center justify-center mb-4 relative"
+                    animate={{ 
+                      rotateZ: hoveredElement === item.element ? 360 : 0,
+                      scale: hoveredElement === item.element ? 1.1 : 1
+                    }}
+                    transition={{ duration: 2 }}
+                  >
+                    <Gem className="w-10 h-10 text-purple-200" />
+                    {hoveredElement === item.element && (
+                      <motion.div
+                        className="absolute inset-0 border-2 border-purple-300 rounded-full"
+                        animate={{ scale: [1, 1.3, 1], opacity: [1, 0, 1] }}
+                        transition={{ duration: 1, repeat: Infinity }}
+                      />
+                    )}
+                  </motion.div>
+                  
+                  <div className={`inline-block px-3 py-1 text-xs rounded-full bg-gradient-to-r ${getRarityColor(item.rarity)} text-white font-bold mb-2`}>
+                    {t(`shop.rarity.${item.rarity}`).toUpperCase()}
+                  </div>
+                </div>
+
+                {/* Item Details */}
+                <h3 className="font-playfair font-bold text-lg text-purple-100 mb-2 text-center">
+                  {item.name}
                 </h3>
                 
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={`w-4 h-4 ${
-                          i < Math.floor(product.rating) 
-                            ? 'text-imperial-gold fill-current' 
-                            : 'text-royal-purple/20'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                  <span className="ml-2 text-sm text-royal-purple/70">
-                    {product.rating}
+                <p className="text-purple-300/80 text-sm text-center mb-3 italic">
+                  "{item.power}"
+                </p>
+                
+                <p className="text-purple-200/60 text-xs text-center mb-4">
+                  {item.description}
+                </p>
+
+                {/* Price & Action */}
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xl bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
+                    ${item.price} {t('currency.cad')}
                   </span>
+                  <motion.button
+                    disabled
+                    className="px-4 py-2 bg-gradient-to-r from-purple-600/50 to-indigo-600/50 text-purple-200 rounded-xl font-medium cursor-not-allowed opacity-60 border border-purple-400/30"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {t('shop.comingSoon')}
+                  </motion.button>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl text-royal-purple">
-                    ${product.price.toFixed(2)} CAD
-                  </span>
-                  <button
-                    disabled
-                    className="px-4 py-2 bg-imperial-gold/30 text-imperial-gold rounded-xl font-medium cursor-not-allowed opacity-40 hover:opacity-40 transition-opacity duration-200"
-                    aria-label="Ajouter au panier (indisponible)"
-                  >
-                    {t('shop.addToCart')}
-                  </button>
-                </div>
+                {/* Magical Sparkles */}
+                {hoveredElement === item.element && (
+                  <>
+                    <motion.div
+                      className="absolute top-4 left-4 w-2 h-2 bg-purple-300 rounded-full"
+                      animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
+                      transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
+                    />
+                    <motion.div
+                      className="absolute bottom-4 right-4 w-1 h-1 bg-amber-300 rounded-full"
+                      animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
+                      transition={{ duration: 1, repeat: Infinity, delay: 1 }}
+                    />
+                  </>
+                )}
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Empty State */}
-        {filteredProducts.length === 0 && (
-          <motion.div
-            className="text-center py-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="w-24 h-24 bg-royal-purple/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Search className="w-12 h-12 text-royal-purple/40" />
-            </div>
-            <h3 className="font-playfair font-bold text-2xl text-royal-purple mb-2">
-              {t('shop.noProducts')}
-            </h3>
-            <p className="text-royal-purple/70">
-              {t('shop.noProductsDesc')}
-            </p>
-          </motion.div>
-        )}
-
-        {/* Coming Soon Banner */}
+        {/* Mystical Portal Footer */}
         <motion.div
-          className="mt-16 bg-gradient-to-r from-royal-purple to-imperial-gold/80 rounded-2xl p-8 text-center text-white"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-20 text-center relative"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
         >
-          <h2 className="font-playfair font-bold text-3xl mb-4">
-            {t('shop.comingSoon')}
+          <div className="relative inline-block">
+            <motion.div
+              className="w-32 h-32 mx-auto bg-gradient-to-br from-purple-500/30 to-indigo-600/30 rounded-full flex items-center justify-center border-4 border-purple-400/40 relative"
+              animate={{ rotateZ: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            >
+              <Eye className="w-12 h-12 text-purple-200" />
+              <motion.div
+                className="absolute inset-0 border-4 border-purple-300/60 rounded-full"
+                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
+            
+            <motion.div
+              className="absolute -inset-8 border border-purple-400/20 rounded-full"
+              animate={{ rotateZ: -360 }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+          
+          <h2 className="font-playfair font-bold text-3xl text-purple-200 mt-8 mb-4">
+            {t('shop.awakeningTitle')}
           </h2>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            {t('shop.comingSoonDesc')}
+          <p className="text-purple-300/80 max-w-2xl mx-auto leading-relaxed">
+            {t('shop.awakeningDesc')}
           </p>
         </motion.div>
       </div>

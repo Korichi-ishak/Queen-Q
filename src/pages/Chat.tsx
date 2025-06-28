@@ -61,7 +61,7 @@ export const Chat: React.FC = () => {
               <button
                 onClick={handleClose}
                 className="p-2 hover:bg-white/10 rounded-full transition-colors duration-200 text-white/70 hover:text-white"
-                aria-label="Fermer le chat"
+                aria-label={t('accessibility.closeChat')}
               >
                 <X size={20} />
               </button>
@@ -70,7 +70,7 @@ export const Chat: React.FC = () => {
             {/* Chat Messages */}
             <div className="flex-1 p-4 space-y-4 overflow-y-auto">
               <p id="chat-description" className="sr-only">
-                Fenêtre de chat avec la Reine-Mère, actuellement indisponible
+                {t('chat.description')}
               </p>
 
               {/* User Message */}
@@ -81,8 +81,8 @@ export const Chat: React.FC = () => {
                 transition={{ delay: 0.3, duration: 0.4 }}
               >
                 <div className="max-w-[80%] bg-gradient-to-r from-royal-purple to-royal-purple/80 text-white px-4 py-3 rounded-2xl rounded-br-md shadow-lg">
-                  <p className="text-sm">Bonjour... 👋</p>
-                  <span className="text-xs text-white/70 mt-1 block">14:32</span>
+                  <p className="text-sm">{t('chat.greeting')}</p>
+                  <span className="text-xs text-white/70 mt-1 block">{t('chat.timestamp1')}</span>
                 </div>
               </motion.div>
 
@@ -94,8 +94,8 @@ export const Chat: React.FC = () => {
                 transition={{ delay: 0.6, duration: 0.4 }}
               >
                 <div className="max-w-[80%] bg-gradient-to-r from-imperial-gold to-rose-champagne text-royal-purple px-4 py-3 rounded-2xl rounded-bl-md shadow-lg">
-                  <p className="text-sm font-medium">Coming soon... ✨</p>
-                  <span className="text-xs text-royal-purple/70 mt-1 block">14:33</span>
+                  <p className="text-sm font-medium">{t('chat.comingSoon')}</p>
+                  <span className="text-xs text-royal-purple/70 mt-1 block">{t('chat.timestamp2')}</span>
                 </div>
               </motion.div>
 
@@ -136,7 +136,7 @@ export const Chat: React.FC = () => {
                   placeholder={t('chat.comingSoon')}
                   disabled
                   className="flex-1 bg-white/10 backdrop-blur-sm text-white placeholder-white/50 px-4 py-3 rounded-full border border-white/20 cursor-not-allowed opacity-60"
-                  aria-label="Zone de message indisponible"
+                  aria-label={t('accessibility.messageInput')}
                 />
                 <button
                   disabled

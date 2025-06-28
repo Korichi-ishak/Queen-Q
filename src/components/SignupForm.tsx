@@ -154,7 +154,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ drawnCard, isVisible, on
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full px-4 py-3 bg-black/30 border border-imperial-gold/30 rounded-lg text-rose-champagne placeholder-rose-champagne/50 focus:border-imperial-gold focus:outline-none transition-all duration-300 hover:bg-black/40 focus:bg-black/50"
-                    placeholder="votre@email.com"
+                    placeholder={t('signup.emailPlaceholder')}
                   />
                 </div>
               </div>

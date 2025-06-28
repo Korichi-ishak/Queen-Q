@@ -17,8 +17,8 @@ const translations = {
     'nav.shop': 'Boutique',
     
     // Shop
-    'shop.title': 'Sanctuaire Mystique',
-    'shop.subtitle': 'Objets sacrés et artefacts enchantés pour votre voyage spirituel',
+    'shop.title': 'Collection Mystérieuse',
+    'shop.subtitle': 'Découvrez des trésors rares et des objets de pouvoir ancestraux',
     'shop.search': 'Chercher un trésor mystique...',
     'shop.categories.all': 'Tous les trésors',
     'shop.categories.cards': 'Oracles & Cartes',
@@ -40,7 +40,9 @@ const translations = {
     'shop.products.candles.name': 'Trio de Bougies Rituelles Lune-Soleil',
     'shop.products.tarotCloth.name': 'Tapis de Tirage Velours Constellation',
     'shop.addToCart': 'Ajouter',
-    'shop.comingSoon': 'Sanctuaire en Construction',
+    'shop.comingSoon': 'Bientôt',
+    'shop.awakeningTitle': 'Le Sanctuaire s\'Éveille',
+    'shop.awakeningDesc': 'Les mystères s\'assemblent... Bientôt, les portails vers ces trésors ancestraux s\'ouvriront. Préparez votre âme pour l\'acquisition de pouvoirs inimaginables.',
     'shop.comingSoonDesc': 'Notre sanctuaire mystique ouvrira bientôt avec une collection exclusive d\'objets sacrés et d\'artefacts enchantés. Restez connectés pour les premières révélations !',
     'shop.noProducts': 'Aucun trésor trouvé',
     'shop.noProductsDesc': 'Essayez de modifier vos filtres pour découvrir plus de merveilles.',
@@ -49,8 +51,12 @@ const translations = {
     'chat.title': 'Salon de Thé Mystique',
     'chat.queenMother': 'Reine-Mère',
     'chat.online': 'En ligne',
+    'chat.greeting': 'Bonjour... 👋',
     'chat.comingSoon': 'Bientôt disponible...',
     'chat.teaTime': 'Le thé de l\'après-midi arrive bientôt...',
+    'chat.description': 'Fenêtre de chat avec la Reine-Mère, actuellement indisponible',
+    'chat.timestamp1': '14:32',
+    'chat.timestamp2': '14:33',
     
     // Journal
     'journal.title': 'Journal d\'Âme',
@@ -87,6 +93,7 @@ const translations = {
     'signup.description': 'Découvrez les mystères qui vous attendent',
     'signup.name': 'Nom complet',
     'signup.email': 'Adresse email',
+    'signup.emailPlaceholder': 'votre@email.com',
     'signup.submit': 'Rejoindre maintenant',
     'signup.close': 'Fermer',
     'signup.loading': 'En cours...',
@@ -185,6 +192,8 @@ const translations = {
     'accessibility.cardDrawn': 'Carte tirée',
     'accessibility.pressSpaceOrClick': 'Appuyez sur Espace ou cliquez pour tirer une carte',
     'accessibility.photoOf': 'Photo de',
+    'accessibility.closeChat': 'Fermer le chat',
+    'accessibility.messageInput': 'Zone de message indisponible',
     
     // Card names
     'cards.aceOfSpades': 'As de Pique',
@@ -268,7 +277,36 @@ const translations = {
     'ranks.dame': 'Dame',
     'ranks.reine': 'Reine',
     'ranks.roi': 'Roi', 
-    'ranks.cavalier': 'Cavalier'
+    'ranks.cavalier': 'Cavalier',
+    // Live Tea Time
+    'liveTeaTime.title': 'Live Tea Time',
+    'liveTeaTime.date': '29 juin à 19:00 UTC+1',
+    'liveTeaTime.reminder': 'Me rappeler',
+    // Contact
+    'contact.email': 'contact@queendeq.com',
+    
+    // Shop mystical items
+    'shop.items.orb.name': 'Orbe de Vision Nocturne',
+    'shop.items.orb.power': 'Révèle les secrets cachés',
+    'shop.items.orb.description': 'Un cristal qui pulse avec une lumière éthérée',
+    'shop.items.pendulum.name': 'Pendule des Anciens',
+    'shop.items.pendulum.power': 'Guide vers la vérité',
+    'shop.items.pendulum.description': 'Forgé dans les profondeurs du temps',
+    'shop.items.cards.name': 'Cartes des Destinées',
+    'shop.items.cards.power': 'Dévoile l\'avenir',
+    'shop.items.cards.description': 'Chaque carte murmure des prophéties',
+    'shop.items.essence.name': 'Essence de Lune Noire',
+    'shop.items.essence.power': 'Amplifie les rituels',
+    'shop.items.essence.description': 'Récoltée lors d\'éclipses sacrées',
+    
+    // Shop rarities
+    'shop.rarity.common': 'Commun',
+    'shop.rarity.rare': 'Rare',
+    'shop.rarity.legendary': 'Légendaire',
+    'shop.rarity.mythical': 'Mythique',
+    
+    // Currency
+    'currency.cad': 'CAD',
   },
   en: {
     // Navigation
@@ -280,8 +318,8 @@ const translations = {
     'nav.shop': 'Shop',
     
     // Shop
-    'shop.title': 'Mystical Sanctuary',
-    'shop.subtitle': 'Sacred objects and enchanted artifacts for your spiritual journey',
+    'shop.title': 'Mysterious Collection',
+    'shop.subtitle': 'Discover rare treasures and ancestral power objects',
     'shop.search': 'Search for mystical treasures...',
     'shop.categories.all': 'All Treasures',
     'shop.categories.cards': 'Oracles & Cards',
@@ -303,7 +341,9 @@ const translations = {
     'shop.products.candles.name': 'Moon-Sun Ritual Candle Trio',
     'shop.products.tarotCloth.name': 'Constellation Velvet Reading Cloth',
     'shop.addToCart': 'Add to Cart',
-    'shop.comingSoon': 'Sanctuary Under Construction',
+    'shop.comingSoon': 'Coming Soon',
+    'shop.awakeningTitle': 'The Sanctuary Awakens',
+    'shop.awakeningDesc': 'The mysteries are gathering... Soon, portals to these ancestral treasures will open. Prepare your soul for the acquisition of unimaginable powers.',
     'shop.comingSoonDesc': 'Our mystical sanctuary will soon open with an exclusive collection of sacred objects and enchanted artifacts. Stay connected for the first revelations!',
     'shop.noProducts': 'No treasures found',
     'shop.noProductsDesc': 'Try modifying your filters to discover more wonders.',
@@ -312,8 +352,12 @@ const translations = {
     'chat.title': 'Mystical Tea Salon',
     'chat.queenMother': 'Queen Mother',
     'chat.online': 'Online',
+    'chat.greeting': 'Hello... 👋',
     'chat.comingSoon': 'Coming soon...',
     'chat.teaTime': 'Afternoon tea coming soon...',
+    'chat.description': 'Chat window with the Queen Mother, currently unavailable',
+    'chat.timestamp1': '14:32',
+    'chat.timestamp2': '14:33',
     
     // Journal
     'journal.title': 'Soul Journal',
@@ -350,6 +394,7 @@ const translations = {
     'signup.description': 'Discover the mysteries that await you',
     'signup.name': 'Full name',
     'signup.email': 'Email address',
+    'signup.emailPlaceholder': 'your@email.com',
     'signup.submit': 'Join now',
     'signup.close': 'Close',
     'signup.loading': 'Loading...',
@@ -448,6 +493,8 @@ const translations = {
     'accessibility.cardDrawn': 'Card drawn',
     'accessibility.pressSpaceOrClick': 'Press Space or click to draw a card',
     'accessibility.photoOf': 'Photo of',
+    'accessibility.closeChat': 'Close chat',
+    'accessibility.messageInput': 'Message input unavailable',
     
     // Card names
     'cards.aceOfSpades': 'Ace of Spades',
@@ -531,7 +578,36 @@ const translations = {
     'ranks.dame': 'Dame',
     'ranks.reine': 'Queen',
     'ranks.roi': 'King',
-    'ranks.cavalier': 'Knight'
+    'ranks.cavalier': 'Knight',
+    // Live Tea Time
+    'liveTeaTime.title': 'Live Tea Time',
+    'liveTeaTime.date': 'June 29th at 7:00 PM UTC+1',
+    'liveTeaTime.reminder': 'Remind me',
+    // Contact
+    'contact.email': 'contact@queendeq.com',
+    
+    // Shop mystical items
+    'shop.items.orb.name': 'Night Vision Orb',
+    'shop.items.orb.power': 'Reveals hidden secrets',
+    'shop.items.orb.description': 'A crystal that pulses with ethereal light',
+    'shop.items.pendulum.name': 'Pendulum of the Ancients',
+    'shop.items.pendulum.power': 'Guides towards truth',
+    'shop.items.pendulum.description': 'Forged in the depths of time',
+    'shop.items.cards.name': 'Destiny Cards',
+    'shop.items.cards.power': 'Unveils the future',
+    'shop.items.cards.description': 'Each card whispers prophecies',
+    'shop.items.essence.name': 'Black Moon Essence',
+    'shop.items.essence.power': 'Amplifies rituals',
+    'shop.items.essence.description': 'Harvested during sacred eclipses',
+    
+    // Shop rarities
+    'shop.rarity.common': 'Common',
+    'shop.rarity.rare': 'Rare',
+    'shop.rarity.legendary': 'Legendary',
+    'shop.rarity.mythical': 'Mythical',
+    
+    // Currency
+    'currency.cad': 'CAD',
   }
 };
 

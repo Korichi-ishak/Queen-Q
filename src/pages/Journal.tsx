@@ -152,8 +152,8 @@ export const Journal: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#f9f5ef] flex items-center justify-center p-6">
-      <div className="w-full max-w-6xl">
+    <main className="min-h-screen bg-[#f9f5ef] pt-24 pb-12 px-6">
+      <div className="w-full max-w-6xl mx-auto">
         {/* Header */}
         <motion.div
           className="text-center mb-8"

@@ -1,155 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Coffee } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { X, Bell } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
 export const LiveTeaBanner: React.FC = () => {
   const { t } = useTranslation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
+  const steamRef = useRef<HTMLDivElement>(null);
 
-  // Show banner after a short delay
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    // GSAP steam animation would go here
+    // For now using CSS animations
   }, []);
 
-  // Handle banner close
-  const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsVisible(false);
-      setIsClosing(false);
-    }, 300);
-  };
-
-  // Get next tea time (example: always show next day at 7 PM GMT+1)
-  const getNextTeaTime = () => {
-    const now = new Date();
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    tomorrow.setHours(19, 0, 0, 0); // 7 PM
-
-    return new Intl.DateTimeFormat('fr-FR', {
-      day: 'numeric',
-      month: 'long',
-      hour: '2-digit',
-      minute: '2-digit',
-      timeZoneName: 'short'
-    }).format(tomorrow);
-  };
-
-  if (!isVisible) return null;
-
   return (
-    <AnimatePresence>
-      <motion.div
-        className="fixed bottom-0 left-0 right-0 z-50 bg-gradient-to-r from-royal-purple via-imperial-gold/80 to-royal-purple shadow-lg shadow-black/20 border-t border-imperial-gold/30"
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ 
-          y: isClosing ? 100 : 0, 
-          opacity: isClosing ? 0 : 1 
-        }}
-        exit={{ y: 100, opacity: 0 }}
-        transition={{ 
-          type: "spring", 
-          damping: 25, 
-          stiffness: 200,
-          duration: 0.6 
-        }}
-      >
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Tea Time Info */}
-          <div className="flex items-center space-x-3">
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-2xl"
+    <motion.div
+      className="fixed bottom-0 left-0 right-0 z-40 bg-gradient-to-r from-amber-600 via-rose-500 to-purple-600 text-white py-3 px-4 shadow-lg"
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, delay: 2 }}
+    >
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          {/* Tea Cup Icon with Steam */}
+          <div className="relative">
+            <div className="text-2xl">🫖</div>
+            <div 
+              ref={steamRef}
+              className="absolute -top-2 left-1/2 transform -translate-x-1/2"
             >
-              ☕
-            </motion.div>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2">
-              <span className="font-playfair font-bold text-white text-lg">
-                Live Tea Time
-              </span>
-              <span className="text-white/90 text-sm sm:text-base">
-                {getNextTeaTime()}
-              </span>
+              {/* Steam particles */}
+              <motion.div
+                className="w-1 h-1 bg-white/60 rounded-full"
+                animate={{
+                  y: [-5, -15],
+                  x: [-2, 2, -1],
+                  opacity: [1, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatDelay: 0.5
+                }}
+              />
+              <motion.div
+                className="absolute w-1 h-1 bg-white/40 rounded-full"
+                animate={{
+                  y: [-5, -20],
+                  x: [1, -2, 1],
+                  opacity: [1, 0]
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: 0.3,
+                  repeatDelay: 0.5
+                }}
+              />
             </div>
           </div>
-
-          {/* Action & Close */}
-          <div className="flex items-center space-x-3">
-            <motion.button
-              className="hidden sm:inline-flex items-center space-x-2 px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white rounded-full transition-all duration-200 border border-white/20 hover:border-white/40"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => alert('Fonctionnalité bientôt disponible!')}
-            >
-              <Coffee size={16} />
-              <span className="font-medium">Me rappeler</span>
-            </motion.button>
-            
-            <button
-              onClick={handleClose}
-              className="p-2 hover:bg-white/20 rounded-full transition-colors duration-200 text-white/80 hover:text-white"
-              aria-label="Fermer le bandeau"
-            >
-              <X size={20} />
-            </button>
+          
+          <div>
+            <span className="font-bold">{t('liveTeaTime.title')}</span>
+            <span className="ml-2 text-white/90">{t('liveTeaTime.date')}</span>
           </div>
         </div>
-
-        {/* Decorative Tea Steam Animation */}
-        <div className="absolute left-8 top-0 transform -translate-y-2 pointer-events-none">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-6 bg-white/20 rounded-full"
-              style={{ left: i * 4 }}
-              animate={{
-                y: [-10, -20, -10],
-                opacity: [0.3, 0.6, 0.3, 0],
-                scale: [1, 1.2, 1]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                delay: i * 0.3,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
+        
+        <div className="flex items-center space-x-4">
+          <motion.button
+            className="flex items-center space-x-2 bg-white/20 hover:bg-white/30 px-4 py-2 rounded-full backdrop-blur-sm transition-all duration-200"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Bell size={16} />
+            <span className="text-sm font-medium">{t('liveTeaTime.reminder')}</span>
+          </motion.button>
+          
+          <button className="p-2 hover:bg-white/20 rounded-full transition-colors duration-200">
+            <X size={18} />
+          </button>
         </div>
-
-        {/* Sparkle Effects */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-imperial-gold rounded-full"
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${30 + (i % 2) * 40}%`
-              }}
-              animate={{
-                opacity: [0, 1, 0],
-                scale: [0.5, 1, 0.5]
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                delay: i * 0.2,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
-      </motion.div>
-    </AnimatePresence>
+      </div>
+      
+      {/* Sparkle Effects */}
+      <motion.div
+        className="absolute top-2 left-20 w-1 h-1 bg-yellow-300 rounded-full"
+        animate={{
+          scale: [0, 1, 0],
+          opacity: [0, 1, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          delay: 1
+        }}
+      />
+      <motion.div
+        className="absolute top-4 right-32 w-1 h-1 bg-pink-300 rounded-full"
+        animate={{
+          scale: [0, 1, 0],
+          opacity: [0, 1, 0]
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          delay: 2
+        }}
+      />
+    </motion.div>
   );
 }; 
