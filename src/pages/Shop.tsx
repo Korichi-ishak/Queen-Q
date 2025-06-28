@@ -1,70 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Heart, Gem, Sparkles, Moon, Eye, Zap, Crown } from 'lucide-react';
+import { Star, Heart, Gem, Sparkles, Moon, Eye, Zap, Crown, ShoppingBag, Shirt, Shield } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
 
 type TranslationFunction = ReturnType<typeof useTranslation>['t'];
 
-interface MysticalItem {
+interface ShopItem {
   id: string;
   name: string;
   price: number;
-  rarity: 'common' | 'rare' | 'legendary' | 'mythical';
-  power: string;
-  element: 'fire' | 'water' | 'earth' | 'air' | 'spirit';
+  category: 'cards' | 'accessories' | 'clothing' | 'protection';
   description: string;
+  badge?: string;
 }
 
-const getMysticalItems = (t: TranslationFunction): MysticalItem[] => [
+const getShopItems = (t: TranslationFunction): ShopItem[] => [
   {
     id: '1',
-    name: t('shop.items.orb.name'),
-    price: 89.99,
-    rarity: 'legendary',
-    power: t('shop.items.orb.power'),
-    element: 'spirit',
-    description: t('shop.items.orb.description')
+    name: t('shop.items.physicalCards.name'),
+    price: 29.99,
+    category: 'cards',
+    description: t('shop.items.physicalCards.description'),
+    badge: t('shop.badges.bestseller')
   },
   {
     id: '2',
-    name: t('shop.items.pendulum.name'),
-    price: 124.99,
-    rarity: 'mythical',
-    power: t('shop.items.pendulum.power'),
-    element: 'earth',
-    description: t('shop.items.pendulum.description')
+    name: t('shop.items.queenShirt.name'),
+    price: 34.99,
+    category: 'clothing',
+    description: t('shop.items.queenShirt.description'),
+    badge: t('shop.badges.limitedEdition')
   },
   {
     id: '3',
-    name: t('shop.items.cards.name'),
-    price: 67.99,
-    rarity: 'rare',
-    power: t('shop.items.cards.power'),
-    element: 'air',
-    description: t('shop.items.cards.description')
+    name: t('shop.items.protectionKit.name'),
+    price: 19.99,
+    category: 'protection',
+    description: t('shop.items.protectionKit.description'),
+    badge: t('shop.badges.essential')
   },
   {
     id: '4',
-    name: t('shop.items.essence.name'),
-    price: 156.99,
-    rarity: 'mythical',
-    power: t('shop.items.essence.power'),
-    element: 'water',
-    description: t('shop.items.essence.description')
+    name: t('shop.items.charmBracelet.name'),
+    price: 24.99,
+    category: 'accessories',
+    description: t('shop.items.charmBracelet.description'),
+    badge: t('shop.badges.handcrafted')
   }
 ];
 
 export const Shop: React.FC = () => {
   const { t } = useTranslation();
-  const [selectedItem, setSelectedItem] = useState<string | null>(null);
-  const [hoveredElement, setHoveredElement] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [starPositions, setStarPositions] = useState<Array<{x: number, y: number, delay: number}>>([]);
   
-  const mysticalItems = getMysticalItems(t);
+  const shopItems = getShopItems(t);
 
   useEffect(() => {
     // Generate random star positions for background
-    const stars = Array.from({ length: 20 }, (_, i) => ({
+    const stars = Array.from({ length: 15 }, (_, i) => ({
       x: Math.random() * 100,
       y: Math.random() * 100,
       delay: Math.random() * 2
@@ -72,29 +66,32 @@ export const Shop: React.FC = () => {
     setStarPositions(stars);
   }, []);
 
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case 'common': return 'from-gray-400 to-gray-600';
-      case 'rare': return 'from-blue-400 to-purple-600';
-      case 'legendary': return 'from-purple-500 to-pink-600';
-      case 'mythical': return 'from-amber-400 to-rose-500';
+  const getCategoryIcon = (category: string) => {
+    switch (category) {
+      case 'cards': return <Star className="w-6 h-6 text-amber-400" />;
+      case 'clothing': return <Shirt className="w-6 h-6 text-purple-400" />;
+      case 'protection': return <Shield className="w-6 h-6 text-rose-400" />;
+      case 'accessories': return <Heart className="w-6 h-6 text-indigo-400" />;
+      default: return <ShoppingBag className="w-6 h-6 text-gray-400" />;
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case 'cards': return 'from-amber-400 to-yellow-600';
+      case 'clothing': return 'from-purple-400 to-purple-600';
+      case 'protection': return 'from-rose-400 to-pink-600';
+      case 'accessories': return 'from-indigo-400 to-blue-600';
       default: return 'from-gray-400 to-gray-600';
     }
   };
 
-  const getElementIcon = (element: string) => {
-    switch (element) {
-      case 'fire': return <Zap className="w-6 h-6 text-orange-400" />;
-      case 'water': return <Moon className="w-6 h-6 text-blue-400" />;
-      case 'earth': return <Gem className="w-6 h-6 text-green-400" />;
-      case 'air': return <Sparkles className="w-6 h-6 text-purple-400" />;
-      case 'spirit': return <Eye className="w-6 h-6 text-indigo-400" />;
-      default: return <Star className="w-6 h-6 text-gray-400" />;
-    }
-  };
+  const filteredItems = selectedCategory === 'all' 
+    ? shopItems 
+    : shopItems.filter(item => item.category === selectedCategory);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-black px-6 pt-32 pb-12 relative overflow-hidden">
+    <main className="min-h-screen bg-gradient-to-br from-royal-purple via-purple-900 to-black px-6 pt-32 pb-12 relative overflow-hidden">
       {/* Animated Background Stars */}
       {starPositions.map((star, i) => (
         <motion.div
@@ -107,172 +104,129 @@ export const Shop: React.FC = () => {
       ))}
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Mystical Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-16 relative"
+          className="text-center mb-12 relative"
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-500/20 to-transparent blur-3xl"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-imperial-gold/20 to-transparent blur-3xl"></div>
+          
           <motion.div
-            className="relative"
+            className="relative mb-6"
             animate={{ rotateY: [0, 5, 0, -5, 0] }}
             transition={{ duration: 6, repeat: Infinity }}
           >
-            <Crown className="w-16 h-16 text-amber-400 mx-auto mb-6" />
+            <Crown className="w-16 h-16 text-imperial-gold mx-auto mb-4" />
           </motion.div>
           
-          <h1 className="font-playfair font-bold text-6xl bg-gradient-to-r from-amber-200 via-purple-300 to-rose-300 bg-clip-text text-transparent mb-6">
+          <h1 className="font-playfair font-bold text-5xl bg-gradient-to-r from-imperial-gold via-rose-champagne to-purple-300 bg-clip-text text-transparent mb-4">
             {t('shop.title')}
           </h1>
-          <p className="text-purple-200/80 text-xl max-w-3xl mx-auto leading-relaxed">
+          <p className="text-rose-champagne/80 text-xl max-w-3xl mx-auto leading-relaxed">
             {t('shop.subtitle')}
           </p>
-          
-          {/* Floating Orbs */}
-          <motion.div
-            className="absolute -top-10 left-1/4 w-4 h-4 bg-purple-400 rounded-full blur-sm"
-            animate={{ y: [-10, 10, -10], x: [-5, 5, -5] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute -top-5 right-1/4 w-3 h-3 bg-amber-400 rounded-full blur-sm"
-            animate={{ y: [10, -10, 10], x: [5, -5, 5] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-          />
         </motion.div>
 
-        {/* Mystical Items Grid */}
+        {/* Category Filters */}
+        <motion.div
+          className="flex flex-wrap justify-center gap-4 mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          {['all', 'cards', 'clothing', 'protection', 'accessories'].map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                selectedCategory === category
+                  ? 'bg-imperial-gold text-royal-purple shadow-lg shadow-imperial-gold/30'
+                  : 'bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm'
+              }`}
+            >
+              {t(`shop.categories.${category}`)}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {mysticalItems.map((item, index) => (
+          {filteredItems.map((item, index) => (
             <motion.div
               key={item.id}
               className="group relative"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              onHoverStart={() => setHoveredElement(item.element)}
-              onHoverEnd={() => setHoveredElement(null)}
             >
-              {/* Mystical Card */}
-              <div className="relative bg-gradient-to-br from-indigo-800/40 to-purple-900/60 backdrop-blur-xl rounded-3xl p-6 border border-purple-400/30 shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 hover:scale-105">
+              {/* Product Card */}
+              <div className="relative bg-white/10 backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 hover:border-imperial-gold/50">
                 
-                {/* Rarity Glow */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${getRarityColor(item.rarity)} opacity-0 group-hover:opacity-20 rounded-3xl blur-xl transition-all duration-500`}></div>
-                
-                {/* Element Badge */}
-                <div className="absolute -top-3 -right-3 w-12 h-12 bg-gradient-to-br from-purple-600 to-indigo-600 rounded-full flex items-center justify-center border-2 border-purple-300/50">
-                  {getElementIcon(item.element)}
+                {/* Badge */}
+                {item.badge && (
+                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-imperial-gold to-rose-champagne text-royal-purple px-3 py-1 rounded-full text-xs font-bold">
+                    {item.badge}
+                  </div>
+                )}
+
+                {/* Category Icon */}
+                <div className="absolute top-4 left-4 w-10 h-10 bg-gradient-to-br from-white/20 to-white/10 rounded-full flex items-center justify-center border border-white/30">
+                  {getCategoryIcon(item.category)}
                 </div>
 
-                {/* Mystical Center */}
-                <div className="relative text-center mb-6">
-                  <motion.div
-                    className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-400/30 to-indigo-500/30 rounded-full flex items-center justify-center mb-4 relative"
-                    animate={{ 
-                      rotateZ: hoveredElement === item.element ? 360 : 0,
-                      scale: hoveredElement === item.element ? 1.1 : 1
-                    }}
-                    transition={{ duration: 2 }}
-                  >
-                    <Gem className="w-10 h-10 text-purple-200" />
-                    {hoveredElement === item.element && (
-                      <motion.div
-                        className="absolute inset-0 border-2 border-purple-300 rounded-full"
-                        animate={{ scale: [1, 1.3, 1], opacity: [1, 0, 1] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      />
-                    )}
-                  </motion.div>
-                  
-                  <div className={`inline-block px-3 py-1 text-xs rounded-full bg-gradient-to-r ${getRarityColor(item.rarity)} text-white font-bold mb-2`}>
-                    {t(`shop.rarity.${item.rarity}`).toUpperCase()}
+                {/* Product Image Placeholder */}
+                <div className="w-full h-40 bg-gradient-to-br from-imperial-gold/20 to-rose-champagne/20 rounded-xl mb-6 mt-8 flex items-center justify-center border border-imperial-gold/30">
+                  <div className={`w-16 h-16 bg-gradient-to-r ${getCategoryColor(item.category)} rounded-full flex items-center justify-center`}>
+                    {getCategoryIcon(item.category)}
                   </div>
                 </div>
 
-                {/* Item Details */}
-                <h3 className="font-playfair font-bold text-lg text-purple-100 mb-2 text-center">
+                {/* Product Details */}
+                <h3 className="font-playfair font-bold text-lg text-white mb-3 text-center">
                   {item.name}
                 </h3>
                 
-                <p className="text-purple-300/80 text-sm text-center mb-3 italic">
-                  "{item.power}"
-                </p>
-                
-                <p className="text-purple-200/60 text-xs text-center mb-4">
+                <p className="text-rose-champagne/80 text-sm text-center mb-6 leading-relaxed">
                   {item.description}
                 </p>
 
                 {/* Price & Action */}
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-xl bg-gradient-to-r from-amber-300 to-rose-300 bg-clip-text text-transparent">
+                  <span className="font-bold text-xl bg-gradient-to-r from-imperial-gold to-rose-champagne bg-clip-text text-transparent">
                     ${item.price} {t('currency.cad')}
                   </span>
                   <motion.button
                     disabled
-                    className="px-4 py-2 bg-gradient-to-r from-purple-600/50 to-indigo-600/50 text-purple-200 rounded-xl font-medium cursor-not-allowed opacity-60 border border-purple-400/30"
+                    className="px-4 py-2 bg-gradient-to-r from-imperial-gold/20 to-rose-champagne/20 text-white rounded-lg font-medium cursor-not-allowed opacity-60 border border-imperial-gold/30 hover:opacity-80 transition-opacity"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
                     {t('shop.comingSoon')}
                   </motion.button>
                 </div>
-
-                {/* Magical Sparkles */}
-                {hoveredElement === item.element && (
-                  <>
-                    <motion.div
-                      className="absolute top-4 left-4 w-2 h-2 bg-purple-300 rounded-full"
-                      animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
-                      transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
-                    />
-                    <motion.div
-                      className="absolute bottom-4 right-4 w-1 h-1 bg-amber-300 rounded-full"
-                      animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
-                      transition={{ duration: 1, repeat: Infinity, delay: 1 }}
-                    />
-                  </>
-                )}
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Mystical Portal Footer */}
+        {/* Coming Soon Footer */}
         <motion.div
           className="mt-20 text-center relative"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
         >
-          <div className="relative inline-block">
-            <motion.div
-              className="w-32 h-32 mx-auto bg-gradient-to-br from-purple-500/30 to-indigo-600/30 rounded-full flex items-center justify-center border-4 border-purple-400/40 relative"
-              animate={{ rotateZ: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              <Eye className="w-12 h-12 text-purple-200" />
-              <motion.div
-                className="absolute inset-0 border-4 border-purple-300/60 rounded-full"
-                animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </motion.div>
-            
-            <motion.div
-              className="absolute -inset-8 border border-purple-400/20 rounded-full"
-              animate={{ rotateZ: -360 }}
-              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            />
+          <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
+            <Crown className="w-12 h-12 text-imperial-gold mx-auto mb-4" />
+            <h2 className="font-playfair font-bold text-2xl text-imperial-gold mb-4">
+              {t('shop.awakeningTitle')}
+            </h2>
+            <p className="text-rose-champagne/80 max-w-2xl mx-auto leading-relaxed">
+              {t('shop.awakeningDesc')}
+            </p>
           </div>
-          
-          <h2 className="font-playfair font-bold text-3xl text-purple-200 mt-8 mb-4">
-            {t('shop.awakeningTitle')}
-          </h2>
-          <p className="text-purple-300/80 max-w-2xl mx-auto leading-relaxed">
-            {t('shop.awakeningDesc')}
-          </p>
         </motion.div>
       </div>
     </main>
