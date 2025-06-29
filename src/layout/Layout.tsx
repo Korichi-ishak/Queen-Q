@@ -74,6 +74,21 @@ export const Layout: React.FC = () => {
                   </li>
                   <li>
                     <Link 
+                      to="/application" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/application' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">{t('nav.application')}</span>
+                      {location.pathname === '/application' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
+                  <li>
+                    <Link 
                       to="/cards" 
                       className={`relative px-2 py-1 font-medium ${
                         location.pathname === '/cards' 
@@ -89,80 +104,19 @@ export const Layout: React.FC = () => {
                   </li>
                   <li>
                     <Link 
-                      to="/application" 
+                      to="/apropos" 
                       className={`relative px-2 py-1 font-medium ${
-                        location.pathname === '/application' 
+                        location.pathname === '/apropos' 
                           ? 'text-imperial-gold' 
                           : 'text-rose-champagne hover:text-imperial-gold'
                       } transition-colors`}
                     >
-                      <span className="relative z-10">L'Application</span>
-                      {location.pathname === '/application' && (
+                      <span className="relative z-10">{t('nav.apropos')}</span>
+                      {location.pathname === '/apropos' && (
                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
                       )}
                     </Link>
                   </li>
-                  {/* DISABLED PAGES - Quiz, Chat, Journal, Shop */}
-                  {/* <li>
-                    <Link 
-                      to="/quiz" 
-                      className={`relative px-2 py-1 font-medium ${
-                        location.pathname === '/quiz' 
-                          ? 'text-imperial-gold' 
-                          : 'text-rose-champagne hover:text-imperial-gold'
-                      } transition-colors`}
-                    >
-                      <span className="relative z-10">{t('nav.quiz')}</span>
-                      {location.pathname === '/quiz' && (
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
-                      )}
-                    </Link>
-                  </li> */}
-                  {/* <li>
-                    <Link 
-                      to="/chat" 
-                      className={`relative px-2 py-1 font-medium ${
-                        location.pathname === '/chat' 
-                          ? 'text-imperial-gold' 
-                          : 'text-rose-champagne hover:text-imperial-gold'
-                      } transition-colors`}
-                    >
-                      <span className="relative z-10">{t('nav.chat')}</span>
-                      {location.pathname === '/chat' && (
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
-                      )}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      to="/journal" 
-                      className={`relative px-2 py-1 font-medium ${
-                        location.pathname === '/journal' 
-                          ? 'text-imperial-gold' 
-                          : 'text-rose-champagne hover:text-imperial-gold'
-                      } transition-colors`}
-                    >
-                      <span className="relative z-10">{t('nav.journal')}</span>
-                      {location.pathname === '/journal' && (
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
-                      )}
-                    </Link>
-                  </li>
-                  <li>
-                    <Link 
-                      to="/shop" 
-                      className={`relative px-2 py-1 font-medium ${
-                        location.pathname === '/shop' 
-                          ? 'text-imperial-gold' 
-                          : 'text-rose-champagne hover:text-imperial-gold'
-                      } transition-colors`}
-                    >
-                      <span className="relative z-10">{t('nav.shop')}</span>
-                      {location.pathname === '/shop' && (
-                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
-                      )}
-                    </Link>
-                  </li> */}
                 </ul>
               </nav>
               
@@ -209,6 +163,18 @@ export const Layout: React.FC = () => {
               </li>
               <li>
                 <Link 
+                  to="/application" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/application' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  {t('nav.application')}
+                </Link>
+              </li>
+              <li>
+                <Link 
                   to="/cards" 
                   className={`block px-4 py-2 rounded-lg ${
                     location.pathname === '/cards' 
@@ -221,65 +187,16 @@ export const Layout: React.FC = () => {
               </li>
               <li>
                 <Link 
-                  to="/application" 
+                  to="/apropos" 
                   className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === '/application' 
+                    location.pathname === '/apropos' 
                       ? 'bg-imperial-gold/20 text-imperial-gold' 
                       : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
                   } transition-colors`}
                 >
-                  L'Application
+                  {t('nav.apropos')}
                 </Link>
               </li>
-              {/* DISABLED PAGES - Quiz, Chat, Journal, Shop */}
-              {/* <li>
-                <Link 
-                  to="/quiz" 
-                  className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === '/quiz' 
-                      ? 'bg-imperial-gold/20 text-imperial-gold' 
-                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
-                  } transition-colors`}
-                >
-                  {t('nav.quiz')}
-                </Link>
-              </li> */}
-              {/* <li>
-                <Link 
-                  to="/chat" 
-                  className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === '/chat' 
-                      ? 'bg-imperial-gold/20 text-imperial-gold' 
-                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
-                  } transition-colors`}
-                >
-                  {t('nav.chat')}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/journal" 
-                  className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === '/journal' 
-                      ? 'bg-imperial-gold/20 text-imperial-gold' 
-                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
-                  } transition-colors`}
-                >
-                  {t('nav.journal')}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/shop" 
-                  className={`block px-4 py-2 rounded-lg ${
-                    location.pathname === '/shop' 
-                      ? 'bg-imperial-gold/20 text-imperial-gold' 
-                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
-                  } transition-colors`}
-                >
-                  {t('nav.shop')}
-                </Link>
-              </li> */}
             </ul>
           </nav>
         </div>
@@ -335,11 +252,27 @@ export const Layout: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/application" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
+                    <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 4c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-9h2v2h-2zm0 3h2v4h-2z" />
+                    </svg>
+                    {t('nav.application')}
+                  </Link>
+                </li>
+                <li>
                   <Link to="/cards" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
                     <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                     </svg>
                     {t('nav.cards')}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/apropos" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
+                    <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    </svg>
+                    {t('nav.apropos')}
                   </Link>
                 </li>
               </ul>
@@ -349,7 +282,7 @@ export const Layout: React.FC = () => {
             <div>
               <h3 className="font-playfair font-bold text-imperial-gold mb-4 text-center md:text-left">{t('links.contact')}</h3>
               <div className="flex flex-col space-y-2">
-                <a href={`mailto:${t('contact.email')}`} className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
+                <a href="mailto:gestionreines@gmail.com" className="text-rose-champagne hover:text-imperial-gold transition-colors flex items-center justify-center md:justify-start">
                   <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                   </svg>

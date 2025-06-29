@@ -25,8 +25,8 @@
 
 .deck-container.is-single .absolute {
   transform: translateZ(0px);
-  background: linear-gradient(135deg, #D6AE60, #D4B5A5);
-  border-color: #D6AE60;
+  background: linear-gradient(135deg, theme('colors.imperial-gold'), theme('colors.rose-champagne'));
+  border-color: theme('colors.imperial-gold');
 }
 
 /* Animations essentielles */
@@ -74,7 +74,7 @@ html {
 
 /* Focus styles */
 .focus-ring:focus-visible {
-  outline: 2px solid #D6AE60;
+  outline: 2px solid theme('colors.imperial-gold');
   outline-offset: 2px;
 }
 
@@ -90,7 +90,7 @@ html {
   inset: 0;
   border-radius: inherit;
   transform: scale(0);
-  background: rgba(214, 174, 96, 0.2);
+  background: theme('colors.imperial-gold / 20%');
   transition: transform 0.3s ease;
   pointer-events: none;
 }
@@ -169,7 +169,7 @@ html {
 
 .exit-button:hover {
   transform: rotate(90deg) scale(1.1);
-  color: #ef4444;
+  color: theme('colors.red.500');
 }
 
 /* Styles d'accessibilité */
@@ -187,27 +187,22 @@ html {
   }
 }
 
-/* Variables CSS */
-:root {
-  --royal-purple: #3B1E50;
-  --imperial-gold: #D6AE60;
-  --rose-champagne: #D4B5A5;
-  --deep-purple: #1a0b2e;
-  --soft-gold: #e6c570;
-}
-
 /* Styles de base */
 body {
-  font-family: 'Playfair Display', serif;
-  background: linear-gradient(135deg, var(--royal-purple), var(--deep-purple));
-  color: var(--rose-champagne);
+  font-family: theme('fontFamily.inter');
+  background-color: theme('colors.inked-indigo');
+  color: theme('colors.rose-champagne');
   line-height: 1.6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Focus accessibility */
 button:focus,
 a:focus {
-  outline: 2px solid var(--imperial-gold);
+  outline: 2px solid theme('colors.imperial-gold');
   outline-offset: 2px;
 }
 
@@ -333,4 +328,24 @@ a:focus {
 
 .confession-card {
   animation: confession-reveal 0.8s ease-out forwards;
+}
+
+/* Custom scrollbar for a more themed look */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(214, 174, 96, 0.4) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(214, 174, 96, 0.4);
+  border-radius: 20px;
+  border: 3px solid transparent;
 } 

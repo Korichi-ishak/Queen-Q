@@ -1,296 +1,284 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Crown, Sparkles, CreditCard, Coffee, Search, Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Crown, Sparkles, Heart, Eye, Coffee, Moon, Gift, X } from 'lucide-react';
 import { useTranslation } from '../context/TranslationContext';
+
+// Une composante pour les ornements de coin
+const CornerOrnament = ({ position }: { position: string }) => {
+  const baseClasses = "absolute w-16 h-16 text-imperial-gold/30 pointer-events-none";
+  let positionClasses = "";
+  switch(position) {
+    case 'top-left': positionClasses = 'top-4 left-4'; break;
+    case 'top-right': positionClasses = 'top-4 right-4 transform rotate-90'; break;
+    case 'bottom-left': positionClasses = 'bottom-4 left-4 transform -rotate-90'; break;
+    case 'bottom-right': positionClasses = 'bottom-4 right-4 transform rotate-180'; break;
+  }
+  return (
+    <svg className={`${baseClasses} ${positionClasses}`} viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <path d="M 2 50 C 2 20, 20 2, 50 2" />
+      <path d="M 50 2 C 80 2, 98 20, 98 50" />
+    </svg>
+  );
+};
+
+const RegistrationModal = ({ onClose }: { onClose: () => void }) => {
+  const { t } = useTranslation();
+
+  // Helper pour interpréter le HTML dans les traductions
+  const T_HTML = ({ tKey }: { tKey: any }) => (
+    <p dangerouslySetInnerHTML={{ __html: t(tKey) }}></p>
+  );
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      <motion.div
+        className="relative w-full max-w-2xl bg-gradient-to-br from-royal-purple/50 via-ink-black to-ink-black border-2 border-imperial-gold/50 rounded-2xl shadow-2xl shadow-imperial-gold/20 p-8 text-center"
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 50, opacity: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button onClick={onClose} className="absolute top-4 right-4 text-imperial-gold/50 hover:text-imperial-gold transition-colors">
+          <X className="w-6 h-6" />
+        </button>
+        
+        <h3 className="font-playfair text-4xl font-bold text-imperial-gold mb-2">{t('modal.title')}</h3>
+        <p className="text-rose-champagne/80 italic mb-6">{t('modal.subtitle')}</p>
+
+        <div className="flex justify-center items-center gap-6 mb-8 text-rose-champagne">
+          <div>
+            <p className="font-bold text-lg text-imperial-gold">{t('modal.date')}</p>
+            <p>{t('modal.time')}</p>
+          </div>
+          <div className="h-10 w-px bg-imperial-gold/30"></div>
+          <div>
+            <p className="font-bold text-lg text-imperial-gold">{t('modal.location')}</p>
+            <p>{t('modal.location.desc')}</p>
+          </div>
+        </div>
+
+        <div className="text-left mb-8 space-y-4">
+          <h4 className="font-playfair text-xl font-bold text-imperial-gold border-b border-imperial-gold/20 pb-2 mb-4">{t('modal.program.title')}</h4>
+          <div className="flex items-start"><Heart className="w-4 h-4 inline mr-2 text-rose-champagne mt-1 flex-shrink-0"/> <T_HTML tKey="modal.program.item1"/></div>
+          <div className="flex items-start"><Eye className="w-4 h-4 inline mr-2 text-rose-champagne mt-1 flex-shrink-0"/> <T_HTML tKey="modal.program.item2"/></div>
+          <div className="flex items-start"><Coffee className="w-4 h-4 inline mr-2 text-rose-champagne mt-1 flex-shrink-0"/> <T_HTML tKey="modal.program.item3"/></div>
+        </div>
+
+        <div className="bg-imperial-gold/10 border border-imperial-gold/30 rounded-lg p-4 mb-8">
+          <p className="font-bold text-imperial-gold text-lg"><Gift className="w-6 h-6 inline mr-2"/> {t('modal.offer.title')}</p>
+          <p className="text-rose-champagne/90">{t('modal.offer.desc')}</p>
+        </div>
+
+        <p className="font-playfair text-xl text-rose-champagne mb-4">{t('modal.final_question')}</p>
+        
+        <div className="max-w-md mx-auto">
+          <div className="flex items-center bg-ink-black/50 border border-imperial-gold/30 rounded-lg p-2 backdrop-blur-sm">
+            <input
+              type="email"
+              placeholder={t('modal.email_placeholder')}
+              className="flex-grow bg-transparent text-rose-champagne placeholder-rose-champagne/50 px-4 py-2 focus:outline-none"
+            />
+            <motion.button
+              className="bg-gradient-to-r from-imperial-gold to-rose-champagne text-royal-purple px-6 py-2 rounded-md font-bold text-lg shadow-[0_0_15px_rgba(210,180,140,0.3)] hover:shadow-[0_0_25px_rgba(210,180,140,0.5)] transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {t('modal.submit_button')}
+            </motion.button>
+          </div>
+        </div>
+
+      </motion.div>
+    </motion.div>
+  );
+}
+
+// Composante pour une carte mystère
+const MysteryCard = ({ icon, title, description, index }: { icon: JSX.Element, title: string, description: string, index: number }) => {
+  return (
+    <motion.div 
+      className="relative aspect-[3/5] w-72 bg-ink-black/50 backdrop-blur-md rounded-2xl border border-imperial-gold/30 p-6 flex flex-col justify-center items-center text-center group"
+      initial={{ opacity: 0, y: 50, rotateZ: (index - 1) * 5 }}
+      whileInView={{ opacity: 1, y: 0, rotateZ: (index - 1) * 2 }}
+      whileHover={{ y: -10, scale: 1.05, rotateZ: (index - 1) * 2, boxShadow: "0 0 30px rgba(210, 180, 140, 0.3)" }}
+      viewport={{ once: true, amount: 0.5 }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <div className="text-imperial-gold group-hover:text-rose-champagne transition-colors duration-300 mb-4">
+        {icon}
+      </div>
+      <h4 className="font-playfair text-2xl font-bold text-imperial-gold mb-4 group-hover:text-white transition-colors duration-300">
+        {title}
+      </h4>
+      <p className="text-rose-champagne/80 text-sm leading-relaxed">
+        {description}
+      </p>
+      <div className="absolute inset-0 border border-imperial-gold/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform scale-95 group-hover:scale-100"></div>
+    </motion.div>
+  );
+};
 
 export const Application: React.FC = () => {
   const { t } = useTranslation();
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" }
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const features = [
     {
-      icon: <CreditCard className="w-12 h-12" />,
-      title: "Ta pioche",
-      description: "En répondant à quelques questions de la Reine Mère, découvre quel archétype masculin est ton ex, ton amoureux ou ton prospect. Plus la carte est forte, plus il est mature émotionnellement : pas pour rien qu'on mérite un King!",
-      gradient: "from-rose-champagne via-antique-rose to-powder-rose"
+      icon: <Heart className="w-10 h-10" />,
+      title: t('app.feature1.title'),
+      description: t('app.feature1.desc'),
     },
     {
-      icon: <Search className="w-12 h-12" />,
-      title: "Miroir, Miroir",
-      description: "En répondant à quelques questions de la Reine Mère, découvre qui est ta reine intérieure (Cœur, Trèfle, Carreau, Pique). Tu pourras aussi apprendre quelles sont les blessures émotionnelles, ton langage de l'amour et les forces dominantes.",
-      gradient: "from-imperial-gold via-smoky-gold to-patina-gold"
+      icon: <Eye className="w-10 h-10" />,
+      title: t('app.feature2.title'),
+      description: t('app.feature2.desc'),
     },
     {
-      icon: <Coffee className="w-12 h-12" />,
-      title: "Le Salon de thé",
-      description: "Profite d'un moment privilégié avec la Reine Mère. Échange avec elle pour tout savoir comment mettre un terme à une relation (Flush, Royal) ou pour te désenvouter du charme de ton deux de pique.",
-      gradient: "from-royal-purple via-vintage-aubergine to-inked-indigo"
+      icon: <Coffee className="w-10 h-10" />,
+      title: t('app.feature3.title'),
+      description: t('app.feature3.desc'),
     }
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-royal-purple via-vintage-aubergine to-inked-indigo overflow-hidden relative">
-      {/* Étoiles animées */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(50)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-imperial-gold rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              opacity: [0.3, 1, 0.3],
-              scale: [0.8, 1.2, 0.8],
-            }}
-            transition={{
-              duration: 2 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Ornements décoratifs */}
-      <div className="absolute top-0 left-0 w-64 h-64 opacity-20">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-imperial-gold">
-          <path d="M0,0 Q50,50 100,0 Q150,50 200,0 L200,100 Q150,50 100,100 Q50,50 0,100 Z" fill="currentColor" />
-        </svg>
-      </div>
-      <div className="absolute top-0 right-0 w-64 h-64 opacity-20 transform rotate-90">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-imperial-gold">
-          <path d="M0,0 Q50,50 100,0 Q150,50 200,0 L200,100 Q150,50 100,100 Q50,50 0,100 Z" fill="currentColor" />
-        </svg>
-      </div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 opacity-20 transform rotate-180">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-imperial-gold">
-          <path d="M0,0 Q50,50 100,0 Q150,50 200,0 L200,100 Q150,50 100,100 Q50,50 0,100 Z" fill="currentColor" />
-        </svg>
-      </div>
-      <div className="absolute bottom-0 right-0 w-64 h-64 opacity-20 transform rotate-270">
-        <svg viewBox="0 0 200 200" className="w-full h-full text-imperial-gold">
-          <path d="M0,0 Q50,50 100,0 Q150,50 200,0 L200,100 Q150,50 100,100 Q50,50 0,100 Z" fill="currentColor" />
-        </svg>
-      </div>
-
-      <motion.div
-        className="relative z-10 pt-24 pb-16 px-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Header avec couronne */}
+    <div className="bg-ink-black text-rose-champagne overflow-x-hidden">
+      <AnimatePresence>
+        {isModalOpen && <RegistrationModal onClose={() => setIsModalOpen(false)} />}
+      </AnimatePresence>
+      
+      {/* Hero Section - The Unveiling */}
+      <section className="min-h-screen flex flex-col justify-center items-center relative text-center p-6">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-ink-black via-royal-purple/50 to-ink-black opacity-80"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2 }}
+        />
+        <div className="absolute inset-0 bg-[url('/src/assets/sprites/placeholder.png')] bg-repeat opacity-5"></div>
+        
         <motion.div 
-          className="text-center mb-16"
-          variants={itemVariants}
+          className="relative z-10"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
         >
-          <div className="relative inline-block">
-            {/* Couronne animée */}
-            <motion.div
-              className="absolute -top-8 left-1/2 transform -translate-x-1/2"
-              animate={{
-                rotate: [0, 5, -5, 0],
-                y: [-2, 2, -2]
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <Crown className="w-16 h-16 text-imperial-gold" />
-            </motion.div>
-            
-            <h1 className="font-playfair text-5xl md:text-7xl font-bold bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent mb-4 pt-12">
-              Queen de Q
-            </h1>
-            
-            <motion.div
-              className="text-4xl md:text-5xl font-playfair font-bold text-imperial-gold mb-6"
-              animate={{
-                textShadow: [
-                  "0 0 20px rgba(210, 180, 140, 0.5)",
-                  "0 0 30px rgba(210, 180, 140, 0.8)",
-                  "0 0 20px rgba(210, 180, 140, 0.5)"
-                ]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              L'APPLICATION
-            </motion.div>
-            
-            <motion.p 
-              className="text-xl text-rose-champagne font-medium"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              Lancement prévu été/automne 2025
-            </motion.p>
+          <Crown className="w-20 h-20 text-imperial-gold mx-auto mb-4 opacity-80" />
+          <h1 className="font-playfair text-6xl md:text-8xl font-bold bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold bg-clip-text text-transparent mb-4">
+            {t('app.title')}
+          </h1>
+          <motion.h2 
+            className="text-4xl md:text-5xl font-playfair font-bold text-imperial-gold/80"
+            initial={{ letterSpacing: '0.5em', opacity: 0 }}
+            animate={{ letterSpacing: '0.1em', opacity: 1 }}
+            transition={{ duration: 2, delay: 1, ease: "easeOut" }}
+          >
+            {t('app.subtitle')}
+          </motion.h2>
+        </motion.div>
+        
+        <motion.div 
+          className="absolute bottom-10 text-imperial-gold/50 animate-bounce"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 1 }}
+        >
+          <p className="mb-2">{t('app.scroll')}</p>
+          <Moon className="w-6 h-6 mx-auto" />
+        </motion.div>
+      </section>
+
+      {/* Intro Text Section - The Whispers */}
+      <section className="py-24 px-6 relative bg-gradient-to-b from-ink-black via-vintage-aubergine/20 to-ink-black">
+        <motion.div 
+          className="max-w-3xl mx-auto text-center"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="font-playfair text-4xl font-bold text-imperial-gold mb-8">
+            {t('app.intro.title')}
+          </h2>
+          <div className="space-y-6 text-lg md:text-xl leading-relaxed font-serif text-rose-champagne/80">
+            <p>{t('app.intro.p1')}</p>
+            <p>{t('app.intro.p2')}</p>
+            <p className="text-imperial-gold font-semibold">{t('app.intro.p3')}</p>
+            <p className="text-3xl font-playfair font-bold text-imperial-gold mt-8">{t('app.intro.p4')}</p>
+            <p>{t('app.intro.p5')}</p>
+            <p className="text-2xl font-semibold text-rose-champagne">{t('app.intro.p6')}</p>
           </div>
         </motion.div>
+      </section>
 
-        {/* Message principal */}
-        <motion.div
-          className="max-w-4xl mx-auto text-center mb-20"
-          variants={itemVariants}
+      {/* Features Section - The Rituals */}
+      <section className="py-24 px-6 relative bg-ink-black">
+        <div className="absolute inset-0 bg-[url('/src/assets/sprites/placeholder.png')] bg-repeat opacity-[0.02]"></div>
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-imperial-gold/30 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-imperial-gold/30 to-transparent"></div>
+        
+        <motion.h3 
+          className="text-center font-playfair text-4xl font-bold text-imperial-gold mb-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 1 }}
         >
-          <div className="relative bg-gradient-to-r from-royal-purple/30 via-vintage-aubergine/30 to-royal-purple/30 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-imperial-gold/30">
-            {/* Ornements dans les coins */}
-            <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-imperial-gold rounded-tl-lg"></div>
-            <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-imperial-gold rounded-tr-lg"></div>
-            <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-imperial-gold rounded-bl-lg"></div>
-            <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-imperial-gold rounded-br-lg"></div>
-            
-            <h2 className="font-playfair text-3xl md:text-4xl font-bold text-imperial-gold mb-8">
-              Tout de toi est complet
-            </h2>
-            
-            <div className="space-y-4 text-lg md:text-xl text-rose-champagne leading-relaxed">
-              <p>T'as déconstruit. Analysé. Trop.</p>
-              <p>T'as été douce, forte, conciliante, sexy, brillante... parfois tout en même temps.</p>
-              <p className="text-imperial-gold font-medium">Et t'as quand même mangé des deux de piques.</p>
-              <p className="text-2xl font-playfair font-bold text-imperial-gold">Queen de Q, c'est la fin du bluff.</p>
-              <p>C'est le début d'un jeu où on choisit nos règles, nos cartes, notre vérité.</p>
-              <p className="text-xl font-bold text-rose-champagne">Pas pour plaire. Pour se couronner.</p>
-            </div>
-          </div>
-        </motion.div>
+          {t('app.features.title')}
+        </motion.h3>
 
-        {/* Section des fonctionnalités */}
-        <motion.div
-          className="max-w-7xl mx-auto mb-20"
-          variants={itemVariants}
-        >
-          <h3 className="text-center font-playfair text-3xl md:text-4xl font-bold text-imperial-gold mb-16">
-            L'application Queen de Q, c'est...
-          </h3>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                className="relative group"
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <div className={`relative bg-gradient-to-br ${feature.gradient} p-8 rounded-3xl shadow-2xl border border-imperial-gold/30 h-full`}>
-                  {/* Ornements décoratifs */}
-                  <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-                    <div className="absolute top-4 left-4 w-6 h-6 border-l-2 border-t-2 border-white/30 rounded-tl-lg"></div>
-                    <div className="absolute top-4 right-4 w-6 h-6 border-r-2 border-t-2 border-white/30 rounded-tr-lg"></div>
-                    <div className="absolute bottom-4 left-4 w-6 h-6 border-l-2 border-b-2 border-white/30 rounded-bl-lg"></div>
-                    <div className="absolute bottom-4 right-4 w-6 h-6 border-r-2 border-b-2 border-white/30 rounded-br-lg"></div>
-                  </div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex justify-center mb-6">
-                      <div className="p-4 bg-white/20 rounded-full backdrop-blur-sm border border-white/30">
-                        <div className="text-white">
-                          {feature.icon}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <h4 className="font-playfair text-2xl font-bold text-white text-center mb-6">
-                      {feature.title}
-                    </h4>
-                    
-                    <p className="text-white/90 text-center leading-relaxed">
-                      {feature.description}
-                    </p>
-                  </div>
-                  
-                  {/* Particules flottantes */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(8)].map((_, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-white/40 rounded-full"
-                        style={{
-                          left: `${20 + Math.random() * 60}%`,
-                          top: `${20 + Math.random() * 60}%`,
-                        }}
-                        animate={{
-                          opacity: [0.2, 0.8, 0.2],
-                          scale: [0.5, 1, 0.5],
-                        }}
-                        transition={{
-                          duration: 2 + Math.random(),
-                          repeat: Infinity,
-                          delay: Math.random() * 2,
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <div className="flex flex-wrap justify-center items-start gap-16">
+          {features.map((feature, index) => (
+            <MysteryCard 
+              key={index}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+              index={index}
+            />
+          ))}
+        </div>
+      </section>
 
-        {/* Call to Action */}
+      {/* CTA Section - The Invitation */}
+      <section className="py-24 px-6 text-center relative bg-gradient-to-t from-ink-black via-royal-purple/20 to-ink-black">
+        <CornerOrnament position="top-left" />
+        <CornerOrnament position="top-right" />
+        <CornerOrnament position="bottom-left" />
+        <CornerOrnament position="bottom-right" />
+        
         <motion.div
-          className="text-center"
-          variants={itemVariants}
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 1 }}
         >
-          <div className="relative inline-block">
-            <motion.div
-              className="bg-gradient-to-r from-imperial-gold via-rose-champagne to-imperial-gold p-8 rounded-3xl shadow-2xl border-2 border-white/30 backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <h4 className="font-playfair text-2xl md:text-3xl font-bold text-royal-purple mb-4">
-                Participe au lancement virtuel!
-              </h4>
-              
-              <motion.button
-                className="bg-royal-purple text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-vintage-aubergine transition-all duration-300 shadow-lg border-2 border-white/30"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Sparkles className="w-5 h-5 inline mr-2" />
-                Je m'inscris
-              </motion.button>
-            </motion.div>
-          </div>
+          <h2 className="font-playfair text-5xl font-bold text-imperial-gold mb-4">{t('app.cta.title')}</h2>
+          <p className="text-xl text-rose-champagne/80 mb-8 max-w-2xl mx-auto">{t('app.cta.subtitle')}</p>
+          <motion.button 
+            onClick={() => setIsModalOpen(true)}
+            className="bg-gradient-to-r from-imperial-gold to-rose-champagne text-royal-purple px-10 py-4 rounded-lg font-bold text-xl shadow-[0_0_20px_rgba(210,180,140,0.4)] hover:shadow-[0_0_35px_rgba(210,180,140,0.6)] transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Sparkles className="w-6 h-6 inline mr-2" />
+            {t('app.cta.button')}
+          </motion.button>
         </motion.div>
-
-        {/* Disclaimer */}
-        <motion.div
-          className="max-w-4xl mx-auto text-center mt-16"
-          variants={itemVariants}
-        >
-          <p className="text-rose-champagne/70 text-sm italic leading-relaxed">
-            Dans tous les cas, sache que les interactions avec la Reine Mère, un robot conversationnel entièrement spécifiquement par Queen de Q, te sont offertes à des fins de divertissement et ne remplacent en aucun cas un suivi thérapeutique avec une professionnelle de la santé compétente. Si tu ressens de la détresse, nous t'invitons à demander de l'aide.
-          </p>
-        </motion.div>
-      </motion.div>
-    </main>
+      </section>
+      
+      {/* Disclaimer Section - The Fine Print */}
+      <footer className="py-16 px-6 text-center border-t border-imperial-gold/20">
+        <p className="max-w-3xl mx-auto text-rose-champagne/50 text-xs italic leading-relaxed">
+          Dans tous les cas, sache que les interactions avec la Reine Mère, un robot conversationnel entièrement spécifiquement par Queen de Q, te sont offertes à des fins de divertissement et ne remplacent en aucun cas un suivi thérapeutique avec une professionnelle de la santé compétente. Si tu ressens de la détresse, nous t'invitons à demander de l'aide.
+        </p>
+      </footer>
+    </div>
   );
 }; 
