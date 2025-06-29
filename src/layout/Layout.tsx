@@ -89,6 +89,22 @@ export const Layout: React.FC = () => {
                   </li>
                   <li>
                     <Link 
+                      to="/application" 
+                      className={`relative px-2 py-1 font-medium ${
+                        location.pathname === '/application' 
+                          ? 'text-imperial-gold' 
+                          : 'text-rose-champagne hover:text-imperial-gold'
+                      } transition-colors`}
+                    >
+                      <span className="relative z-10">L'Application</span>
+                      {location.pathname === '/application' && (
+                        <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
+                      )}
+                    </Link>
+                  </li>
+                  {/* DISABLED PAGES - Quiz, Chat, Journal, Shop */}
+                  {/* <li>
+                    <Link 
                       to="/quiz" 
                       className={`relative px-2 py-1 font-medium ${
                         location.pathname === '/quiz' 
@@ -101,8 +117,8 @@ export const Layout: React.FC = () => {
                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
                       )}
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Link 
                       to="/chat" 
                       className={`relative px-2 py-1 font-medium ${
@@ -146,7 +162,7 @@ export const Layout: React.FC = () => {
                         <span className="absolute bottom-0 left-0 w-full h-0.5 bg-imperial-gold"></span>
                       )}
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </nav>
               
@@ -205,6 +221,19 @@ export const Layout: React.FC = () => {
               </li>
               <li>
                 <Link 
+                  to="/application" 
+                  className={`block px-4 py-2 rounded-lg ${
+                    location.pathname === '/application' 
+                      ? 'bg-imperial-gold/20 text-imperial-gold' 
+                      : 'text-rose-champagne hover:bg-imperial-gold/10 hover:text-imperial-gold'
+                  } transition-colors`}
+                >
+                  L'Application
+                </Link>
+              </li>
+              {/* DISABLED PAGES - Quiz, Chat, Journal, Shop */}
+              {/* <li>
+                <Link 
                   to="/quiz" 
                   className={`block px-4 py-2 rounded-lg ${
                     location.pathname === '/quiz' 
@@ -214,8 +243,8 @@ export const Layout: React.FC = () => {
                 >
                   {t('nav.quiz')}
                 </Link>
-              </li>
-              <li>
+              </li> */}
+              {/* <li>
                 <Link 
                   to="/chat" 
                   className={`block px-4 py-2 rounded-lg ${
@@ -250,7 +279,7 @@ export const Layout: React.FC = () => {
                 >
                   {t('nav.shop')}
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </div>
